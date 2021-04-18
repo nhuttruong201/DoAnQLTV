@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- <h2> Login </h2> -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="/images/logo.png" id="iconLogin" alt="User Icon" />
+            </div>
+
+            <!-- Login Form -->
+            <form action="/login" method="post">
+                <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" required>
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
+                <input type="submit" class="fadeIn fourth pointer" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="/forget-password">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
