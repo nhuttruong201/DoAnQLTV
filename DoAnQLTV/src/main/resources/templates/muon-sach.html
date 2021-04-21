@@ -1,0 +1,33 @@
+<div th:fragment="muon_sach" class="row">
+    <div class="col-sm-12">
+        <span style="color: #28a745;"><i class="fas fa-book"></i> Cho mượn sách</span>
+        <hr>
+        <div class="col-sm-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên sách</th>
+                        <th>Tên tác giả</th>
+                        <th>Số lượng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${listBook}">
+                        <td th:text="*{book.getTensach()}"></td>
+                        <td th:text="*{book.getTacgia()}"></td>
+                        <td th:text="*{book.getSoluong()}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#muonSach").addClass("active");
+        });
+    </script>
+</div>

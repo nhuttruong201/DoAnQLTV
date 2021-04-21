@@ -1,7 +1,8 @@
 package com.example.DoAnQLTV.entity;
 
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ public class TheThuVienEntity {
     private String gioitinh;
     private String sodienthoai;
     private String diachi;
-    private Date hansudung;
+    private java.sql.Date hansudung;
     private int solanphat;
     private String matrangthai;
 
@@ -73,11 +74,11 @@ public class TheThuVienEntity {
         this.diachi = diachi;
     }
 
-    public Date getHansudung() {
+    public java.sql.Date getHansudung() {
         return hansudung;
     }
 
-    public void setHansudung(Date hansudung) {
+    public void setHansudung(java.sql.Date hansudung) {
         this.hansudung = hansudung;
     }
 

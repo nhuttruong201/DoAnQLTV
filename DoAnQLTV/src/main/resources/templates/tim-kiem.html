@@ -1,0 +1,36 @@
+<div th:fragment="tim_kiem" class="row">
+    <div class="col-sm-12">
+        <span style="color: #28a745;"><i class="fas fa-search">: </i> 
+            <span th:text="${length} + ' kết quả với từ khóa \'' + ${keyword} + '\''"></span>
+        </span>
+        <hr>
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Tên sách</th>
+                            <th>Tên tác giả</th>
+                            <th>Năm xuất bản</th>
+                            <th>Nhà xuất bản</th>
+                            <th>Thể loại</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${listBook}">
+                            <td th:text="*{book.getMasach()}"></td>
+                            <td th:text="*{book.getTensach()}"></td>
+                            <td th:text="*{book.getTacgia()}"></td>
+                            <td th:text="*{book.getNamxuatban()}"></td>
+                            <td th:text="*{book.getManhaxuatban()}"></td>
+                            <td th:text="*{book.getMatheloai()}"></td>
+                            <td th:text="*{book.getSoluong()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
