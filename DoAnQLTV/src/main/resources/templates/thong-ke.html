@@ -5,7 +5,7 @@
         <a href="/thong-ke/tat-ca-sach" class="btn btn-outline-primary" id="tatca">Tất cả sách</a>
         <a href="/thong-ke/dang-muon" class="btn btn-outline-success" id="dangmuon">Đang mượn</a>
         <a href="#" class="btn btn-outline-warning" id="quanhan">Quá hạn</a>
-        <a href="#" class="btn btn-outline-danger" id="thebikhoa">Thẻ bị khóa</a>
+        <a href="/thong-ke/the-bi-khoa" class="btn btn-outline-danger" id="thebikhoa">Thẻ bị khóa</a>
         <!-- <button type="button" class="btn btn-outline-dark"></button> -->
         <hr>
         <div th:replace="thong-ke :: ${type}"></div>
@@ -13,6 +13,43 @@
     <script>
         $(document).ready(function() {
             $("#thongKe").addClass("active");
+        });
+    </script>
+</div>
+
+<!-- Thẻ bị khóa -->
+<div class="col-sm-12" th:fragment="the-bi-khoa">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Mã thẻ</th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>SDT</th>
+                    <th>Địa chỉ</th>
+                    <th>Hạn sử dụng</th>
+                    <th>Số lần phạt</th>
+                    <th>Mã trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="card : ${listCard}">
+                    <td th:text="*{card.getMathe()}"></td>
+                    <td th:text="*{card.getHoten()}"></td>
+                    <td th:text="*{card.getGioitinh()}"></td>
+                    <td th:text="*{card.getSodienthoai()}"></td>
+                    <td th:text="*{card.getDiachi()}"></td>
+                    <td th:text="*{card.getHansudung()}"></td>
+                    <td th:text="*{card.getSolanphat()}"></td>
+                    <td th:text="*{card.getMatrangthai()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#thebikhoa").addClass("active");
         });
     </script>
 </div>

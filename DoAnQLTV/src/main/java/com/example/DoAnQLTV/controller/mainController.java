@@ -28,6 +28,8 @@ public class mainController {
     private TheLoaiRepo theLoaiRepo;
     @Autowired
     private ChiTietPhieuMuonRepo ctpmRepo;
+    @Autowired
+    private TheThuVienRepo theThuVienRepo;
     // Làm thẻ thư viện
     @GetMapping("/lam-the-thu-vien")
     public String LamTheThuVien(Model model){
@@ -99,7 +101,8 @@ public class mainController {
         model.addAttribute("listBook", listBook);
         List<ChiTietPhieuMuonEntity> listSachMuon = ctpmRepo.findAll();
         model.addAttribute("listSachMuon", listSachMuon);
-
+        List<TheThuVienEntity> listTheBiKhoa = theThuVienRepo.findByMatrangthai("lock");
+        model.addAttribute("listCard", listTheBiKhoa);
 
         model.addAttribute("source", "thong-ke");
         model.addAttribute("fragment", "thong_ke");
