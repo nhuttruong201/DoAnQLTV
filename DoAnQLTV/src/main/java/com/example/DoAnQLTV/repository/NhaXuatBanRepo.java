@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NhaXuatBanRepo extends JpaRepository<NhaXuatBanEntity, String> {
+    NhaXuatBanEntity findByManhaxuatban(String manhaxuatban);
 }

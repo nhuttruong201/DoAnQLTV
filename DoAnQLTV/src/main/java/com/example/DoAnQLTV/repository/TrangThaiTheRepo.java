@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrangThaiTheRepo extends JpaRepository<TrangThaiTheEntity, String> {
+    TrangThaiTheEntity findByMatrangthai(String matrangthai);
 }

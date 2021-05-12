@@ -1,0 +1,145 @@
+<div class="container my-4" th:fragment="quan-ly-the-thu-vien">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-address-card"></i> Quản lý thẻ thư viện </strong>
+            <div class="float-right">
+                <a href="/lam-the-thu-vien" type="button" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Thêm mới
+                </a>
+            </div>
+            <hr>
+            <form action="/tim-the-thu-vien" method="post">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <select name="mathe" class="custom-select">
+                            <option value="">Mã thẻ</option>
+                            <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}"></option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="hoten" id="" placeholder="tên đọc giả">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="sdt" id="" placeholder="số điện thoại">
+                    </div>
+
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block text-center" type="submit">
+                        <i class="fas fa-search"></i> Tìm
+                    </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form>
+            <div class="row jumbotron p-1">
+                <div class="col-sm-12 mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-group">
+                                <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn btn-primary" id="btnShowAllCard">Tất cả thẻ</a>
+                                <a href="/quan-ly-the-thu-vien/the-bi-khoa" type="button" class="btn btn-primary" id="btnShowCardLock">Thẻ bị khóa</a>
+                                <a href="/quan-ly-the-thu-vien/the-dang-muon" type="button" class="btn btn-primary" id="btnShowCardBorrow">Thẻ đang mượn</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div th:replace="${source} :: ${type}">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#btnQuanLyTheTV").addClass("active");
+        });
+    </script>
+</div>
+
+
+<!--todo: Tất cả thẻ -->
+<div class="col-sm-12" th:fragment="tat-ca-the">
+    <div th:replace="quan-ly-the-thu-vien :: list-card"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowAllCard").addClass("active");
+        });
+    </script>
+</div>
+
+<!--todo: Thẻ bị khóa -->
+<div class="col-sm-12" th:fragment="the-bi-khoa">
+    <div th:replace="quan-ly-the-thu-vien :: list-card"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowCardLock").addClass("active");
+        });
+    </script>
+</div>
+
+<!--todo: Thẻ đang mượn -->
+<div class="col-sm-12" th:fragment="the-dang-muon">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>Mã thẻ</th>
+                <th>Họ tên</th>
+                <th>Mã Bill</th>
+                <th>Ngày mượn</th>
+                <th>Hạn trả</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="card : ${listCardBorrow}">
+                <td th:text="*{card.getMathe()}"></td>
+                <td th:text="*{card.getHoten()}"></td>
+                <td th:text="*{card.getMaphieumuon()}"></td>
+                <td th:text="*{card.getNgaymuon()}"></td>
+                <td th:text="*{card.getHantra()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowCardBorrow").addClass("active");
+        });
+    </script>
+</div>
+
+<!--todo: list card -->
+<div th:fragment="list-card">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>GT</th>
+                <th>SDT</th>
+                <th>Địa chỉ</th>
+                <th>Hạn sử dụng</th>
+                <th>Trạng thái</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="card : ${listCard}">
+                <td th:text="*{card.getMathe()}"></td>
+                <td th:text="*{card.getHoten()}"></td>
+                <td th:text="*{card.getGioitinh()}"></td>
+                <td th:text="*{card.getSodienthoai()}"></td>
+                <td th:text="*{card.getDiachi()}"></td>
+                <td th:text="*{card.getHansudung()}"></td>
+                <td th:text="*{card.getMatrangthai()}"></td>
+                <th class="text-center">
+                    <a th:href="'/edit-card/' + ${card.getMathe()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>

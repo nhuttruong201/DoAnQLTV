@@ -1,0 +1,128 @@
+<!--todo: fragment chính -->
+<div class="container my-4" th:fragment="quan-ly-sach">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-book"></i> Quản lý sách</strong>
+            <div class="float-right">
+                <a href="/them-sach" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Thêm mới
+                </a>
+            </div>
+            <br>
+            <hr>
+            <form action="/tim-sach" method="post" class="">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <select name="masach" class="custom-select">
+                            <option value="">Mã sách</option>
+                            <option th:each="book : ${listBook}" th:value="${book.getMasach()}" th:text="${book.getMasach()}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tensach" id="" placeholder="tên sách">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tacgia" id="" placeholder="tên tác giả">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block text-center" type="submit">
+                        <i class="fas fa-search"></i> Tìm
+                    </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form>
+            <div class="row jumbotron p-1">
+                <div class="col-sm-12 mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-group">
+                                <a href="/quan-ly-sach/tat-ca-sach" type="button" class="btn btn-primary" id="btnShowBookAvai">Tất cả sách</a>
+                                <a href="/quan-ly-sach/sach-dang-muon" type="button" class="btn btn-primary" id="btnShowBookBorrow">Sách đang mượn</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div th:replace="${source} :: ${type}">
+                            <!--todo: content include -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $("#btnQuanLySach").addClass("active");
+            });
+        </script>
+    </div>
+</div>
+
+<!--todo: Tất cả sách -->
+<div class="col-sm-12" th:fragment="tat-ca-sach">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Tên sách</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>SL</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${listBook}">
+                <td th:text="*{book.getMasach()}"></td>
+                <td th:text="*{book.getTensach()}"></td>
+                <td th:text="*{book.getTacgia()}"></td>
+                <td th:text="*{book.getMatheloai()}"></td>
+                <td th:text="*{book.getSoluong()}"></td>
+                <td class="text-center">
+                    <a th:href="'/edit-book/' + ${book.getMasach()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                    <a th:href="'/delete-book/' + ${book.getMasach()}" onclick="return confirm('\n\n\nSau khi xóa, thông tin sách vẫn còn nhưng số lượng trở về 0.\nBạn có chắc xóa?\n');" type="button" class="btn btn-outline-primary btn-sm"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowBookAvai").addClass("active");
+        });
+    </script>
+</div>
+
+<!--todo: Sách đang mượn -->
+<div class="col-sm-12" th:fragment="sach-dang-muon">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID Bill</th>
+                <th>ID sách</th>
+                <th>Tên sách</th>
+                <th>Số lượng</th>
+                <th>ID thẻ</th>
+                <th>Tên đọc giả</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${listBookBorrow}">
+                <td th:text="*{book.getMaphieumuon()}"></td>
+                <td th:text="*{book.getMasach()}"></td>
+                <td th:text="*{book.getTensach()}"></td>
+                <td th:text="*{book.getSoluong()}"></td>
+                <td th:text="*{book.getMadocgia()}"></td>
+                <td th:text="*{book.getTendocgia()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowBookBorrow").addClass("active");
+        });
+    </script>
+</div>

@@ -8,6 +8,8 @@ import java.util.List;
 
 
 @Repository
-public interface NhanVienRepo extends JpaRepository<NhanVienEntity, String> {
+public interface NhanVienRepo extends JpaRepository<NhanVienEntity, Long> {
     List<NhanVienEntity> findByHotenLike(String name);
+    NhanVienEntity findByManhanvien(int id);
+    
 }

@@ -1,44 +1,66 @@
 package com.example.DoAnQLTV.entity;
 
-
-
 import java.sql.Date;
 
 import javax.persistence.*;
+
+import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table(name = "thethuvien")
 public class TheThuVienEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String mathe;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int mathe;
     private String hoten;
     private String gioitinh;
     private String sodienthoai;
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    private Date hansudung;
     private String diachi;
-    private java.sql.Date hansudung;
-    private int solanphat;
     private String matrangthai;
+
+
+
+    public String getTenTrangThai(TrangThaiTheRepo trangThaiTheRepo, String matrangthai){
+        TrangThaiTheEntity trangthai = trangThaiTheRepo.findByMatrangthai(matrangthai);
+        return trangthai.getTentrangthai();
+    }
+
+
+
 
     @Override
     public String toString() {
-        return "TheThuVienEntity{" +
-                "mathe='" + mathe + '\'' +
-                ", hoten='" + hoten + '\'' +
-                ", gioitinh='" + gioitinh + '\'' +
-                ", sodienthoai='" + sodienthoai + '\'' +
-                ", diachi='" + diachi + '\'' +
-                ", hansudung='" + hansudung + '\'' +
-                ", solanphat=" + solanphat +
-                ", matrangthai='" + matrangthai + '\'' +
-                '}';
+        return "{" +
+            " mathe='" + getMathe() + "'" +
+            ", hoten='" + getHoten() + "'" +
+            ", gioitinh='" + getGioitinh() + "'" +
+            ", sodienthoai='" + getSodienthoai() + "'" +
+            ", hansudung='" + getHansudung() + "'" +
+            ", diachi='" + getDiachi() + "'" +
+            ", matrangthai='" + getMatrangthai() + "'" +
+            "}";
     }
 
-    public String getMathe() {
+   
+
+    public String getDiachi() {
+        return this.diachi;
+    }
+
+    public void setDiachi(String diachi) {
+        this.diachi = diachi;
+    }
+   
+
+    public int getMathe() {
         return mathe;
     }
 
-    public void setMathe(String mathe) {
+    public void setMathe(int mathe) {
         this.mathe = mathe;
     }
 
@@ -66,30 +88,14 @@ public class TheThuVienEntity {
         this.sodienthoai = sodienthoai;
     }
 
-    public String getDiachi() {
-        return diachi;
-    }
-
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
-
-    public java.sql.Date getHansudung() {
+    public Date getHansudung() {
         return hansudung;
     }
 
-    public void setHansudung(java.sql.Date hansudung) {
+    public void setHansudung(Date hansudung) {
         this.hansudung = hansudung;
     }
-
-    public int getSolanphat() {
-        return solanphat;
-    }
-
-    public void setSolanphat(int solanphat) {
-        this.solanphat = solanphat;
-    }
-
+    
     public String getMatrangthai() {
         return matrangthai;
     }

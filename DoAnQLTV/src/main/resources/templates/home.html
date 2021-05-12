@@ -1,0 +1,93 @@
+<div class="container my-4 fadeInDown" th:fragment="trang-chu">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-home"></i> Trang chủ</strong>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="jumbotron bg-success p-2 shadow">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2 th:text="${listBookSize}"></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="float-right">
+                            <h2><i class="fas fa-book text-black-50"></i></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <a href="/quan-ly-sach/tat-ca-sach" class="text-black-50">
+                            <i class="fas fa-hand-point-right"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="jumbotron bg-info p-2 shadow">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2 th:text="${listCardSize}"></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="float-right">
+                            <h2><i class="fas fa-address-card text-black-50"></i></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <a href="/quan-ly-the-thu-vien/tat-ca-the" class="text-black-50">
+                            <i class="fas fa-hand-point-right"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="jumbotron bg-warning p-2 shadow">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2 th:text="${listNvSize}"></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="float-right">
+                            <h2><i class="fas fa-user-tie text-black-50"></i></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <a href="/quan-ly-sach/tat-ca-sach" class="text-black-50">
+                            <i class="fas fa-hand-point-right"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="jumbotron bg-primary p-2 shadow">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2 th:text="${listAcSize}"></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="float-right">
+                            <h2><i class="fas fa-user text-black-50"></i></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <a href="/quan-ly-sach/tat-ca-sach" class="text-black-50">
+                            <i class="fas fa-hand-point-right"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#btnHome").addClass("active");
+        });
+    </script>
+</div>

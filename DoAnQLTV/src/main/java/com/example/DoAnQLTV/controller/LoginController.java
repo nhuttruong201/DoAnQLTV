@@ -2,6 +2,8 @@ package com.example.DoAnQLTV.controller;
 
 import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,42 +19,41 @@ public class LoginController {
 
 
     @GetMapping(value = {"/", "/login"})
-    public String login(){
+    public String login(Model model){
         System.out.println("Có người đang đăng nhập!");
+        model.addAttribute("title", "Đăng nhập");
+        model.addAttribute("source", "fragment-login");
+        model.addAttribute("fragment", "login");
         return "login";
     }
 
     @PostMapping("/login")
     public String login(
-            @RequestParam(name="username", required = true, defaultValue = "") String userName,
-            @RequestParam(name="password", required = true, defaultValue = "") String passWord,
+            @RequestParam(name="username", required = true, defaultValue = "") String username,
+            @RequestParam(name="password", required = true, defaultValue = "") String password,
             Model model){
-        System.out.println("username = " + userName + "\npassword = " + passWord);
+        System.out.println("username = " + username + "\npassword = " + password);
 
         List<TaiKhoanEntity> taiKhoanEntityList = taiKhoanRepo.findAll();
         for(TaiKhoanEntity i : taiKhoanEntityList){
-            if(i.getTentaikhoan().equals(userName) && i.getMatkhau().equals(passWord)){
-                System.out.println("Thành công!");
-                
-                model.addAttribute("source", "thong-ke");
-                model.addAttribute("fragment", "thong_ke");
-                model.addAttribute("title", "Thống kê");
+            if(i.getTentaikhoan().equals(username) && i.getMatkhau().equals(password)){
+                // thành công
+                model.addAttribute("title", "Trang chủ");
+                model.addAttribute("source", "home");
+                model.addAttribute("fragment", "trang-chu");
                 return "index";
-
-                // tạm thời return lại trang login
-                // return "login";
             }
         }
-
-        System.out.println("Thất bại!");
-        // tạm thời return lại trang login
+        // thất bại
+        model.addAttribute("username", username);
+        model.addAttribute("password", password);
+        model.addAttribute("title", "Đăng nhập");
+        model.addAttribute("source", "fragment-login");
+        model.addAttribute("fragment", "login-fail");
         return "login";
+
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "test";
-    }
 
 
 }

@@ -2,6 +2,7 @@ package com.example.DoAnQLTV;
 
 import com.example.DoAnQLTV.entity.*;
 import com.example.DoAnQLTV.repository.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootApplication
@@ -118,12 +121,19 @@ public class DoAnQltvApplication implements CommandLineRunner {
         System.out.println("Tháng " + localDate.getMonthValue());
         System.out.println("Năm " + localDate.getYear());
 
+
+        System.out.println("\n\n\n");
+        
+        // List<PhieuMuonEntity> listBill = phieuMuonRepo.findAll();
+        // Collections.reverse(listBill);
+        // listBill.forEach(System.out :: println);
+        
+        // System.out.println("\n\n\n");
+
+
         
         
-
-        // Date temp = theThuVienRepo.findByHansudung();
-
-        // System.out.println(temp);
+        // System.out.println(myService.getTenTheLoai(theLoaiRepo ,"tltltg").toString());
     
     
 

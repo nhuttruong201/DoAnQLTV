@@ -1,0 +1,10 @@
+<div class="row" th:fragment="success">
+    <div class="col-sm-12">
+        <div class="alert alert-success alert-dismissible fade show my-4">
+            <a th:href="${linkBack}" type="button" class="close">&times;</a>
+            <strong th:text="${alert}"></strong>
+            <br><br>
+            <a th:href="${linkBack}"><i class="fas fa-hand-point-right"></i> Tiếp tục công việc</a>
+        </div>
+    </div>
+</div>

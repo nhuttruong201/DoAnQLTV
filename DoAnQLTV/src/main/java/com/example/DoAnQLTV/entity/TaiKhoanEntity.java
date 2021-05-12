@@ -6,10 +6,12 @@ import javax.persistence.*;
 @Table(name = "taikhoan")
 public class TaiKhoanEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String tentaikhoan;
     private String matkhau;
-    private String manhanvien;
+    private int manhanvien;
+    private String email;
     private String maquyenhan;
 
     public String getMaquyenhan() {
@@ -24,11 +26,32 @@ public class TaiKhoanEntity {
     @Override
     public String toString() {
         return "{" +
-            " tentaikhoan='" + getTentaikhoan() + "'" +
+            " id='" + getId() + "'" +
+            ", tentaikhoan='" + getTentaikhoan() + "'" +
             ", matkhau='" + getMatkhau() + "'" +
             ", manhanvien='" + getManhanvien() + "'" +
+            ", email='" + getEmail() + "'" +
             ", maquyenhan='" + getMaquyenhan() + "'" +
             "}";
+    }
+
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+   
+  
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
   
 
@@ -48,11 +71,11 @@ public class TaiKhoanEntity {
         this.matkhau = matkhau;
     }
 
-    public String getManhanvien() {
+    public int getManhanvien() {
         return manhanvien;
     }
 
-    public void setManhanvien(String manhanvien) {
+    public void setManhanvien(int manhanvien) {
         this.manhanvien = manhanvien;
     }
 }

@@ -1,11 +1,158 @@
-<div th:fragment="tra_sach" class="row">
-    <div class="col-sm-12">
-        <span style="color: #28a745;"><i class="fas fa-book"></i> Nhận trả sách</span>
-        <hr>
+<div class="container my-4" th:fragment="kiem-tra-the">
+    <div class="fadeInDown">
+        <strong style="color: #28a745;"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</strong>
     </div>
+    <hr>
+    <form th:action="@{/tra-sach}" method="post">
+        <div class="row jumbotron p-1 py-3">
+            <div class="col-sm-12">
+                <strong><i class="fas fa-address-card"></i> Thông tin đọc giả</strong>
+                <hr>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Mã thẻ thư viện</label>
+                    <select name="mathe" class="custom-select">
+                        <option value="">chọn mã thẻ thư viện</option>
+                        <option th:each="id : ${listIdCardBorrow}" th:value="${id}" th:text="${id}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" name="sdt" class="form-control" placeholder="nhập số điện thoại" />
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-info btn-block">
+                    <i class="fas fa-check-circle"></i> Check
+                </button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </form>
+
     <script>
         $(document).ready(function() {
-            $("#traSach").addClass("active");
+            $("#btnYeuCauTraSach").addClass("active");
         });
     </script>
+</div>
+
+<!-- Trả sách -->
+<div class="container my-4" th:fragment="tra-sach">
+    <strong style="color: #28a745;"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</strong>
+    <hr>
+    <form th:action="@{/thanh-toan-sach-tra}" method="post">
+        <div class="row jumbotron p-1 py-3">
+            <div class="col-sm-12">
+                <strong><i class="fas fa-address-card"></i> Thông tin đọc giả</strong>
+                <hr>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Mã thẻ thư viện</label>
+                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="">Họ tên đọc giả</label>
+                    <input type="text" name="hoten" th:value="${hoten}" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" name="sdt" th:value="${sdt}" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="">Ngày trả</label>
+                    <input type="date" name="ngaytra" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-2">
+                <strong><i class="fas fa-book"></i> Thông tin sách mượn - sách trả</strong>
+                <hr>
+            </div>
+            <div class="col-sm-8">
+                <span>Danh sách mượn</span>
+                <table class="table table-bordered table-hover table-info mt-2">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>ID Bill</th>
+                            <th>ID Sách</th>
+                            <th>Tên sách</th>
+                            <th>SL</th>
+                            <!-- <th class="text-center">Thao tác</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${listBookBorrow}">
+                            <td th:text="*{book.getMaphieumuon()}"></td>
+                            <td th:text="*{book.getMasach()}"></td>
+                            <td th:text="*{book.getTensach()}"></td>
+                            <td th:text="*{book.getSoluong()}"></td>
+                            <!-- <td class="text-center">
+                                <button type="button" th:onclick="|MoveBook(*{book.getMaphieumuon()})|" th:class="'btn btn-outline-primary btn-sm btnMoveId_' + *{book.getMaphieumuon()}"><i class="fas fa-arrow-alt-circle-right"></i></button>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4">
+                <span>Phiếu trả sách</span>
+                <select name="idBill" id="" class="custom-select mt-2">
+                    <option value="allBill">Tất cả phiếu</option>
+                    <option th:each="bill : ${listBill}" th:value="${bill.getMaphieumuon()}" th:text="${bill.getMaphieumuon()}"></option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Nhận sách</button>
+                <a href="/tra-sach" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function() {
+            $("#btnYeuCauTraSach").addClass("active");
+        });
+    </script>
+</div>
+
+<!-- không được để trống -->
+<div th:fragment="khong-co-du-lieu">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Không có dữ liệu!</strong>
+        <hr>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i> 
+            <span> Chọn mã thẻ hoặc nhập số điện thoại để check!</span>
+        </span>
+    </div>
+    <div th:replace="tra-sach :: kiem-tra-the"></div>
+</div>
+
+
+<!-- Không tồn tại thẻ -->
+<div th:fragment="the-khong-ton-tai">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Thẻ không tồn tại!</strong>
+        <hr>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i> 
+            <span th:text="${alert}"></span>
+        </span>
+        <hr>
+        <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
+
+    </div>
+    <div th:replace="tra-sach :: kiem-tra-the"></div>
 </div>

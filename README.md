@@ -40,3 +40,6 @@ vd: do là list nên dùng th:each để duyệt, tương tự dòng forEach Jav
     </li>
 </ul>
 
+
+- Set các thuộc tính input:
+<input type="text" th:value="${test}" th:placeholder="${test}">

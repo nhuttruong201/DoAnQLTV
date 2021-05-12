@@ -1,0 +1,125 @@
+<!-- fragment chính -->
+<div class="container my-4" th:fragment="quan-ly-phieu-muon">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-file-invoice-dollar"></i> Quản lý phiếu mượn</strong>
+            <div class="float-right">
+                <a href="/muon-sach" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Thêm mới
+                </a>
+            </div>
+            <br>
+            <hr>
+            <form action="/tim-phieu-muon" method="post">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <select name="maphieumuon" class="custom-select">
+                            <option value="">mã phiếu mượn</option>
+                            <option th:each="bill : ${listAllBill}" th:value="${bill.getMaphieumuon()}" th:text="${bill.getMaphieumuon()}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <select name="mathe" id="" class="custom-select">
+                            <option value="">mã đọc giả</option>
+                            <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="date" name="ngaymuon" id="">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block text-center" type="submit">
+                        <i class="fas fa-search"></i> Tìm
+                    </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form>
+
+            <div class="row jumbotron p-1">
+                <div class="col-sm-12 mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-group">
+                                <a href="/quan-ly-phieu-muon/tat-ca-phieu" type="button" class="btn btn-primary" id="btnShowAllBill">Tất cả phiếu</a>
+                                <a href="/quan-ly-phieu-muon/chua-thanh-toan" type="button" class="btn btn-primary" id="btnShowBillUnpaid">Chưa thanh toán</a>
+                                <a href="/quan-ly-phieu-muon/phieu-qua-han" type="button" class="btn btn-primary" id="btnShowBillExpired">Phiếu quá hạn</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div th:replace="${source} :: ${type}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $("#btnQuanLyPhieuMuon").addClass("active");
+            });
+        </script>
+    </div>
+</div>
+
+<!--todo: tất cả phiếu mượn -->
+<div class="col-sm-12" th:fragment="tat-ca-phieu">
+    <div th:replace="quan-ly-phieu-muon :: list-bill"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowAllBill").addClass("active");
+        });
+    </script>
+</div>
+<!--todo: chưa thanh toán -->
+<div class="col-sm-12" th:fragment="chua-thanh-toan">
+    <div th:replace="quan-ly-phieu-muon :: list-bill"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowBillUnpaid").addClass("active");
+        });
+    </script>
+</div>
+<!--todo: quá hạn -->
+<div class="col-sm-12" th:fragment="phieu-qua-han">
+    <div th:replace="quan-ly-phieu-muon :: list-bill"></div>
+    <script>
+        $(document).ready(function() {
+            $("#hantra").addClass("text-danger font-weight-bold");
+            $("#btnShowBillExpired").addClass("active");
+        });
+    </script>
+</div>
+
+
+<!-- todo: list bill -->
+<div th:fragment="list-bill">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID Bill</th>
+                <th>ID đọc giả</th>
+                <th>Ngày mượn</th>
+                <th>Hạn trả</th>
+                <th>Ngày trả</th>
+                <th>Trạng thái</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="bill : ${listBill}">
+                <td th:text="*{bill.getMaphieumuon()}"></td>
+                <td th:text="*{bill.getMathe()}"></td>
+                <td th:text="*{bill.getNgaymuon()}"></td>
+                <td th:text="*{bill.getHantra()}" id="hantra"></td>
+                <td th:text="*{bill.getNgaytra()}"></td>
+                <td th:text="*{bill.getTrangthai()}"></td>
+                <td class="text-center">
+                    <a href="" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

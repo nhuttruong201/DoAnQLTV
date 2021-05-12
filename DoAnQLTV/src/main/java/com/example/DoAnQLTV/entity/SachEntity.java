@@ -1,19 +1,33 @@
 package com.example.DoAnQLTV.entity;
 import javax.persistence.*;
 
+import com.example.DoAnQLTV.repository.NhaXuatBanRepo;
+import com.example.DoAnQLTV.repository.TheLoaiRepo;
+
 @Entity
 @Table(name = "sach")
 public class SachEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private String masach;
+    private int masach;
     private String tensach;
     private String tacgia;
     private int namxuatban;
     private String manhaxuatban;
     private String matheloai;
     private int soluong;
+
+    
+    public String getTenTheLoai(TheLoaiRepo theLoaiRepo, String matheloai){
+        TheLoaiEntity theloai = theLoaiRepo.findByMatheloai(matheloai);
+        return theloai.getTentheloai();
+    }
+
+    public String getTenNhaXuatBan(NhaXuatBanRepo nhaXuatBanRepo, String manhaxuatban){
+        NhaXuatBanEntity nxb = nhaXuatBanRepo.findByManhaxuatban(manhaxuatban);
+        return nxb.getTennhaxuatban();
+    }
 
     @Override
     public String toString() {
@@ -28,11 +42,11 @@ public class SachEntity {
                 '}';
     }
 
-    public String getMasach() {
+    public int getMasach() {
         return masach;
     }
 
-    public void setMasach(String masach) {
+    public void setMasach(int masach) {
         this.masach = masach;
     }
 

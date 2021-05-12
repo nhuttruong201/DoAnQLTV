@@ -1,0 +1,70 @@
+<div class="container my-4" th:fragment="tim-the-thu-vien">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-search"></i> Tìm thẻ thư viện</strong>
+            <br>
+            <hr>
+            <form action="/tim-the-thu-vien" method="post">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="number" name="mathe" th:value="${mathe}" id="" placeholder="mã thẻ">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="hoten" id="" th:value="${hoten}" placeholder="tên đọc giả">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="sdt" id="" th:value="${sdt}" placeholder="số điện thoại">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block text-center" type="submit">
+                        <i class="fas fa-search"></i> Tìm
+                    </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form>
+
+            <div class="row jumbotron p-2">
+                <span style="color: #28a745;"><i class="fas fa-search"></i><span th:text="'  ' + ${size} + ' kết quả (thẻ thư viện)'"></span></span>
+
+                <div class="col-sm-12 mt-2">
+                    <div class="row pt-3">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover table-info">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Họ tên</th>
+                                        <th>GT</th>
+                                        <th>SDT</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Hạn sử dụng</th>
+                                        <th>Trạng thái</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="card : ${listCard}">
+                                        <td th:text="*{card.getMathe()}"></td>
+                                        <td th:text="*{card.getHoten()}"></td>
+                                        <td th:text="*{card.getGioitinh()}"></td>
+                                        <td th:text="*{card.getSodienthoai()}"></td>
+                                        <td th:text="*{card.getDiachi()}"></td>
+                                        <td th:text="*{card.getHansudung()}"></td>
+                                        <td th:text="*{card.getMatrangthai()}"></td>
+                                        <th class="text-center">
+                                            <a th:href="'/edit-card/' + ${card.getMathe()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

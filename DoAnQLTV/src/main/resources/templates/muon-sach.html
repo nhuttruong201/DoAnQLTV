@@ -1,33 +1,211 @@
-<div th:fragment="muon_sach" class="row">
-    <div class="col-sm-12">
-        <span style="color: #28a745;"><i class="fas fa-book"></i> Cho mượn sách</span>
-        <hr>
-        <div class="col-sm-6">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Tên sách</th>
-                        <th>Tên tác giả</th>
-                        <th>Số lượng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="book : ${listBook}">
-                        <td th:text="*{book.getTensach()}"></td>
-                        <td th:text="*{book.getTacgia()}"></td>
-                        <td th:text="*{book.getSoluong()}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-6">
-
-        </div>
-
+<div class="container my-4" th:fragment="kiem-tra-the">
+    <div class="fadeInDown">
+        <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
     </div>
+
+    <hr />
+    <form th:action="@{/muon-sach}" method="post">
+        <div class="row jumbotron p-1 py-3">
+            <div class="col-sm-12">
+                <strong><i class="fas fa-address-card"></i> Thông tin đọc giả</strong>
+                <hr />
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Mã thẻ thư viện</label>
+                    <select name="mathe" class="custom-select">
+                        <option value="0">chọn mã thẻ thư viện</option>
+                        <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}">
+                        </option>
+                    </select>
+                    <!-- <input type="number" name="mathe" class="form-control" placeholder="nhập mã thẻ thư viện" /> -->
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" name="sdt" class="form-control" placeholder="nhập số điện thoại" />
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-info btn-block">
+                    <i class="fas fa-check-circle"></i> Check
+                </button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </form>
+
     <script>
         $(document).ready(function() {
-            $("#muonSach").addClass("active");
+            $("#btnYeuCauMuonSach").addClass("active");
         });
     </script>
+</div>
+
+<!-- Thẻ không tồn tại -->
+<div th:fragment="the-khong-ton-tai">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Thẻ không tồn tại!</strong>
+        <hr />
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+            <span th:text="${dataSearch}"></span>
+        </span>
+        <hr />
+        <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
+    </div>
+    <div th:replace="muon-sach :: kiem-tra-the"></div>
+</div>
+<!-- Đã đạt số lần mượn tối đa -->
+<div th:fragment="het-luot">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Số lần mượn sách đã đạt tối đa 2 lần!</strong>
+        <hr />
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Một thẻ thư viện chỉ được mượn sách tối đa 2 lần cùng lúc!</span>
+        </span>
+        <hr />
+        <span>
+            <span th:text="'Mã thẻ:' + ${mathe}"></span>
+        <span th:text="' - Họ tên: ' + ${hoten}"></span>
+        <span th:text="' - Giới tính: '+${gioitinh}"></span>
+        <span th:text="' - Sdt: '+${sdt}"></span>
+        </span>
+    </div>
+    <div th:replace="muon-sach :: kiem-tra-the"></div>
+</div>
+<!-- Thẻ bị khóa không thể mượn -->
+<div th:fragment="the-bi-khoa">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Thẻ đã bị vô hiệu hóa!</strong>
+        <hr />
+        <span>
+            <span th:text="'Mã thẻ:' + ${mathe}"></span>
+        <span th:text="' - Họ tên: ' + ${hoten}"></span>
+        <span th:text="' - Giới tính: '+${gioitinh}"></span>
+        <span th:text="' - Sdt: '+${sdt}"></span>
+        </span>
+    </div>
+    <div th:replace="muon-sach :: kiem-tra-the"></div>
+</div>
+<!-- Không được để trống -->
+<div th:fragment="khong-co-du-lieu">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Không có dữ liệu!</strong>
+        <hr />
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+            <span> Chọn mã thẻ hoặc nhập số điện thoại để check!</span>
+        </span>
+    </div>
+    <div th:replace="muon-sach :: kiem-tra-the"></div>
+</div>
+<!-- Mượn sách -->
+<div class="container my-4" th:fragment="muon-sach">
+    <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
+    <hr />
+    <form th:action="@{/lap-phieu-muon}" method="post">
+        <div class="row jumbotron p-1 py-3">
+            <div class="col-sm-12">
+                <strong><i class="fas fa-address-card"></i> Thông tin đọc giả</strong>
+                <hr />
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Mã thẻ thư viện</label>
+                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" readonly placeholder="" />
+                </div>
+                <div class="form-group">
+                    <label for="">Họ tên đọc giả</label>
+                    <input type="text" name="mathe" th:value="${hoten}" class="form-control" readonly placeholder="" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" name="sdt" th:value="${sdt}" class="form-control" readonly placeholder="" />
+                </div>
+                <div class="form-group">
+                    <label for="">Hạn trả</label>
+                    <input type="date" name="hantra" class="form-control" placeholder="" required />
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-2">
+                <strong><i class="fas fa-book"></i> Thông tin sách mượn</strong>
+                <hr />
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="">Mã sách</label>
+                    <select name="" class="custom-select" id="selectBookId">
+                        <option selected value="">Chọn mã sách</option>
+                        <option th:each="book : ${listBook}" th:value="${book.getMasach()}"
+                            th:text="${book.getMasach()}"></option>
+                    </select>
+                    <!-- <input type="text" class="form-control" placeholder="nhập mã sách" required/> -->
+                </div>
+                <div class="form-group">
+                    <label for="">Tên sách</label>
+                    <input type="text" class="form-control" placeholder="..." id="bookName" readonly required />
+                </div>
+                <div class="form-group">
+                    <label for="">Số lượng</label>
+                    <input type="number" id="sl" class="form-control" placeholder="" value="1" required />
+                </div>
+                <div>
+                    <button type="button" id="btnAddBook" class="btn btn-info btn-block my-4">
+                        <i class="fas fa-plus-circle"></i> Thêm vào danh sách mượn
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <span>Danh sách mượn</span>
+                <input type="hidden" name="numBookType" value="" id="numBookType" />
+                <div id="arrBookId">
+                    <input type="hidden" class="bookId" name="bookId[0]" value="" id="bookId_1" />
+                    <input type="hidden" class="bookId" name="bookId[1]" value="" id="bookId_2" />
+                    <input type="hidden" class="bookId" name="bookId[2]" value="" id="bookId_3" />
+                    <input type="hidden" class="bookId" name="bookId[3]" value="" id="bookId_4" />
+                    <input type="hidden" class="bookId" name="bookId[4]" value="" id="bookId_5" />
+                </div>
+                <div id="arrNumBook">
+                    <input type="hidden" class="numBook" name="numBook[0]" value="" id="numBook_1" />
+                    <input type="hidden" class="numBook" name="numBook[1]" value="" id="numBook_2" />
+                    <input type="hidden" class="numBook" name="numBook[2]" value="" id="numBook_3" />
+                    <input type="hidden" class="numBook" name="numBook[3]" value="" id="numBook_4" />
+                    <input type="hidden" class="numBook" name="numBook[4]" value="" id="numBook_5" />
+                </div>
+                <table class="table table-bordered table-hover table-info mt-2">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên sách</th>
+                            <th>SL</th>
+                            <th class="text-center">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listBookBorrow"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-hand-point-right"></i> Lập phiếu mượn
+                </button>
+                <a href="/muon-sach" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+            </div>
+        </div>
+    </form>
+
+    <script src="handle.js"></script>
 </div>

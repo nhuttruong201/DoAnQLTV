@@ -2,7 +2,10 @@ package com.example.DoAnQLTV.entity;
 
 
 import javax.persistence.*;
-import java.util.Date;
+
+import com.example.DoAnQLTV.repository.TheThuVienRepo;
+
+import java.sql.Date;
 
 @Entity
 @Table(name = "phieumuon")
@@ -11,23 +14,41 @@ public class PhieuMuonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int maphieumuon;
-    private String mathe;
-    private String manhanvien;
+    private int mathe;
+    private int manhanvien;
     private Date ngaymuon;
+    private Date hantra;
     private Date ngaytra;
     private int trangthai;
 
+    public String getHoTenDocGia(TheThuVienRepo theThuVienRepo, int id){
+        TheThuVienEntity docgia = theThuVienRepo.findByMathe(id);
+        return docgia.getHoten();
+    }
+
+
     @Override
     public String toString() {
-        return "PhieuMuonEntity{" +
-                "maphieumuon=" + maphieumuon +
-                ", mathe='" + mathe + '\'' +
-                ", manhanvien='" + manhanvien + '\'' +
-                ", ngaymuon=" + ngaymuon +
-                ", ngaytra=" + ngaytra +
-                ", trangthai=" + trangthai +
-                '}';
+        return "{" +
+            " maphieumuon='" + getMaphieumuon() + "'" +
+            ", mathe='" + getMathe() + "'" +
+            ", manhanvien='" + getManhanvien() + "'" +
+            ", ngaymuon='" + getNgaymuon() + "'" +
+            ", hantra='" + getHantra() + "'" +
+            ", ngaytra='" + getNgaytra() + "'" +
+            ", trangthai='" + getTrangthai() + "'" +
+            "}";
     }
+    
+
+    public Date getHantra() {
+        return this.hantra;
+    }
+
+    public void setHantra(Date hantra) {
+        this.hantra = hantra;
+    }
+
 
     public int getMaphieumuon() {
         return maphieumuon;
@@ -37,19 +58,19 @@ public class PhieuMuonEntity {
         this.maphieumuon = maphieumuon;
     }
 
-    public String getMathe() {
+    public int getMathe() {
         return mathe;
     }
 
-    public void setMathe(String mathe) {
+    public void setMathe(int mathe) {
         this.mathe = mathe;
     }
 
-    public String getManhanvien() {
+    public int getManhanvien() {
         return manhanvien;
     }
 
-    public void setManhanvien(String manhanvien) {
+    public void setManhanvien(int manhanvien) {
         this.manhanvien = manhanvien;
     }
 

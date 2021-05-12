@@ -1,46 +1,64 @@
-<div th:fragment="lam_the_thu_vien" class="row">
-    <div class="col-sm-7">
-        <span style="color: #28a745;"><i class="fas fa-address-card"></i> Làm thẻ thư viện</span>
-        <hr>
-        <form action="/lam-the-thu-vien" method="POST" class="was-validated my-4" th:object="${entity}">
-            <div class="form-group">
-                <label for="fullname">Họ và tên:</label>
-                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="fullname" required>
+<div class="container my-4" th:fragment="lam-the-thu-vien">
+    <strong style="color: #28a745;"><i class="fas fa-book"></i> Làm thẻ thư viện</strong>
+    <hr>
+    <form th:action="@{/lam-the-thu-vien}" th:object="${card}" method="post" class="was-validated">
+        <div class="row jumbotron py-4">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Họ tên:</label>
+                    <input type="text" class="form-control" placeholder="nhập họ tên" th:field="*{hoten}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="">Giới tính:</label>
+                    <select name="" class="custom-select" th:field="*{gioitinh}">
+                       <option selected value="Nam">Nam</option>
+                       <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Số điện thoại:</label>
+                    <input type="text" class="form-control" placeholder="nhập số điện thoại" th:field="*{sodienthoai}" required/>
+                </div>
+
             </div>
-            <div class="form-group">
-                <label for="">Giới tính:</label>
-                <select name="gioitinh" class="custom-select">
-                <option selected value="male">Nam</option>
-                <option value="female">Nữ</option>
-                <option value="third">Giới tính thứ 3</option>
-              </select>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Địa chỉ:</label>
+                    <input type="text" class="form-control" placeholder="nhập quận/huyện" th:field="*{diachi}" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Hạn sử dụng:</label>
+                    <input type="date" class="form-control" required th:field="*{hansudung}">
+                </div>
+                <div class="form-group">
+                    <label for="">Trạng thái:</label>
+                    <select name="matrangthai" class="custom-select" th:field="*{matrangthai}">
+                        <option selected value="open">Mở</option>
+                        <option value="lock">Bị khóa</option>
+                     </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="">Số điện thoại:</label>
-                <input type="number" class="form-control" placeholder="Nhập số điện thoại" name="sdt" required>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Tạo thẻ thư viện</button>
+                <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
             </div>
-            <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Tạo thẻ thư viện</button>
-        </form>
-    </div>
-    <!-- about thẻ thư viện -->
-    <div class="col-sm-4 jumbotron text-center mx-4" style="color: #28a745;">
-        <p>about
-            <br>
-            <hr> thằng Vinh Dâu sẽ đảm nhận phần chém gió này
-        </p>
-    </div>
-    <script>
-        $(document).ready(function() {
-            $("#createCard").addClass("active");
-        });
-    </script>
+        </div>
+
+    </form>
 </div>
 
-<!-- noti success -->
-<div th:fragment="tao_the_thanh_cong" class="row">
-    <div class="col-sm-7">
-        <span style="color: #28a745;"><i class="fas fa-check"></i> Tạo thẻ thành công!&ensp;</span>
-        <a href="/lam-the-thu-vien"><i class="far fa-hand-point-right"></i> Tiếp tục công việc</a>
-    </div>
 
+
+
+
+<!-- Thêm thành công -->
+<div th:fragment="lam-the-thanh-cong">
+    <div class="alert alert-success alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Tạo thẻ thành công!</strong>
+    </div>
+    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien"></div>
 </div>

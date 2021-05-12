@@ -3,17 +3,37 @@ package com.example.DoAnQLTV.entity;
 
 import javax.persistence.*;
 
+import com.example.DoAnQLTV.repository.NhanVienRepo;
+
 @Entity
 @Table(name = "nhanvien")
 public class NhanVienEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String manhanvien;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int manhanvien;
     private String hoten;
     private int namsinh;
     private String gioitinh;
     private String sodienthoai;
     private String diachi;
+    private String machucvu;
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " manhanvien='" + getManhanvien() + "'" +
+            ", hoten='" + getHoten() + "'" +
+            ", namsinh='" + getNamsinh() + "'" +
+            ", gioitinh='" + getGioitinh() + "'" +
+            ", sodienthoai='" + getSodienthoai() + "'" +
+            ", diachi='" + getDiachi() + "'" +
+            ", machucvu='" + getMachucvu() + "'" +
+            "}";
+    }
+    
+
+
 
     public String getDiachi() {
         return diachi;
@@ -31,13 +51,12 @@ public class NhanVienEntity {
         this.machucvu = machucvu;
     }
 
-    private String machucvu;
 
-    public String getManhanvien() {
+    public int getManhanvien() {
         return manhanvien;
     }
 
-    public void setManhanvien(String manhanvien) {
+    public void setManhanvien(int manhanvien) {
         this.manhanvien = manhanvien;
     }
 
@@ -73,16 +92,4 @@ public class NhanVienEntity {
         this.sodienthoai = sodienthoai;
     }
 
-    @Override
-    public String toString() {
-        return "NhanVienEntity{" +
-                "manhanvien='" + manhanvien + '\'' +
-                ", hoten='" + hoten + '\'' +
-                ", namsinh=" + namsinh +
-                ", gioitinh='" + gioitinh + '\'' +
-                ", sodienthoai='" + sodienthoai + '\'' +
-                ", diachi='" + diachi + '\'' +
-                ", machucvu='" + machucvu + '\'' +
-                '}';
-    }
 }

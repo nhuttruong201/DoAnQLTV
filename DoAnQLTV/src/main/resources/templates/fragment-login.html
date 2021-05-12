@@ -1,0 +1,102 @@
+<!--todo: login submit -->
+<div class="row" th:fragment="login">
+    <div class="col-sm-7 fadeIn mt-5" id="box-intro">
+        <h1 class="text-primary">Thư viện TTV</h1>
+        <h6>Giúp công tác quản lý thư viện trở nên dễ dàng và hiệu quả hơn.</h6>
+        <h6>Thành viên: Võ Nhựt Trường, Đỗ Quang Trung, Nguyễn Hoàng Vinh.</h6>
+    </div>
+    <div class="col-sm-5">
+        <div class="jumbotron bg-light border shadow fadeInDown" id="box-login">
+            <form action="/login" method="POST" class="was-validated" id="frmLogin">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Tài khoản" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                </div>
+                <div class="text-center">
+                    <a href="/forget-password">Quên mật khẩu?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- todo: login fail -->
+<div th:fragment="login-fail">
+    <div th:replace="fragment-login :: login"></div>
+    <input type="hidden" th:value="${username}" id="username-fail">
+    <input type="hidden" th:value="${password}" id="password-fail">
+    <script>
+        $(Document).ready(function() {
+            $("#box-intro").removeClass("fadeIn");
+            $("#box-login").removeClass("fadeInDown");
+            $("#box-login").addClass("fadeIn");
+            $("#username").val($("#username-fail").val());
+            $("#password").val($("#password-fail").val());
+
+            var alert = '<br><div class="text-center" id="alert-login"><div><span class="text-danger"><i class="fas fa-exclamation-triangle"></i> Tài khoản hoặc mật khẩu không chính xác!</span>'
+            $("#frmLogin").append(alert);
+            $("#username").focusin(function() {
+                $("#alert-login").remove();
+            });
+            $("#password").focusin(function() {
+                $("#alert-login").remove();
+            });
+        });
+    </script>
+</div>
+
+<!-- todo: forget password -->
+<div class="row" th:fragment="forget-password">
+    <div class="col-sm-7 fadeIn mt-5" id="box-intro">
+        <h1 class="text-primary">Thư viện TTV</h1>
+        <h6>Giúp công tác quản lý thư viện trở nên dễ dàng và hiệu quả hơn.</h6>
+        <h6>Thành viên: Võ Nhựt Trường, Đỗ Quang Trung, Nguyễn Hoàng Vinh.</h6>
+    </div>
+    <div class="col-sm-5">
+        <div class="jumbotron bg-light border shadow fadeInDown" id="box-forget-pass">
+            <form action="/forget-password" method="POST" class="was-validated" id="frm-forget-pass">
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" id="btnSubmitForgetPass">Gửi lại mật khẩu</button>
+                </div>
+                <div class="text-center">
+                    <a href="/login"><i class="fas fa-hand-point-right"></i> Quay lại đăng nhập</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script>
+        $(Document).ready(function() {
+
+            $("#btnSubmitForgetPass").click(function() {
+                if ($("#email").val() != "") {
+                    $(this).html('<span class="spinner-border spinner-border-sm"></span> Đang gửi...');
+                }
+            });
+        });
+    </script>
+</div>
+
+<!-- todo: send pass thành công -->
+<div th:fragment="get-pass-success">
+    <div th:replace="fragment-login :: forget-password"></div>
+    <input type="hidden" th:value="${email}" id="email-submit">
+    <script>
+        $(Document).ready(function() {
+            $("#box-intro").removeClass("fadeIn");
+            $("#box-forget-pass").remove("fadeInDown");
+            $("#btnSubmitForgetPass").html("Gửi lại mật khẩu");
+            $("#email").val($("#email-submit").val());
+            var alert = '<hr><div class="text-center"><span class="text-success"> Đã gửi mật khẩu về email của bạn!</span></div>';
+            $("#frm-forget-pass").append(alert);
+        });
+    </script>
+</div>

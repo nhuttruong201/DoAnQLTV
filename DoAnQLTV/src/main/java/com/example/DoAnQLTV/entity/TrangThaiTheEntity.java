@@ -2,6 +2,8 @@ package com.example.DoAnQLTV.entity;
 
 import javax.persistence.*;
 
+import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
+
 @Entity
 @Table(name = "trangthaithe")
 public class TrangThaiTheEntity {

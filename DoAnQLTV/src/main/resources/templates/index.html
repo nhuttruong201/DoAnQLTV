@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/logo.png" sizes="30x30">
     <title th:text="${title}"></title>
     <base href="/" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -13,84 +14,93 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="animation.css">
-    <link rel="stylesheet" href="layout.css">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-        <a class="navbar-brand" href="#">Đồ án Java</a>
+        <a class="navbar-brand" href="#">Admin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/trang-chu">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/lam-the-thu-vien">Làm thẻ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/them-sach">Thêm sách</a>
                 </li>
-                <!-- Dropdown -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/muon-sach">Mượn sách</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tra-sach">Trả sách</a>
+                </li>
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Dropdown link
+                         Quản lý
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Link 1</a>
-                        <a class="dropdown-item" href="#">Link 2</a>
-                        <a class="dropdown-item" href="#">Link 3</a>
+                        <a class="dropdown-item" href="/quan-ly-phieu-muon/tat-ca-phieu">Quản lý phiếu mượn</a>
+                        <a class="dropdown-item" href="/quan-ly-the-thu-vien/tat-ca-the">Quản lý thẻ thư viện</a>
+                        <a class="dropdown-item" href="/quan-ly-sach/tat-ca-sach">Quản lý sách</a>
+                        <a class="dropdown-item" href="/trang-chu">Quản lý nhân viên</a>
+                        <a class="dropdown-item" href="/trang-chu">Quản lý tài khoản</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <form action="/tim-kiem" method="POST">
-                        <input type="search" id="inputSearch" name="bookName" placeholder="tìm sách theo tên" required>
-                        <button class="btn btn-primary" id="submitSearch" type="submit">Tìm</button>
-                    </form>
-
-                </li>
-
             </ul>
+
         </div>
     </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 bg-light p-4">
+            <div class="col-sm-3 bg-light py-4 shadow" id="contentLeft">
                 <div class="container">
-                    <span style="color: #007bff;"><i class="fas fa-angle-double-down"></i> Thao tác nhanh</span>
-                    <hr>
+                    <!-- <strong style="color: #007bff;"><i class="fas fa-angle-double-down"></i> Thao tác</strong>
+                    <hr> -->
                     <ul class="nav nav-pills flex-column my-3" id="myTest">
                         <li class="nav-item">
-                            <a class="nav-link i" id="thongKe" href="/thong-ke/tat-ca-sach"><i class="fas fa-chart-bar"></i> Thống kê</a>
+                            <a class="nav-link i" id="btnHome" href="/trang-chu"><i class="fas fa-home"></i> Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link i" id="createCard" href="/lam-the-thu-vien"><i class="fas fa-address-card"></i> Làm thẻ thư viện</a>
+                            <a class="nav-link i" id="btnYeuCauMuonSach" href="/muon-sach"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link i" id="muonSach" href="/muon-sach"><i class="fas fa-book"></i> Cho mượn sách</a>
+                            <a class="nav-link i" id="btnYeuCauTraSach" href="/tra-sach"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link i" id="traSach" href="/tra-sach"><i class="fas fa-book"></i> Nhận trả sách</a>
+                            <a class="nav-link i" id="btnQuanLyPhieuMuon" href="/quan-ly-phieu-muon/tat-ca-phieu"><i class="fas fa-file-invoice-dollar"></i> Quản lý phiếu mượn</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link i">Chưa nghĩ ra</a>
+                            <a class="nav-link i" id="btnQuanLyTheTV" href="/quan-ly-the-thu-vien/tat-ca-the"><i class="fas fa-address-card"></i> Quản lý thẻ thư viện</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link i" id="btnQuanLySach" href="/quan-ly-sach/tat-ca-sach"><i class="fas fa-book"></i> Quản lý sách</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link i" id="btnQuanLyNhanVien" href="/trang-chu"><i class="fas fa-user-tie"></i> Quản lý nhân viên</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link i" id="btnQuanLyTaiKhoan" href="/trang-chu"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+                        </li>
                     </ul>
                     <hr class="d-sm-none">
                 </div>
             </div>
             <!-- include -->
-            <div class="col-sm-9 my-4">
+            <div class="col-sm-9">
                 <div th:replace="${source} :: ${fragment}"></div>
             </div>
         </div>
     </div>
 
-    <div class="jumbotron text-center " style="margin-bottom:0 ">
+    <div class="jumbotron text-center" style="margin-bottom:0 ">
         <div class="row ">
             <div class="col-sm-4 "></div>
             <div class="col-sm-4 ">
@@ -104,20 +114,26 @@
         </div>
     </div>
 
-    <script>
-        var header = document.getElementById("myTest ");
-        var btns = header.getElementsByClassName("i ");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click ", function() {
-                var current = document.getElementsByClassName("active ");
-                if (current.length > 0) {
-                    current[0].className = current[0].className.replace(" active ", " ");
-                }
-                this.className += " active ";
-            });
-        }
-    </script>
 
 </body>
+<script>
+    $(Document).ready(function() {
+        // khởi động
+        if ($(window).width() < 576) {
+            $("#contentLeft").hide();
+        } else {
+            $("#contentLeft").show();
+        }
+        // thay đổi
+        $(window).resize(function() {
+            if ($(window).width() < 576) {
+                $("#contentLeft").hide();
+            } else {
+                $("#contentLeft").show();
+            }
+        });
+
+    });
+</script>
 
 </html>
