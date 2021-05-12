@@ -45,6 +45,7 @@ public class QuanLySachController{
         List<BookBorrow> listBookBorrows = new ArrayList<BookBorrow>();
 
         if(type.equals("tat-ca-sach")){
+            //todo: tất cả sách
             listBook = sachRepo.findAll();
             for(int i=0; i<listBook.size(); i++){
                 String tentheloai = listBook.get(i).getTenTheLoai(theLoaiRepo, listBook.get(i).getMatheloai());

@@ -8,14 +8,9 @@ import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
-import com.example.DoAnQLTV.repository.NhaXuatBanRepo;
-import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
-import com.example.DoAnQLTV.repository.TaiKhoanRepo;
-import com.example.DoAnQLTV.repository.TheLoaiRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
-import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
 import com.example.DoAnQLTV.service.BookBorrow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,10 +41,7 @@ public class TraSachController {
                 arrIdCardOnly.add(listBill.get(i).getMathe());
             }
         }
-
-        arrIdCardOnly.forEach(System.out :: println);
         model.addAttribute("listIdCardBorrow", arrIdCardOnly);
-
         return "index";
     }
 

@@ -117,7 +117,10 @@
                 <td th:text="*{bill.getNgaytra()}"></td>
                 <td th:text="*{bill.getTrangthai()}"></td>
                 <td class="text-center">
-                    <a href="" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></a>
+                    <form action="/tra-sach" method="post">
+                        <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">
+                        <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></button>
+                    </form>
                 </td>
             </tr>
         </tbody>
