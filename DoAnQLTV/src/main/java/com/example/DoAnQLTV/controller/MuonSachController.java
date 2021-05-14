@@ -104,7 +104,9 @@ public class MuonSachController {
                         model.addAttribute("hoten", i.getHoten());
                         model.addAttribute("sdt", i.getSodienthoai());
                         model.addAttribute("fragment", "muon-sach");
-                        
+                         // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
+                        LocalDate toDay = LocalDate.now();
+                        model.addAttribute("toDay", toDay);
                         return "index";
                     }
                 }
@@ -125,7 +127,9 @@ public class MuonSachController {
                             model.addAttribute("hoten", i.getHoten());
                             model.addAttribute("sdt", i.getSodienthoai());
                             model.addAttribute("fragment", "muon-sach");
-                            
+                            // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
+                            LocalDate toDay = LocalDate.now();
+                            model.addAttribute("toDay", toDay);
                             return "index";
                         }
                     }

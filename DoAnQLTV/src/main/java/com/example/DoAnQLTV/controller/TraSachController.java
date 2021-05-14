@@ -1,6 +1,7 @@
 package com.example.DoAnQLTV.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
@@ -110,6 +111,9 @@ public class TraSachController {
                 }
                 model.addAttribute("listBill", listBill);
                 model.addAttribute("listBookBorrow", listBookBorrows);
+                 // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
+                LocalDate toDay = LocalDate.now();
+                model.addAttribute("toDay", toDay);
                 return "index";
             }
         }else{
@@ -138,6 +142,9 @@ public class TraSachController {
             }
             model.addAttribute("listBill", listBill);
             model.addAttribute("listBookBorrow", listBookBorrows);
+             // phục vụ set value ngày trả phải = ngaỳ hiện tại
+            LocalDate toDay = LocalDate.now();
+            model.addAttribute("toDay", toDay);
             return "index";
         }
     }
