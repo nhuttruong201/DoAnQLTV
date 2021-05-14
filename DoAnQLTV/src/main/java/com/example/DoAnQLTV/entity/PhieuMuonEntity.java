@@ -21,6 +21,16 @@ public class PhieuMuonEntity {
     private Date ngaytra;
     private int trangthai;
 
+
+    public String getTenTrangThai(){
+        if(trangthai == 0){
+            return "Đã thanh toán";
+        }else if(trangthai == 1){
+            return "Chưa thanh toán";
+        }
+        return "Chưa xác định";
+    }
+
     public String getHoTenDocGia(TheThuVienRepo theThuVienRepo, int id){
         TheThuVienEntity docgia = theThuVienRepo.findByMathe(id);
         return docgia.getHoten();

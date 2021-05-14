@@ -87,7 +87,7 @@
     <div th:replace="quan-ly-phieu-muon :: list-bill"></div>
     <script>
         $(document).ready(function() {
-            $("#hantra").addClass("text-danger font-weight-bold");
+            $(".hantra").addClass("text-danger font-weight-bold");
             $("#btnShowBillExpired").addClass("active");
         });
     </script>
@@ -100,7 +100,7 @@
         <thead class="bg-light">
             <tr>
                 <th>ID Bill</th>
-                <th>ID đọc giả</th>
+                <th>ID thẻ</th>
                 <th>Ngày mượn</th>
                 <th>Hạn trả</th>
                 <th>Ngày trả</th>
@@ -113,9 +113,9 @@
                 <td th:text="*{bill.getMaphieumuon()}"></td>
                 <td th:text="*{bill.getMathe()}"></td>
                 <td th:text="*{bill.getNgaymuon()}"></td>
-                <td th:text="*{bill.getHantra()}" id="hantra"></td>
+                <td th:text="*{bill.getHantra()}" class="hantra"></td>
                 <td th:text="*{bill.getNgaytra()}"></td>
-                <td th:text="*{bill.getTrangthai()}"></td>
+                <td th:text="*{bill.getTenTrangThai()}"></td>
                 <td class="text-center">
                     <form action="/tra-sach" method="post">
                         <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">

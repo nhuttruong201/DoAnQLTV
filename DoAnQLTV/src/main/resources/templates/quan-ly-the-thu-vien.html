@@ -88,9 +88,9 @@
     <table class="table table-bordered table-hover table-info">
         <thead class="bg-light">
             <tr>
-                <th>Mã thẻ</th>
+                <th>ID thẻ</th>
                 <th>Họ tên</th>
-                <th>Mã Bill</th>
+                <th>ID bill</th>
                 <th>Ngày mượn</th>
                 <th>Hạn trả</th>
             </tr>
@@ -135,7 +135,7 @@
                 <td th:text="*{card.getSodienthoai()}"></td>
                 <td th:text="*{card.getDiachi()}"></td>
                 <td th:text="*{card.getHansudung()}"></td>
-                <td th:text="*{card.getMatrangthai()}"></td>
+                <td th:text="*{card.getTenTrangThai()}"></td>
                 <th class="text-center">
                     <a th:href="'/edit-card/' + ${card.getMathe()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
                 </th>

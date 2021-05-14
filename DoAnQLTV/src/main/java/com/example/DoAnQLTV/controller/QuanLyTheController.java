@@ -50,6 +50,7 @@ public class QuanLyTheController {
                 listCardBorrows.add(temp);
             }
         }
+        Collections.reverse(listCard);
         model.addAttribute("listCard", listCard);
         model.addAttribute("listCardBorrow", listCardBorrows);                                              
         return "index";
@@ -78,11 +79,13 @@ public class QuanLyTheController {
 
     @PostMapping("/lam-the-thu-vien")
     public String LamTheThuVien(Model model, @ModelAttribute TheThuVienEntity card){
+        card.setMatrangthai("open");
         theThuVienRepo.save(card);
         model.addAttribute("title", "Làm thẻ thư viện");
         model.addAttribute("source", "lam-the-thu-vien");
         model.addAttribute("fragment", "lam-the-thanh-cong");
         model.addAttribute("card", new TheThuVienEntity());
+        System.out.println(card);
         return "index";
     }
 

@@ -1,11 +1,11 @@
-<div class="container my-4 fadeInDown" th:fragment="trang-chu">
-    <div class="row">
+<div class="container my-4" th:fragment="trang-chu">
+    <div class="row fadeInDown">
         <div class="col-sm-12">
             <strong style="color: #28a745;"><i class="fas fa-home"></i> Trang chủ</strong>
             <hr>
         </div>
     </div>
-    <div class="row">
+    <div class="row fadeInDown">
         <div class="col-sm-3">
             <div class="jumbotron bg-success p-2 shadow">
                 <div class="row">
@@ -80,6 +80,71 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row fadeIn">
+        <div class="col-sm-12">
+            <div class="jumbotron p-2">
+                <span class="text-info" th:text="'Bill chưa thanh toán (' + ${sizeBillUnpaid} + ')'"></span>
+                <hr>
+                <table class="table table-bordered table-hover table-info">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>ID Bill</th>
+                            <th>ID thẻ</th>
+                            <th>Ngày mượn</th>
+                            <th>Hạn trả</th>
+                            <th>Ngày trả</th>
+                            <th>Trạng thái</th>
+                            <th class="text-center">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="bill : ${listBillUnpaid}">
+                            <td th:text="*{bill.getMaphieumuon()}"></td>
+                            <td th:text="*{bill.getMathe()}"></td>
+                            <td th:text="*{bill.getNgaymuon()}"></td>
+                            <td th:text="*{bill.getHantra()}" class="hantra"></td>
+                            <td th:text="*{bill.getNgaytra()}"></td>
+                            <td th:text="*{bill.getTenTrangThai()}"></td>
+                            <td class="text-center">
+                                <form action="/tra-sach" method="post">
+                                    <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="jumbotron p-2">
+                <span class="text-info" th:text="'Sách đang mượn (' + ${sizeBookBorow} + ')'"></span>
+                <hr>
+                <table class="table table-bordered table-hover table-info">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>ID Bill</th>
+                            <th>ID sách</th>
+                            <th>Tên sách</th>
+                            <th>Số lượng</th>
+                            <th>ID thẻ</th>
+                            <th>Tên đọc giả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${listBookBorrow}">
+                            <td th:text="*{book.getMaphieumuon()}"></td>
+                            <td th:text="*{book.getMasach()}"></td>
+                            <td th:text="*{book.getTensach()}"></td>
+                            <td th:text="*{book.getSoluong()}"></td>
+                            <td th:text="*{book.getMadocgia()}"></td>
+                            <td th:text="*{book.getTendocgia()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

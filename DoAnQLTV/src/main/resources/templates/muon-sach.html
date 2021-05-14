@@ -1,3 +1,4 @@
+<!-- todo: Kiểm tra thẻ -->
 <div class="container my-4" th:fragment="kiem-tra-the">
     <div class="fadeInDown">
         <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
@@ -44,57 +45,54 @@
     </script>
 </div>
 
-<!-- Thẻ không tồn tại -->
+<!--todo: Thẻ không tồn tại -->
 <div th:fragment="the-khong-ton-tai">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-exclamation-triangle"></i>
         <strong>Thẻ không tồn tại!</strong>
-        <hr />
-        <span>
-            <i class="fas fa-exclamation-triangle"></i>
-            <span th:text="${dataSearch}"></span>
-        </span>
-        <hr />
+        <hr/>
+        <span th:text="'Không tồn tại thẻ với số điện thoại: ' + ${sdt}"></span>
+        <hr>
         <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
-<!-- Đã đạt số lần mượn tối đa -->
+<!--todo: Đã đạt số lần mượn tối đa -->
 <div th:fragment="het-luot">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-exclamation-triangle"></i>
         <strong>Số lần mượn sách đã đạt tối đa 2 lần!</strong>
         <hr />
-        <span>
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Một thẻ thư viện chỉ được mượn sách tối đa 2 lần cùng lúc!</span>
-        </span>
+        <span>Một thẻ thư viện chỉ được mượn sách tối đa 2 lần cùng lúc!</span>
         <hr />
-        <span>
-            <span th:text="'Mã thẻ:' + ${mathe}"></span>
+        <strong>Thông tin thẻ: </strong>
+        <span th:text="'Mã thẻ: ' + ${mathe}"></span>
         <span th:text="' - Họ tên: ' + ${hoten}"></span>
         <span th:text="' - Giới tính: '+${gioitinh}"></span>
         <span th:text="' - Sdt: '+${sdt}"></span>
-        </span>
+
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
-<!-- Thẻ bị khóa không thể mượn -->
+<!--todo: Thẻ bị khóa -->
 <div th:fragment="the-bi-khoa">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-exclamation-triangle"></i>
         <strong>Thẻ đã bị vô hiệu hóa!</strong>
         <hr />
-        <span>
-            <span th:text="'Mã thẻ:' + ${mathe}"></span>
+        <strong>Thông tin thẻ: </strong>
+        <span th:text="'Mã thẻ: ' + ${mathe}"></span>
         <span th:text="' - Họ tên: ' + ${hoten}"></span>
         <span th:text="' - Giới tính: '+${gioitinh}"></span>
         <span th:text="' - Sdt: '+${sdt}"></span>
-        </span>
+
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
-<!-- Không được để trống -->
+<!--todo: Không được để trống -->
 <div th:fragment="khong-co-du-lieu">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -107,7 +105,7 @@
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
-<!-- Mượn sách -->
+<!--todo: Mượn sách -->
 <div class="container my-4" th:fragment="muon-sach">
     <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
     <hr />
@@ -158,7 +156,8 @@
                 </div>
                 <div class="form-group">
                     <label for="">Số lượng</label>
-                    <input type="number" id="sl" class="form-control" placeholder="" value="1" required />
+                    <input type="number" id="sl" class="form-control" placeholder="" value="1" min="1" max="5" required />
+                    <input type="hidden" id="numBookCurrent">
                 </div>
                 <div>
                     <button type="button" id="btnAddBook" class="btn btn-info btn-block my-4">

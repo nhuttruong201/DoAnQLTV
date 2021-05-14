@@ -1,14 +1,22 @@
 package com.example.DoAnQLTV.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.NhanVienEntity;
+import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
 import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
+import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
+import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
+import com.example.DoAnQLTV.service.BookBorrow;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +29,8 @@ public class HomeController {
     @Autowired private TheThuVienRepo theThuVienRepo;
     @Autowired private NhanVienRepo nhanVienRepo;
     @Autowired private TaiKhoanRepo taiKhoanRepo;
+    @Autowired private PhieuMuonRepo phieuMuonRepo;
+    @Autowired private ChiTietPhieuMuonRepo ctpmRepo;
     
     // Trang chủ
     @GetMapping("/trang-chu")
@@ -41,6 +51,33 @@ public class HomeController {
         model.addAttribute("listNvSize", listNV.size());
         List<TaiKhoanEntity> listAc = taiKhoanRepo.findAll();
         model.addAttribute("listAcSize", listAc.size());
+
+        //todo: phiếu chưa thanh toán
+        List<PhieuMuonEntity> listBillUnpaid = phieuMuonRepo.findByTrangthai(1);
+        model.addAttribute("listBillUnpaid", listBillUnpaid);
+        model.addAttribute("sizeBillUnpaid", listBillUnpaid.size());
+
+        //todo: sách đang mượn
+        List<BookBorrow> listBookBorrows = new ArrayList<BookBorrow>();
+        List<ChiTietPhieuMuonEntity> listCTPM = ctpmRepo.findAll();
+        List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
+        for(PhieuMuonEntity bill : listBill){
+            for(ChiTietPhieuMuonEntity billDetail : listCTPM){
+                if(bill.getMaphieumuon() == billDetail.getMaphieumuon()){
+                    BookBorrow temp = new BookBorrow();
+                    temp.setMaphieumuon(billDetail.getMaphieumuon());
+                    temp.setMasach(billDetail.getMasach());
+                    temp.setTensach(temp.getTenSachBaseMaSach(sachRepo, billDetail.getMasach()));
+                    temp.setSoluong(billDetail.getSoluong());
+                    temp.setTendocgia(temp.getTenDocGiaBaseMaPhieuMuon(theThuVienRepo, temp.getMaTheBaseMaPhieuMuon(phieuMuonRepo, billDetail.getMaphieumuon())));
+                    temp.setMadocgia(temp.getMaDocGiaBaseMaPhieuMuon(theThuVienRepo, temp.getMaTheBaseMaPhieuMuon(phieuMuonRepo, billDetail.getMaphieumuon())));
+                    listBookBorrows.add(temp);
+                }
+            }
+        }
+        model.addAttribute("listBookBorrow", listBookBorrows);
+        model.addAttribute("sizeBookBorow", listBookBorrows.size());
+
         return "index";
     }
 }

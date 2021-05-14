@@ -22,12 +22,19 @@ public class TheThuVienEntity {
     private String diachi;
     private String matrangthai;
 
-
-
-    public String getTenTrangThai(TrangThaiTheRepo trangThaiTheRepo, String matrangthai){
-        TrangThaiTheEntity trangthai = trangThaiTheRepo.findByMatrangthai(matrangthai);
-        return trangthai.getTentrangthai();
+   
+    public String getTenTrangThai(){
+        if(this.matrangthai.equals("lock")){
+            return "Bị khóa";
+        }else{
+            return "Mở";
+        }
     }
+
+    // public String getTenTrangThai(TrangThaiTheRepo trangThaiTheRepo, String matrangthai){
+    //     TrangThaiTheEntity trangthai = trangThaiTheRepo.findByMatrangthai(matrangthai);
+    //     return trangthai.getTentrangthai();
+    // }
 
 
 

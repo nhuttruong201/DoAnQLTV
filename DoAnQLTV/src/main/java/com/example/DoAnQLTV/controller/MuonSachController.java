@@ -61,9 +61,7 @@ public class MuonSachController {
         List<SachEntity> listBook = sachRepo.findAll();
         model.addAttribute("listCard", listCard);
         model.addAttribute("listBook", listBook);
-        
-        // aler
-        String noSdt = "Không tồn tại thẻ với số điện thoại: " + sdt;
+    
         // Check Card
         TheThuVienEntity cardCheck;
         // cả thẻ và sdt rỗng
@@ -79,7 +77,6 @@ public class MuonSachController {
                  // thẻ không tồn tại
                 model.addAttribute("fragment", "the-khong-ton-tai");
                 model.addAttribute("sdt", sdt);
-                model.addAttribute("dataSearch", noSdt);
                 return "index";
             }
         }else{
@@ -112,7 +109,6 @@ public class MuonSachController {
                     }
                 }
                 // không tồn tại thẻ với sdt submit
-                model.addAttribute("dataSearch", noSdt);
                 model.addAttribute("fragment", "the-khong-ton-tai");
                 model.addAttribute("sdt", sdt);
                 return "index";

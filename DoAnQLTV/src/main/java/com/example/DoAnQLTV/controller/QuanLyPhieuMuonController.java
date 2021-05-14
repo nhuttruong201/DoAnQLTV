@@ -44,8 +44,9 @@ public class QuanLyPhieuMuonController {
         }else if(type.equals("phieu-qua-han")){
             //todo: quá hạn
            
+            List<PhieuMuonEntity> listBillUnpaid = phieuMuonRepo.findByTrangthai(1);
             LocalDate ngayhientai = LocalDate.now();
-            for(PhieuMuonEntity bill : listAllBill){
+            for(PhieuMuonEntity bill : listBillUnpaid){
                 String hantra = bill.getHantra() + "";
                 if(LocalDate.parse(hantra).compareTo(ngayhientai) < 0){
                     listBill.add(bill);
@@ -55,6 +56,7 @@ public class QuanLyPhieuMuonController {
         //todo: phục vụ cmb để tìm kiếm
         List<TheThuVienEntity> listCard = theThuVienRepo.findAll();
         model.addAttribute("listCard", listCard);
+        //todo: listBill thống kê
         Collections.reverse(listBill);
         model.addAttribute("listBill", listBill);
         return "index";
