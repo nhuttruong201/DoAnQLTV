@@ -42,18 +42,6 @@ public class DoAnQltvApplication implements CommandLineRunner {
         SpringApplication.run(DoAnQltvApplication.class, args);
     }
 
-    @GetMapping("/search/{id}")
-    public String search(@PathVariable String id, Model model) {
-        List<NhanVienEntity> listName = nhanVienRepo.findByHotenLike("%" + id + "%");
-        listName.forEach(System.out::println);
-        // List<SachEntity> listBook = sachRepo.findByTensachLike("%" + id + "%");
-        // listBook.forEach(System.out::println);
-        return id;
-    }
-
-
-   
-
     @Override
     public void run(String... args) throws Exception {
         System.out.println("**********************");
@@ -118,20 +106,6 @@ public class DoAnQltvApplication implements CommandLineRunner {
 
 
         System.out.println("\n\n\n");
-        
-        // List<PhieuMuonEntity> listBill = phieuMuonRepo.findAll();
-        // Collections.reverse(listBill);
-        // listBill.forEach(System.out :: println);
-        
-        // System.out.println("\n\n\n");
-
-
-        
-        
-        // System.out.println(myService.getTenTheLoai(theLoaiRepo ,"tltltg").toString());
-    
-    
-
 
     }
 }

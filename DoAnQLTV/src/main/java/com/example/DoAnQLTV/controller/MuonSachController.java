@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
@@ -17,6 +20,8 @@ import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheLoaiRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
+import com.example.DoAnQLTV.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,20 +32,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MuonSachController {
     @Autowired private SachRepo sachRepo;
-    @Autowired private TheLoaiRepo theLoaiRepo;
-    @Autowired private ChiTietPhieuMuonRepo ctpmRepo;
     @Autowired private TheThuVienRepo theThuVienRepo;
-    @Autowired private NhaXuatBanRepo nhaXuatBanRepo;
-    @Autowired private TrangThaiTheRepo trangThaiTheRepo;
     @Autowired private PhieuMuonRepo phieuMuonRepo;
     @Autowired private ChiTietPhieuMuonRepo chiTietPhieuMuonRepo;
-    @Autowired private NhanVienRepo nhanVienRepo;
-    @Autowired private TaiKhoanRepo taiKhoanRepo;
 
-    
-    // Mượn sách - Kiểm tra thẻ
+    //todo: Mượn sách - Kiểm tra thẻ
     @GetMapping("/muon-sach")
-    public String MuonSach(Model model){
+    public String MuonSach(Model model, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
         model.addAttribute("source", "muon-sach");
         model.addAttribute("fragment", "kiem-tra-the");
         model.addAttribute("title", "Yâu cầu mượn sách");
@@ -100,12 +102,14 @@ public class MuonSachController {
                 // duyệt để tìm thẻ yêu cầu mượn sách
                 for(TheThuVienEntity i : listCard){
                     if(i.getSodienthoai().equals(sdt)){
+                        //todo: check thẻ thành công
                         model.addAttribute("mathe", i.getMathe());
                         model.addAttribute("hoten", i.getHoten());
                         model.addAttribute("sdt", i.getSodienthoai());
                         model.addAttribute("fragment", "muon-sach");
                          // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
                         LocalDate toDay = LocalDate.now();
+                        
                         model.addAttribute("toDay", toDay);
                         return "index";
                     }
@@ -123,6 +127,7 @@ public class MuonSachController {
                     // duyệt để tìm thẻ yêu cầu mượn sách
                     for(TheThuVienEntity i : listCard){
                         if(i.getMathe() == Integer.parseInt(mathe)){
+                            //todo: check thẻ thành công
                             model.addAttribute("mathe", i.getMathe());
                             model.addAttribute("hoten", i.getHoten());
                             model.addAttribute("sdt", i.getSodienthoai());

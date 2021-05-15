@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
@@ -13,6 +14,7 @@ import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.service.BookBorrow;
+import com.example.DoAnQLTV.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,16 +29,19 @@ public class TraSachController {
     @Autowired private PhieuMuonRepo phieuMuonRepo;
     @Autowired private ChiTietPhieuMuonRepo chiTietPhieuMuonRepo;
 
-    // Trả sách - Kiểm tra thẻ
+    //todo: Trả sách - Kiểm tra thẻ
     @GetMapping("/tra-sach")
-    public String TraSach(Model model){
+    public String TraSach(Model model, HttpSession session){
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
         model.addAttribute("source", "tra-sach");
         model.addAttribute("fragment", "kiem-tra-the");
         model.addAttribute("title", "Yêu cầu trả sách");
 
         List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
         List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-        // loại bỏ mã thẻ trùng nhau
+        //todo: loại bỏ mã thẻ trùng nhau
         for(int i=0; i<listBill.size(); i++){
             if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
                 arrIdCardOnly.add(listBill.get(i).getMathe());
@@ -54,11 +59,11 @@ public class TraSachController {
         model.addAttribute("source", "tra-sach");
         model.addAttribute("title", "Yâu cầu trả sách");
 
-        // check rỗng submit
+        //todo: check rỗng submit
         if(mathe.equals("0") && sdt.equals("0")){
             List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
             List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-            // loại bỏ mã thẻ trùng nhau
+            //todo: loại bỏ mã thẻ trùng nhau
             for(int i=0; i<listBill.size(); i++){
                 if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
                     arrIdCardOnly.add(listBill.get(i).getMathe());
@@ -70,12 +75,12 @@ public class TraSachController {
         }
 
         if(mathe.equals("0")){
-            // check với số điện thoại
+            //todo: check với số điện thoại
             TheThuVienEntity card = theThuVienRepo.findBySodienthoai(sdt);
             if(card == null){
                 List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
                 List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-                // loại bỏ mã thẻ trùng nhau
+                //todo: loại bỏ mã thẻ trùng nhau
                 for(int i=0; i<listBill.size(); i++){
                     if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
                         arrIdCardOnly.add(listBill.get(i).getMathe());
@@ -117,7 +122,7 @@ public class TraSachController {
                 return "index";
             }
         }else{
-            // check với mã thẻ, không thể null
+            //todo: check với mã thẻ, không thể null
             TheThuVienEntity card = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
             model.addAttribute("mathe", card.getMathe());
             model.addAttribute("hoten", card.getHoten());
@@ -142,14 +147,14 @@ public class TraSachController {
             }
             model.addAttribute("listBill", listBill);
             model.addAttribute("listBookBorrow", listBookBorrows);
-             // phục vụ set value ngày trả phải = ngaỳ hiện tại
+            //todo: phục vụ set value ngày trả phải = ngaỳ hiện tại
             LocalDate toDay = LocalDate.now();
             model.addAttribute("toDay", toDay);
             return "index";
         }
     }
 
-    // thanh toán sách trả
+    //todo: thanh toán sách trả
     @PostMapping("/thanh-toan-sach-tra")
     public String ThanhToanSachTra(Model model,
         @RequestParam(name = "idBill") String idBill,

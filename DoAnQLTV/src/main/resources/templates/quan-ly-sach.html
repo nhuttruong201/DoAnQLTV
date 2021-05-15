@@ -10,7 +10,7 @@
             </div>
             <br>
             <hr>
-            <form action="/tim-sach" method="post" class="">
+            <form action="/tim-sach" method="post">
                 <div class="row">
                     <div class="col-sm-4 mt-1">
                         <select name="masach" class="custom-select">
@@ -28,9 +28,9 @@
                 <div class="row my-3">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-6">
-                        <button class="btn btn-primary btn-block text-center" type="submit">
-                        <i class="fas fa-search"></i> Tìm
-                    </button>
+                        <button type="submit" class="btn btn-primary btn-block text-center">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
                     </div>
                     <div class="col-sm-3"></div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="row pt-3">
                         <div th:replace="${source} :: ${type}">
-                            <!--todo: content include -->
+
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
                 <td th:text="*{book.getMasach()}"></td>
                 <td th:text="*{book.getTensach()}"></td>
                 <td th:text="*{book.getTacgia()}"></td>
-                <td th:text="*{book.getMatheloai()}"></td>
+                <td th:text="*{book.getTentheloai()}"></td>
                 <td th:text="*{book.getSoluong()}"></td>
                 <td class="text-center">
                     <a th:href="'/edit-book/' + ${book.getMasach()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
@@ -101,7 +101,7 @@
     <table class="table table-bordered table-hover table-info">
         <thead class="bg-light">
             <tr>
-                <th>ID Bill</th>
+                <th>ID bill</th>
                 <th>ID sách</th>
                 <th>Tên sách</th>
                 <th>Số lượng</th>

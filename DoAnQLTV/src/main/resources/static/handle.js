@@ -13,52 +13,57 @@ $(document).ready(function() {
     });
 
     $("#btnAddBook").click(function() {
-        var slSachMuon = $("#sl").val();
-        var slSachConLai = $("#numBookCurrent").val();
-        // check sách tồn tại trong danh sách mượn
-        if (checkExistInListBookBorrow(arrIdBookBorrow, $("#selectBookId").val())) {
-            alert("\n\nSách đã tồn tại trong danh sách mượn!\n\n")
-        }
-        // check sl sách mượn nhiều hơn sách hiện còn
-        else if (slSachMuon > slSachConLai) {
-            alert("\n\nKhông đủ sách!\n\n");
+        if ($("#bookName").val() == "") {
+            alert("\n\nChưa chọn sách!\n\n");
         } else {
-            allNum += parseInt($("#sl").val());
-            if (allNum > 5) {
-                allNum -= parseInt($("#sl").val());
-                alert("\n\nChỉ được mượn tối đa 5 quyển sách!\n\n");
+            var slSachMuon = parseInt($("#sl").val());
+            var slSachConLai = parseInt($("#numBookCurrent").val());
+            // check sách tồn tại trong danh sách mượn
+            if (checkExistInListBookBorrow(arrIdBookBorrow, $("#selectBookId").val())) {
+                alert("\n\nSách đã tồn tại trong danh sách mượn!\n\n")
+            }
+            // check sl sách mượn nhiều hơn sách hiện còn
+            else if (slSachMuon > slSachConLai) {
+                alert("\n\nKhông đủ sách!\n\n");
             } else {
-                arrIdBookBorrow.push($("#selectBookId").val());
-                updateIdBookSubmit(arrIdBookBorrow);
-                arrNumBookBorrow.push($("#sl").val());
-                updateNumBookSubmit(arrNumBookBorrow);
-                var bookId = $("#selectBookId").val();
-                var bookName = $("#bookName").val();
-                var sl = $("#sl").val();
-                var btnDelete =
-                    '<button type="button" onclick="MoveBook(' +
-                    bookId +
-                    ')" class="btn btn-outline-primary btn-sm"><i class="far fa-trash-alt"></i></button>';
-                var idTr = "tr_" + bookId;
-                $("#listBookBorrow").append(
-                    "<tr id='" +
-                    idTr +
-                    "'><td>" +
-                    bookId +
-                    "</td><td>" +
-                    bookName +
-                    "</td><td>" +
-                    sl +
-                    "</td><td class='text-center'>" +
-                    btnDelete +
-                    "</td></tr>"
-                );
-                //todo: reset select book Id
-                $("#selectBookId").prop("selectedIndex", 0);
-                $("#bookName").val("...");
-                $("#sl").val(1);
+                allNum += parseInt($("#sl").val());
+                if (allNum > 5) {
+                    allNum -= parseInt($("#sl").val());
+                    alert("\n\nChỉ được mượn tối đa 5 quyển sách!\n\n");
+                } else {
+                    arrIdBookBorrow.push($("#selectBookId").val());
+                    updateIdBookSubmit(arrIdBookBorrow);
+                    arrNumBookBorrow.push($("#sl").val());
+                    updateNumBookSubmit(arrNumBookBorrow);
+                    var bookId = $("#selectBookId").val();
+                    var bookName = $("#bookName").val();
+                    var sl = $("#sl").val();
+                    var btnDelete =
+                        '<button type="button" onclick="MoveBook(' +
+                        bookId +
+                        ')" class="btn btn-outline-primary btn-sm"><i class="far fa-trash-alt"></i></button>';
+                    var idTr = "tr_" + bookId;
+                    $("#listBookBorrow").append(
+                        "<tr id='" +
+                        idTr +
+                        "'><td>" +
+                        bookId +
+                        "</td><td>" +
+                        bookName +
+                        "</td><td>" +
+                        sl +
+                        "</td><td class='text-center'>" +
+                        btnDelete +
+                        "</td></tr>"
+                    );
+                    //todo: reset select book Id
+                    $("#selectBookId").prop("selectedIndex", 0);
+                    $("#bookName").val("");
+                    $("#sl").val(1);
+                }
             }
         }
+
     });
 });
 

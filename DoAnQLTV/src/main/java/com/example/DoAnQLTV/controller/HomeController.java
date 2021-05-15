@@ -3,6 +3,8 @@ package com.example.DoAnQLTV.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.NhanVienEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
@@ -16,6 +18,7 @@ import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.service.BookBorrow;
+import com.example.DoAnQLTV.service.SessionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +37,12 @@ public class HomeController {
     
     // Trang chủ
     @GetMapping("/trang-chu")
-    public String Home(Model model){
+    public String Home(Model model, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+        
         model.addAttribute("source", "home");
         model.addAttribute("fragment", "trang-chu");
         model.addAttribute("title", "Trang chủ");

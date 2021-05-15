@@ -18,7 +18,16 @@
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-        <a class="navbar-brand" href="#">Admin</a>
+        <!-- <a class="navbar-brand" href="/logout">Logout</a> -->
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Admin
+           </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item text-info" href="/trang-chu"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                <a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </div>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,11 +55,11 @@
                          Quản lý
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/quan-ly-phieu-muon/tat-ca-phieu">Quản lý phiếu mượn</a>
-                        <a class="dropdown-item" href="/quan-ly-the-thu-vien/tat-ca-the">Quản lý thẻ thư viện</a>
-                        <a class="dropdown-item" href="/quan-ly-sach/tat-ca-sach">Quản lý sách</a>
-                        <a class="dropdown-item" href="/trang-chu">Quản lý nhân viên</a>
-                        <a class="dropdown-item" href="/trang-chu">Quản lý tài khoản</a>
+                        <a class="dropdown-item text-info" href="/quan-ly-phieu-muon/tat-ca-phieu"><i class="fas fa-file-invoice-dollar"></i> Quản lý phiếu mượn</a>
+                        <a class="dropdown-item text-info" href="/quan-ly-the-thu-vien/tat-ca-the"><i class="fas fa-address-card"></i> Quản lý thẻ thư viện</a>
+                        <a class="dropdown-item text-info" href="/quan-ly-sach/tat-ca-sach"><i class="fas fa-book"></i> Quản lý sách</a>
+                        <a class="dropdown-item text-info" href="/trang-chu"><i class="fas fa-user-tie"></i> Quản lý nhân viên</a>
+                        <a class="dropdown-item text-info" href="/trang-chu"><i class="fas fa-user"></i> Quản lý tài khoản</a>
                     </div>
                 </li>
             </ul>

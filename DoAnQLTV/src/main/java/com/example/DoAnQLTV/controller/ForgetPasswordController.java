@@ -1,12 +1,10 @@
 package com.example.DoAnQLTV.controller;
 
-
 import com.example.DoAnQLTV.entity.NhanVienEntity;
 import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.service.MailService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

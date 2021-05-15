@@ -3,11 +3,16 @@ package com.example.DoAnQLTV.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.service.CardBorrow;
+import com.example.DoAnQLTV.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +28,14 @@ public class QuanLyTheController {
     @Autowired private PhieuMuonRepo phieuMuonRepo;
     //todo: Quản lý thẻ - Thống kê
     @GetMapping("/quan-ly-the-thu-vien/{type}")
-    public String QuanLyTheThuVien(Model model, @PathVariable(name = "type") String type){
+    public String QuanLyTheThuVien(Model model, 
+        @PathVariable(name = "type") String type,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", "Quản lý thẻ thư viện");
         model.addAttribute("source", "quan-ly-the-thu-vien");
         model.addAttribute("fragment", "quan-ly-the-thu-vien");
@@ -58,7 +70,12 @@ public class QuanLyTheController {
 
     //todo: Làm thẻ thư viện
     @GetMapping("/lam-the-thu-vien")
-    public String LamTheThuVien(Model model){
+    public String LamTheThuVien(Model model, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", "Làm thẻ thư viện");
         model.addAttribute("source", "lam-the-thu-vien");
         model.addAttribute("fragment", "lam-the-thu-vien");
@@ -67,7 +84,13 @@ public class QuanLyTheController {
     }
     // làm thẻ có truyền sdt sẵn
     @GetMapping("/lam-the-thu-vien/{sdt}")
-    public String LamTheThuVien(Model model,@PathVariable(name = "sdt") String sdt){
+    public String LamTheThuVien(Model model,
+        @PathVariable(name = "sdt") String sdt,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
         model.addAttribute("title", "Làm thẻ thư viện");
         model.addAttribute("source", "lam-the-thu-vien");
         model.addAttribute("fragment", "lam-the-thu-vien");
@@ -91,7 +114,13 @@ public class QuanLyTheController {
 
     //todo: Sửa thẻ thư viện
     @GetMapping("/edit-card/{id}")
-    public String EditCard(Model model, @PathVariable(name = "id") int mathe){
+    public String EditCard(Model model, 
+        @PathVariable(name = "id") int mathe,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
         model.addAttribute("title", "Sửa thẻ thư viện");
         model.addAttribute("source", "edit-card");
         model.addAttribute("fragment", "sua-the-thu-vien");

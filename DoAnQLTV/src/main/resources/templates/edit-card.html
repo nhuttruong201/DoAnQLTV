@@ -7,7 +7,7 @@
                 <input type="hidden" name="mathe" th:value="${oldCard.getMathe()}">
                 <div class="form-group">
                     <label for="">Họ tên:</label>
-                    <input type="text" class="form-control" name="hoten" th:value="${oldCard.getHoten()}" placeholder="nhập họ tên" required/>
+                    <input type="text" class="form-control" name="hoten" th:value="${oldCard.getHoten()}" maxlength="100" placeholder="nhập họ tên" required/>
                 </div>
                 <div class="form-group">
                     <label for="">Giới tính:</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Số điện thoại:</label>
-                    <input type="text" class="form-control" placeholder="nhập số điện thoại" name="sodienthoai" th:value="${oldCard.getSodienthoai()}" required/>
+                    <input type="text" class="form-control" placeholder="nhập số điện thoại" name="sodienthoai" minlength="10" maxlength="11" th:value="${oldCard.getSodienthoai()}" required/>
                 </div>
 
             </div>

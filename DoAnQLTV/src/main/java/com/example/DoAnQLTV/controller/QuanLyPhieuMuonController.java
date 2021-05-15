@@ -5,10 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
+import com.example.DoAnQLTV.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +30,12 @@ public class QuanLyPhieuMuonController {
 
     //todo: Thống kê
     @GetMapping("/quan-ly-phieu-muon/{type}")
-    public String QuanLyPhieuMuon(Model model, @PathVariable(name = "type") String type){
+    public String QuanLyPhieuMuon(Model model, @PathVariable(name = "type") String type, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", "Quản lý phiếu mượn");
         model.addAttribute("source", "quan-ly-phieu-muon");
         model.addAttribute("fragment", "quan-ly-phieu-muon");

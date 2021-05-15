@@ -29,11 +29,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Năm xuất bản:</label>
-                    <input type="number" class="form-control" placeholder="nhập năm xuất bản" required th:field="*{namxuatban}">
+                    <input type="number" class="form-control" placeholder="nhập năm xuất bản" min="2000" max="2021" required th:field="*{namxuatban}">
                 </div>
                 <div class="form-group">
                     <label for="">Số lượng:</label>
-                    <input type="number" class="form-control" placeholder="nhập số lượng" required th:field="*{soluong}">
+                    <input type="number" class="form-control" placeholder="nhập số lượng" min="1" required th:field="*{soluong}">
                 </div>
             </div>
         </div>

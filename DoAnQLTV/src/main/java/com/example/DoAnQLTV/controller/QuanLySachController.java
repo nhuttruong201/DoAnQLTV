@@ -3,6 +3,10 @@ package com.example.DoAnQLTV.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.example.DoAnQLTV.display.BookDisplay;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.NhaXuatBanEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
@@ -15,6 +19,8 @@ import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TheLoaiRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.service.BookBorrow;
+import com.example.DoAnQLTV.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +41,14 @@ public class QuanLySachController{
 
     //todo: Quản lý sách - Thống kê
     @GetMapping("/quan-ly-sach/{type}")
-    public String QuanLySach(Model model, @PathVariable(name = "type") String type){
+    public String QuanLySach(Model model, 
+        @PathVariable(name = "type") String type, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+        // return "test";
+        
         model.addAttribute("source", "quan-ly-sach");
         model.addAttribute("fragment", "quan-ly-sach");
         model.addAttribute("title", "Quản lý sách");
@@ -43,13 +56,20 @@ public class QuanLySachController{
 
         List<SachEntity> listBook = new ArrayList<SachEntity>();
         List<BookBorrow> listBookBorrows = new ArrayList<BookBorrow>();
+        List<BookDisplay> listBookDisplay = new ArrayList<BookDisplay>();
 
         if(type.equals("tat-ca-sach")){
             //todo: tất cả sách
             listBook = sachRepo.findAll();
-            for(int i=0; i<listBook.size(); i++){
-                String tentheloai = listBook.get(i).getTenTheLoai(theLoaiRepo, listBook.get(i).getMatheloai());
-                listBook.get(i).setMatheloai(tentheloai);
+            for(SachEntity i : listBook){
+                BookDisplay temp = new BookDisplay();
+                temp.setMasach(i.getMasach());
+                temp.setTensach(i.getTensach());
+                temp.setTacgia(i.getTacgia());
+                temp.setTentheloai(i.getTenTheLoai(theLoaiRepo, i.getMatheloai()));
+                temp.setTennhaxuatban(i.getTenNhaXuatBan(nhaXuatBanRepo, i.getManhaxuatban()));
+                temp.setSoluong(i.getSoluong());
+                listBookDisplay.add(temp);
             }
         }else if(type.equals("sach-dang-muon")){
             //todo: sách đang mượn
@@ -70,16 +90,21 @@ public class QuanLySachController{
                 }
             }
         }
-        Collections.reverse(listBook);
-        model.addAttribute("listBook", listBook);
+        Collections.reverse(listBookDisplay);
+        model.addAttribute("listBook", listBookDisplay);
         Collections.reverse(listBookBorrows);
         model.addAttribute("listBookBorrow", listBookBorrows);
-        return "index";  
+        return "index";
     }
 
     //todo: Thêm sách
     @GetMapping("/them-sach")
-    public String ThemSach(Model model){
+    public String ThemSach(Model model, HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", "Thêm sách");
         model.addAttribute("source", "them-sach");
         model.addAttribute("fragment", "them-sach");
@@ -110,7 +135,14 @@ public class QuanLySachController{
 
     //todo: edit sách
     @GetMapping("/edit-book/{id}")
-    public String EditBook(Model model, @PathVariable(name = "id") int id){
+    public String EditBook(Model model, 
+        @PathVariable(name = "id") int id,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+
         model.addAttribute("source", "edit-book");
         model.addAttribute("fragment", "sua-sach");
         model.addAttribute("title", "Sửa sách");
@@ -143,7 +175,13 @@ public class QuanLySachController{
 
     //todo: delete book
     @GetMapping("/delete-book/{id}")
-    public String DeleteBook(Model model, @PathVariable(name = "id") int id){
+    public String DeleteBook(Model model, 
+        @PathVariable(name = "id") int id,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
         // sachRepo.deleteByMasach(id);
         SachEntity temp = sachRepo.findByMasach(id);
         temp.setSoluong(0);

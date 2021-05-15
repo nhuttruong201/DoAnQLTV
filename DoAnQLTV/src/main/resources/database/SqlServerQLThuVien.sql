@@ -1,6 +1,6 @@
-create database QuanLyThuVien2
+create database QuanLyThuVien
 go
-use QuanLyThuVien2
+use QuanLyThuVien
 go
 
 
@@ -42,7 +42,7 @@ create table taikhoan
 
 create table theloai
 (
-	matheloai nvarchar(20) primary key,
+	matheloai nvarchar(1000) primary key,
 	tentheloai nvarchar(1000) not null
 )
 
@@ -60,7 +60,7 @@ create table sach
 	tacgia nvarchar(1000) not null,
 	namxuatban int not null,
 	manhaxuatban nvarchar(20) not null,
-	matheloai nvarchar(20) not null,
+	matheloai nvarchar(1000) not null,
 	soluong int not null,
 	foreign key (matheloai) references theloai (matheloai),
 	foreign key (manhaxuatban) references nhaxuatban (manhaxuatban)

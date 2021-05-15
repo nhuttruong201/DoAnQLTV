@@ -1,57 +1,54 @@
 <div class="container my-4" th:fragment="lam-the-thu-vien">
-    <strong style="color: #28a745;"><i class="fas fa-book"></i> Làm thẻ thư viện</strong>
-    <hr>
+    <strong style="color: #28a745"><i class="fas fa-book"></i> Làm thẻ thư viện</strong>
+    <hr />
     <form th:action="@{/lam-the-thu-vien}" th:object="${card}" method="post" class="was-validated">
         <div class="row jumbotron py-4">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Họ tên:</label>
-                    <input type="text" class="form-control" placeholder="nhập họ tên" th:field="*{hoten}" required/>
+                    <input type="text" class="form-control" placeholder="nhập họ tên" maxlength="100" th:field="*{hoten}" required />
                 </div>
                 <div class="form-group">
                     <label for="">Giới tính:</label>
-                    <select name="" class="custom-select" th:field="*{gioitinh}">
-                       <option selected value="Nam">Nam</option>
-                       <option value="Nữ">Nữ</option>
+                    <select class="custom-select" th:field="*{gioitinh}">
+                        <option selected value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="">Số điện thoại:</label>
-                    <input type="text" class="form-control" placeholder="nhập số điện thoại" th:field="*{sodienthoai}" required/>
+                    <input type="text" class="form-control" placeholder="nhập số điện thoại" minlength="10" maxlength="11" th:field="*{sodienthoai}" required />
                 </div>
-
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Địa chỉ:</label>
-                    <input type="text" class="form-control" placeholder="nhập quận/huyện" th:field="*{diachi}" required>
+                    <input type="text" class="form-control" placeholder="nhập quận/huyện" th:field="*{diachi}" required />
                 </div>
                 <div class="form-group">
                     <label for="">Hạn sử dụng:</label>
-                    <input type="date" class="form-control" required th:field="*{hansudung}">
+                    <input type="date" class="form-control" required th:field="*{hansudung}" />
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Tạo thẻ thư viện</button>
-                <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+                <button type="submit " class="btn btn-success">
+                    <i class="fas fa-hand-point-right"></i> Tạo thẻ thư viện
+                </button>
+                <a href="/quan-ly-the-thu-vien/tat-ca-the " type="button " class="btn btn-danger"><i
+                        class="fas fa-times"></i> Hủy</a>
             </div>
         </div>
-
     </form>
 </div>
 
-
-
-
-
 <!-- Thêm thành công -->
-<div th:fragment="lam-the-thanh-cong">
+<div th:fragment="lam-the-thanh-cong ">
     <div class="alert alert-success alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <button type="button " class="close" data-dismiss="alert ">&times;</button>
         <strong>Tạo thẻ thành công!</strong>
     </div>
-    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien"></div>
+    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien "></div>
 </div>
