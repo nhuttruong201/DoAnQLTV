@@ -37,6 +37,7 @@ public class DoAnQltvApplication implements CommandLineRunner {
     private TheThuVienRepo theThuVienRepo;
     @Autowired
     private TrangThaiTheRepo trangThaiTheRepo;
+    @Autowired private QuyenHanRepo quyenHanRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(DoAnQltvApplication.class, args);
@@ -55,10 +56,7 @@ public class DoAnQltvApplication implements CommandLineRunner {
         System.out.println("_____");
         System.out.println("___");
         System.out.println("_");
-        System.out.println("___________________________________________________________________");
-        System.out.println("---------------------  CHI TIẾT PHIẾU MƯỢN  -----------------------");
-        List<ChiTietPhieuMuonEntity> listCTPM = chiTietPhieuMuonRepo.findAll();
-        listCTPM.forEach(System.out::println);
+        
         System.out.println("___________________________________________________________________");
         System.out.println("---------------------  CHỨC VỤ  -----------------------------------");
         List<ChucVuEntity> listChucVu = chucVuRepo.findAll();
@@ -76,9 +74,17 @@ public class DoAnQltvApplication implements CommandLineRunner {
         List<PhieuMuonEntity> phieuMuonEntityList = phieuMuonRepo.findAll();
         phieuMuonEntityList.forEach(System.out::println);
         System.out.println("___________________________________________________________________");
+        System.out.println("---------------------  CHI TIẾT PHIẾU MƯỢN  -----------------------");
+        List<ChiTietPhieuMuonEntity> listCTPM = chiTietPhieuMuonRepo.findAll();
+        listCTPM.forEach(System.out::println);
+        System.out.println("___________________________________________________________________");
         System.out.println("---------------------  SÁCH  --------------------------------------");
         List<SachEntity> sachEntityList = sachRepo.findAll();
         sachEntityList.forEach(System.out::println);
+        System.out.println("___________________________________________________________________");
+        System.out.println("---------------------  QUYỀN HẠN  -----------------------");
+        List<QuyenHanEntity> listQH = quyenHanRepo.findAll();
+        listQH.forEach(System.out::println);
         System.out.println("___________________________________________________________________");
         System.out.println("---------------------  TÀI KHOẢN  ---------------------------------");
         List<TaiKhoanEntity> taiKhoanEntities = taiKhoanRepo.findAll();

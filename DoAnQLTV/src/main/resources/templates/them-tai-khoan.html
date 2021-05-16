@@ -1,0 +1,76 @@
+<!-- todo: fragment chính -->
+<div class="container my-4" th:fragment="them-tai-khoan">
+    <strong style="color: #28a745;"><i class="fas fa-user"></i> Tạo tài khoản</strong>
+    <hr>
+    <form th:action="@{/them-tai-khoan}" th:object="${account}" method="post" class="was-validated">
+        <div class="row jumbotron py-4">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Tên tài khoản:</label>
+                    <input type="text" class="form-control" placeholder="nhập tên tài khoản" th:field="*{tentaikhoan}" minlength="4" maxlength="16" required/>
+                </div>
+                <div class="form-group">
+                    <label for="">Mật khẩu:</label>
+                    <input type="text" class="form-control" placeholder="nhập mật khẩu" th:field="*{matkhau}" minlength="4" maxlength="16" required/>
+                </div>
+                <div class="form-group">
+                    <label for="">Email:</label>
+                    <input type="email" class="form-control" placeholder="nhập email" required th:field="*{email}" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">ID nhân viên sử dụng:</label>
+                    <select class="custom-select" th:field="*{manhanvien}">
+                        <option th:each="nv : ${listNV}" th:value="${nv.getManhanvien()}" th:text="${nv.getManhanvien()}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Quyền hạn:</label>
+                    <select class="custom-select" th:field="*{maquyenhan}">
+                        <option value="0">Nhân viên</option>
+                        <option value="1">Admin</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Tạo tài khoản</button>
+                <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--todo: Thêm thành công -->
+<div th:fragment="them-tai-khoan-thanh-cong">
+    <div class="alert alert-success alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Tạo tài khoản thành công!</strong> Xem thông tin tài khoản vừa thêm ở mục quản lý tài khoản.
+    </div>
+    <div th:replace="them-tai-khoan :: them-tai-khoan"></div>
+</div>
+<!-- todo: username đã được sử dụng -->
+<div th:fragment="username-da-su-dung">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Tên tài khoản đã được sử dụng!</strong>
+        <hr>
+        <span>Vui lòng nhập tên tài khoản khác!</span>
+    </div>
+    <div th:replace="them-tai-khoan :: them-tai-khoan"></div>
+</div>
+
+<!-- todo: email đã được sử dụng -->
+<div th:fragment="email-da-su-dung">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Email đã được sử dụng!</strong>
+        <hr>
+        <span>Vui lòng nhập email khác!</span>
+    </div>
+    <div th:replace="them-tai-khoan :: them-tai-khoan"></div>
+</div>

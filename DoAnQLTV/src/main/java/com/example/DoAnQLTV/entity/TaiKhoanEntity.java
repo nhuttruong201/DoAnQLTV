@@ -2,6 +2,9 @@ package com.example.DoAnQLTV.entity;
 
 import javax.persistence.*;
 
+import com.example.DoAnQLTV.repository.NhanVienRepo;
+
+
 @Entity
 @Table(name = "taikhoan")
 public class TaiKhoanEntity {
@@ -12,16 +15,23 @@ public class TaiKhoanEntity {
     private String matkhau;
     private int manhanvien;
     private String email;
-    private String maquyenhan;
+    private int maquyenhan;
 
-    public String getMaquyenhan() {
-        return this.maquyenhan;
+
+    public String getHoTen(NhanVienRepo nhanVienRepo){
+        NhanVienEntity nv = nhanVienRepo.findByManhanvien(this.manhanvien);
+        return nv.getHoten();
     }
 
-    public void setMaquyenhan(String maquyenhan) {
-        this.maquyenhan = maquyenhan;
+    public String getTenQuyenHan(){
+        if(this.maquyenhan==0){
+            return "Nhân viên";
+        }else if(this.maquyenhan==1){
+            return "Admin";
+        }else{
+            return "Chưa xác định";
+        }
     }
-
 
     @Override
     public String toString() {
@@ -34,6 +44,17 @@ public class TaiKhoanEntity {
             ", maquyenhan='" + getMaquyenhan() + "'" +
             "}";
     }
+
+    public int getMaquyenhan() {
+        return this.maquyenhan;
+    }
+
+    public void setMaquyenhan(int maquyenhan) {
+        this.maquyenhan = maquyenhan;
+    }
+
+
+ 
 
 
     public String getEmail() {

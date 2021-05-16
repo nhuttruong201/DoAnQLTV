@@ -1,0 +1,99 @@
+<!--todo: fragment chính -->
+<div class="container my-4" th:fragment="quan-ly-nhan-vien">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-user-tie"></i> Quản lý nhân viên</strong>
+            <div class="float-right">
+                <a href="/them-nhan-vien" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Thêm mới
+                </a>
+            </div>
+            <br>
+            <hr>
+            <!-- <form action="/tim-nhan-vien" method="post">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <select name="masach" class="custom-select">
+                            <option value="">Mã nhân viên</option>
+                            <option th:each="book : ${listBook}" th:value="${book.getMasach()}" th:text="${book.getMasach()}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tensach" id="" placeholder="tên sách">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tacgia" id="" placeholder="tên tác giả">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary btn-block text-center">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form> -->
+            <div class="row jumbotron p-1">
+                <div class="col-sm-12 mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-group">
+                                <a href="/quan-ly-nhan-vien/tat-ca-nhan-vien" type="button" class="btn btn-primary" id="btnShowBookAvai">Tất cả nhân viên</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div th:replace="${source} :: ${type}">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $("#btnQuanLyNhanVien").addClass("active");
+            });
+        </script>
+    </div>
+</div>
+
+<!--todo: Tất cả nhân viên -->
+<div class="col-sm-12" th:fragment="tat-ca-nhan-vien">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>GT</th>
+                <th>Năm sinh</th>
+                <th>SDT</th>
+                <th>Địa chỉ</th>
+                <th>Chức vụ</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="nv : ${listNV}">
+                <td th:text="*{nv.getManhanvien()}"></td>
+                <td th:text="*{nv.getHoten()}"></td>
+                <td th:text="*{nv.getGioitinh()}"></td>
+                <td th:text="*{nv.getNamsinh()}"></td>
+                <td th:text="*{nv.getSodienthoai()}"></td>
+                <td th:text="*{nv.getDiachi()}"></td>
+                <td th:text="*{nv.getTenChucVu()}"></td>
+                <td class="text-center">
+                    <a th:href="'/edit-staff/' + ${nv.getManhanvien()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <script>
+        $(document).ready(function() {
+            // $("#btnShowBookAvai").addClass("active");
+        });
+    </script> -->
+</div>

@@ -47,6 +47,8 @@ public class LoginController {
                     messages = new ArrayList<>();
                     request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
                 }   
+                // clear để test
+                messages.clear();
                 messages.add(username);
 		        request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
                 return "redirect:/trang-chu";

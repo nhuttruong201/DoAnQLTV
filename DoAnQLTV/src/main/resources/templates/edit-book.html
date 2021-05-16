@@ -1,26 +1,22 @@
+<!-- todo: fragment chính -->
 <div class="container my-4" th:fragment="sua-sach">
     <strong style="color: #28a745;"><i class="fas fa-book"></i> Sửa sách</strong>
     <hr>
     <form th:action="@{/edit-book}" th:object="${book}" method="post" class="was-validated">
         <div class="row jumbotron py-4">
             <div class="col-sm-6">
-                <input type="hidden" name="masach" id="masach" th:value="${oldBook.getMasach()}">
+                <input type="hidden" th:field="*{masach}">
                 <div class="form-group">
                     <label for="">Tên sách:</label>
-                    <!-- th:field="*{tensach}" -->
-                    <input type="text" class="form-control" placeholder="nhập tên sách" name="tensach" id="tensach" th:value="${oldBook.getTensach()}" required />
+                    <input type="text" class="form-control" placeholder="nhập tên sách" th:field="*{tensach}" required/>
                 </div>
                 <div class="form-group">
                     <label for="">Tác giả:</label>
-                    <!-- <input type="text" class="form-control" th:value="${oldBook.getTacgia()}" placeholder="nhập tên tác giả" name="" required th:field="*{tacgia}" /> -->
-                    <input type="text" class="form-control" placeholder="nhập tên tác giả" name="tacgia" id="tacgia" th:value="${oldBook.getTacgia()}" required />
-
+                    <input type="text" class="form-control" placeholder="nhập tên tác giả" required th:field="*{tacgia}" />
                 </div>
                 <div class="form-group">
                     <label for="">Thể loại:</label>
-                    <!-- th:field="*{matheloai}" -->
                     <select name="" class="custom-select" th:field="*{matheloai}">
-                        <option selected th:value="${oldBook.getMatheloai()}" th:text="${idType}"></option>
                         <option th:each="type : ${listType}" th:value="${type.getMatheloai()}" th:text="${type.getTentheloai()}"></option>
                     </select>
                 </div>
@@ -30,27 +26,25 @@
                 <div class="form-group">
                     <label for="">Nhà xuất bản:</label>
                     <select name="" class="custom-select" th:field="*{manhaxuatban}">
-                        <option selected th:value="${oldBook.getManhaxuatban()}" th:text="${tenNXB}"></option>
                         <option th:each="nxb : ${listNXB}" th:value="${nxb.getManhaxuatban()}" th:text="${nxb.getTennhaxuatban()}"></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="">Năm xuất bản:</label>
-                    <input type="number" class="form-control" placeholder="nhập năm xuất bản" name="namxuatban" id="namxuatban" min="2000" max="2021" required th:value="${oldBook.getNamxuatban()}">
+                    <input type="number" class="form-control" placeholder="nhập năm xuất bản" min="2000" max="2021" required th:field="*{namxuatban}">
                 </div>
                 <div class="form-group">
                     <label for="">Số lượng:</label>
-                    <input type="number" class="form-control" placeholder="nhập số lượng" name="soluong" id="soluong" min="1" required th:value="${oldBook.getSoluong()}">
+                    <input type="number" class="form-control" placeholder="nhập số lượng" min="1" required th:field="*{soluong}">
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>  Cập nhật</button>
-                <a href="/quan-ly-sach/tat-ca-sach" type=" button " class="btn btn-danger "><i class="fas fa-times "></i> Hủy</a>
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Cập nhật</button>
+                <a href="/quan-ly-sach/tat-ca-sach" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
             </div>
         </div>
-
     </form>
 </div>

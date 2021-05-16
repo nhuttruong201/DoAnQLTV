@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaiKhoanRepo extends JpaRepository<TaiKhoanEntity, Long> {
     TaiKhoanEntity findByEmail(String email);
+    TaiKhoanEntity findByTentaikhoan(String tentaikhoan);
+    TaiKhoanEntity findById(int id);
 }

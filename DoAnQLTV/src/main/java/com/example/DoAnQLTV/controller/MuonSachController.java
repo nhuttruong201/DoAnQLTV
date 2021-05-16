@@ -10,11 +10,13 @@ import javax.servlet.http.HttpSession;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
+import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
 import com.example.DoAnQLTV.repository.NhaXuatBanRepo;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
+import com.example.DoAnQLTV.repository.QuyenHanRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheLoaiRepo;
@@ -35,6 +37,9 @@ public class MuonSachController {
     @Autowired private TheThuVienRepo theThuVienRepo;
     @Autowired private PhieuMuonRepo phieuMuonRepo;
     @Autowired private ChiTietPhieuMuonRepo chiTietPhieuMuonRepo;
+    @Autowired private QuyenHanRepo quyenHanRepo;
+    @Autowired private TaiKhoanRepo taiKhoanRepo;
+    @Autowired private NhanVienRepo nhanVienRepo;
 
     //todo: Mượn sách - Kiểm tra thẻ
     @GetMapping("/muon-sach")
@@ -43,6 +48,11 @@ public class MuonSachController {
         if(!SessionService.CheckLogin(session)){
             return "redirect:/login";
         }
+        //todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
+        
         model.addAttribute("source", "muon-sach");
         model.addAttribute("fragment", "kiem-tra-the");
         model.addAttribute("title", "Yâu cầu mượn sách");
@@ -55,7 +65,16 @@ public class MuonSachController {
     @PostMapping("/muon-sach")
     public String MuonSach(Model model,
         @RequestParam(name = "mathe", defaultValue = "0") String mathe,
-        @RequestParam(name = "sdt", defaultValue = "0") String sdt){
+        @RequestParam(name = "sdt", defaultValue = "0") String sdt,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+        //todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
 
         model.addAttribute("source", "muon-sach");
         model.addAttribute("title", "Yâu cầu mượn sách");
@@ -174,14 +193,25 @@ public class MuonSachController {
         @RequestParam(name = "numBook[1]") String numBook_2,
         @RequestParam(name = "numBook[2]") String numBook_3,
         @RequestParam(name = "numBook[3]") String numBook_4,
-        @RequestParam(name = "numBook[4]") String numBook_5){
+        @RequestParam(name = "numBook[4]") String numBook_5,
+        HttpSession session){
+        //todo: check login - note: truyền HttpSession session
+        if(!SessionService.CheckLogin(session)){
+            return "redirect:/login";
+        }
+        //todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
        
         LocalDate localDate = LocalDate.now();
         Date ngaymuon = Date.valueOf(localDate);
 
+        TaiKhoanEntity acTemp = taiKhoanRepo.findByTentaikhoan(SessionService.getSession(session));
+
         PhieuMuonEntity temp = new PhieuMuonEntity();
         temp.setMathe(mathe);
-        temp.setManhanvien(1);
+        temp.setManhanvien(acTemp.getManhanvien());
         temp.setNgaymuon(ngaymuon);
         temp.setHantra(hantra);
         temp.setTrangthai(1);

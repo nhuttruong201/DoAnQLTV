@@ -8,12 +8,14 @@ import javax.servlet.http.HttpSession;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.NhanVienEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
+import com.example.DoAnQLTV.entity.QuyenHanEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
 import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
+import com.example.DoAnQLTV.repository.QuyenHanRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
@@ -34,6 +36,7 @@ public class HomeController {
     @Autowired private TaiKhoanRepo taiKhoanRepo;
     @Autowired private PhieuMuonRepo phieuMuonRepo;
     @Autowired private ChiTietPhieuMuonRepo ctpmRepo;
+    @Autowired private QuyenHanRepo quyenHanRepo;
     
     // Trang chủ
     @GetMapping("/trang-chu")
@@ -42,11 +45,14 @@ public class HomeController {
         if(!SessionService.CheckLogin(session)){
             return "redirect:/login";
         }
-        
+        //todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
+        model.addAttribute("title", "Trang chủ");
         model.addAttribute("source", "home");
         model.addAttribute("fragment", "trang-chu");
-        model.addAttribute("title", "Trang chủ");
-
+        
         List<SachEntity> listBook = sachRepo.findAll();
         int sl = 0;
         for(SachEntity i : listBook){
@@ -84,7 +90,11 @@ public class HomeController {
             }
         }
         model.addAttribute("listBookBorrow", listBookBorrows);
-        model.addAttribute("sizeBookBorow", listBookBorrows.size());
+        int sumBookBorrow = 0;
+        for(var i : listBookBorrows){
+            sumBookBorrow+=i.getSoluong();
+        }
+        model.addAttribute("sizeBookBorow", sumBookBorrow);
 
         return "index";
     }

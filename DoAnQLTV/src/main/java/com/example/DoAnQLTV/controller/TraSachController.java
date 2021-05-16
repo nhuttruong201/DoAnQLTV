@@ -8,10 +8,14 @@ import javax.servlet.http.HttpSession;
 import com.example.DoAnQLTV.entity.ChiTietPhieuMuonEntity;
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
 import com.example.DoAnQLTV.entity.SachEntity;
+import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
+import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
+import com.example.DoAnQLTV.repository.QuyenHanRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
+import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
 import com.example.DoAnQLTV.service.BookBorrow;
 import com.example.DoAnQLTV.service.SessionService;
@@ -24,26 +28,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TraSachController {
-    @Autowired private SachRepo sachRepo;
-    @Autowired private TheThuVienRepo theThuVienRepo;
-    @Autowired private PhieuMuonRepo phieuMuonRepo;
-    @Autowired private ChiTietPhieuMuonRepo chiTietPhieuMuonRepo;
-
-    //todo: Trả sách - Kiểm tra thẻ
+    @Autowired
+    private SachRepo sachRepo;
+    @Autowired
+    private TheThuVienRepo theThuVienRepo;
+    @Autowired
+    private PhieuMuonRepo phieuMuonRepo;
+    @Autowired
+    private ChiTietPhieuMuonRepo chiTietPhieuMuonRepo;
+    @Autowired private QuyenHanRepo quyenHanRepo;
+    @Autowired private TaiKhoanRepo taiKhoanRepo;
+    @Autowired private NhanVienRepo nhanVienRepo;
+ 
+    // todo: Trả sách - Kiểm tra thẻ
     @GetMapping("/tra-sach")
-    public String TraSach(Model model, HttpSession session){
-        if(!SessionService.CheckLogin(session)){
+    public String TraSach(Model model, HttpSession session) {
+        if (!SessionService.CheckLogin(session)) {
             return "redirect:/login";
         }
+        // todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
         model.addAttribute("source", "tra-sach");
         model.addAttribute("fragment", "kiem-tra-the");
         model.addAttribute("title", "Yêu cầu trả sách");
 
         List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
         List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-        //todo: loại bỏ mã thẻ trùng nhau
-        for(int i=0; i<listBill.size(); i++){
-            if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
+        // todo: loại bỏ mã thẻ trùng nhau
+        for (int i = 0; i < listBill.size(); i++) {
+            if (!arrIdCardOnly.contains(listBill.get(i).getMathe())) {
                 arrIdCardOnly.add(listBill.get(i).getMathe());
             }
         }
@@ -52,20 +67,27 @@ public class TraSachController {
     }
 
     @PostMapping("/tra-sach")
-    public String TraSach(Model model, 
-        @RequestParam(name = "mathe", defaultValue = "0") String mathe,
-        @RequestParam(name = "sdt", defaultValue = "0") String sdt){
+    public String TraSach(Model model, @RequestParam(name = "mathe", defaultValue = "0") String mathe,
+            @RequestParam(name = "sdt", defaultValue = "0") String sdt, HttpSession session) {
+        // todo: check login - note: truyền HttpSession session
+        if (!SessionService.CheckLogin(session)) {
+            return "redirect:/login";
+        }
+        // todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
 
         model.addAttribute("source", "tra-sach");
         model.addAttribute("title", "Yâu cầu trả sách");
 
-        //todo: check rỗng submit
-        if(mathe.equals("0") && sdt.equals("0")){
+        // todo: check rỗng submit
+        if (mathe.equals("0") && sdt.equals("0")) {
             List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
             List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-            //todo: loại bỏ mã thẻ trùng nhau
-            for(int i=0; i<listBill.size(); i++){
-                if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
+            // todo: loại bỏ mã thẻ trùng nhau
+            for (int i = 0; i < listBill.size(); i++) {
+                if (!arrIdCardOnly.contains(listBill.get(i).getMathe())) {
                     arrIdCardOnly.add(listBill.get(i).getMathe());
                 }
             }
@@ -74,15 +96,15 @@ public class TraSachController {
             return "index";
         }
 
-        if(mathe.equals("0")){
-            //todo: check với số điện thoại
+        if (mathe.equals("0")) {
+            // todo: check với số điện thoại
             TheThuVienEntity card = theThuVienRepo.findBySodienthoai(sdt);
-            if(card == null){
+            if (card == null) {
                 List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
                 List<Integer> arrIdCardOnly = new ArrayList<Integer>();
-                //todo: loại bỏ mã thẻ trùng nhau
-                for(int i=0; i<listBill.size(); i++){
-                    if(!arrIdCardOnly.contains(listBill.get(i).getMathe())){
+                // todo: loại bỏ mã thẻ trùng nhau
+                for (int i = 0; i < listBill.size(); i++) {
+                    if (!arrIdCardOnly.contains(listBill.get(i).getMathe())) {
                         arrIdCardOnly.add(listBill.get(i).getMathe());
                     }
                 }
@@ -92,37 +114,38 @@ public class TraSachController {
                 model.addAttribute("sdt", sdt);
 
                 return "index";
-            }else{
+            } else {
                 model.addAttribute("mathe", card.getMathe());
                 model.addAttribute("hoten", card.getHoten());
                 model.addAttribute("sdt", card.getSodienthoai());
-                model.addAttribute("fragment", "tra-sach");       
-                
+                model.addAttribute("fragment", "tra-sach");
+
                 TheThuVienEntity cardTemp = theThuVienRepo.findBySodienthoai(sdt);
                 List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(cardTemp.getMathe(), 1);
                 List<BookBorrow> listBookBorrows = new ArrayList<BookBorrow>();
 
-                for(PhieuMuonEntity bill : listBill){
-                    List<ChiTietPhieuMuonEntity> listCTPM = chiTietPhieuMuonRepo.findByMaphieumuon(bill.getMaphieumuon());
-                    for(ChiTietPhieuMuonEntity temp : listCTPM){
+                for (PhieuMuonEntity bill : listBill) {
+                    List<ChiTietPhieuMuonEntity> listCTPM = chiTietPhieuMuonRepo
+                            .findByMaphieumuon(bill.getMaphieumuon());
+                    for (ChiTietPhieuMuonEntity temp : listCTPM) {
                         BookBorrow tempBookBorrow = new BookBorrow();
                         tempBookBorrow.setMaphieumuon(temp.getMaphieumuon());
                         tempBookBorrow.setMasach(temp.getMasach());
                         tempBookBorrow.setTensach(tempBookBorrow.getTenSachBaseMaSach(sachRepo, temp.getMasach()));
                         tempBookBorrow.setSoluong(temp.getSoluong());
-                        
+
                         listBookBorrows.add(tempBookBorrow);
                     }
                 }
                 model.addAttribute("listBill", listBill);
                 model.addAttribute("listBookBorrow", listBookBorrows);
-                 // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
+                // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
                 LocalDate toDay = LocalDate.now();
                 model.addAttribute("toDay", toDay);
                 return "index";
             }
-        }else{
-            //todo: check với mã thẻ, không thể null
+        } else {
+            // todo: check với mã thẻ, không thể null
             TheThuVienEntity card = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
             model.addAttribute("mathe", card.getMathe());
             model.addAttribute("hoten", card.getHoten());
@@ -130,60 +153,70 @@ public class TraSachController {
             model.addAttribute("fragment", "tra-sach");
 
             List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(Integer.parseInt(mathe), 1);
-            listBill.forEach(System.out :: println);
+            listBill.forEach(System.out::println);
             List<BookBorrow> listBookBorrows = new ArrayList<BookBorrow>();
 
-            for(PhieuMuonEntity bill : listBill){
+            for (PhieuMuonEntity bill : listBill) {
                 List<ChiTietPhieuMuonEntity> listCTPM = chiTietPhieuMuonRepo.findByMaphieumuon(bill.getMaphieumuon());
-                for(ChiTietPhieuMuonEntity temp : listCTPM){
+                for (ChiTietPhieuMuonEntity temp : listCTPM) {
                     BookBorrow tempBookBorrow = new BookBorrow();
                     tempBookBorrow.setMaphieumuon(temp.getMaphieumuon());
                     tempBookBorrow.setMasach(temp.getMasach());
                     tempBookBorrow.setTensach(tempBookBorrow.getTenSachBaseMaSach(sachRepo, temp.getMasach()));
                     tempBookBorrow.setSoluong(temp.getSoluong());
-                    
+
                     listBookBorrows.add(tempBookBorrow);
                 }
             }
             model.addAttribute("listBill", listBill);
             model.addAttribute("listBookBorrow", listBookBorrows);
-            //todo: phục vụ set value ngày trả phải = ngaỳ hiện tại
+            // todo: phục vụ set value ngày trả phải = ngaỳ hiện tại
             LocalDate toDay = LocalDate.now();
             model.addAttribute("toDay", toDay);
             return "index";
         }
     }
 
-    //todo: thanh toán sách trả
+    // todo: thanh toán sách trả
     @PostMapping("/thanh-toan-sach-tra")
-    public String ThanhToanSachTra(Model model,
-        @RequestParam(name = "idBill") String idBill,
-        @RequestParam(name = "mathe") int mathe,
-        @RequestParam(name = "ngaytra") Date ngaytra){
+    public String ThanhToanSachTra(Model model, @RequestParam(name = "idBill") String idBill,
+            @RequestParam(name = "mathe") int mathe, @RequestParam(name = "ngaytra") Date ngaytra,
+            HttpSession session) {
+        // todo: check login - note: truyền HttpSession session
+        if (!SessionService.CheckLogin(session)) {
+            return "redirect:/login";
+        }
+        // todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
 
-        if(idBill.equals("allBill")){
+        if (idBill.equals("allBill")) {
             List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(mathe, 1);
-            for(PhieuMuonEntity i : listBill){
+            for (PhieuMuonEntity i : listBill) {
                 PhieuMuonEntity billTemp = phieuMuonRepo.findByMaphieumuon(i.getMaphieumuon());
                 billTemp.setTrangthai(0);
                 billTemp.setNgaytra(ngaytra);
                 phieuMuonRepo.save(billTemp);
 
                 List<ChiTietPhieuMuonEntity> listBillDetal = chiTietPhieuMuonRepo.findByMaphieumuon(i.getMaphieumuon());
-                for(ChiTietPhieuMuonEntity j : listBillDetal){
+                for (ChiTietPhieuMuonEntity j : listBillDetal) {
                     SachEntity bookUndo = sachRepo.findByMasach(j.getMasach());
                     bookUndo.setSoluong(bookUndo.getSoluong() + j.getSoluong());
                     sachRepo.save(bookUndo);
                 }
             }
-        }else{
+        } else {
+            TaiKhoanEntity acTemp = taiKhoanRepo.findByTentaikhoan(SessionService.getSession(session));
             PhieuMuonEntity billTemp = phieuMuonRepo.findByMaphieumuon(Integer.parseInt(idBill));
             billTemp.setTrangthai(0);
             billTemp.setNgaytra(ngaytra);
+            billTemp.setManhanvien(acTemp.getManhanvien());
             phieuMuonRepo.save(billTemp);
 
-            List<ChiTietPhieuMuonEntity> listBillDetal = chiTietPhieuMuonRepo.findByMaphieumuon(Integer.parseInt(idBill));
-            for(ChiTietPhieuMuonEntity i : listBillDetal){
+            List<ChiTietPhieuMuonEntity> listBillDetal = chiTietPhieuMuonRepo
+                    .findByMaphieumuon(Integer.parseInt(idBill));
+            for (ChiTietPhieuMuonEntity i : listBillDetal) {
                 SachEntity bookUndo = sachRepo.findByMasach(i.getMasach());
                 bookUndo.setSoluong(bookUndo.getSoluong() + i.getSoluong());
                 sachRepo.save(bookUndo);

@@ -40,8 +40,6 @@
                                         <th>Tên sách</th>
                                         <th>Tác giả</th>
                                         <th>Thể loại</th>
-                                        <!-- <th>Nhà XB</th>
-                                        <th>Năm XB</th> -->
                                         <th>SL</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
@@ -51,9 +49,7 @@
                                         <td th:text="*{book.getMasach()}"></td>
                                         <td th:text="*{book.getTensach()}"></td>
                                         <td th:text="*{book.getTacgia()}"></td>
-                                        <td th:text="*{book.getMatheloai()}"></td>
-                                        <!-- <td th:text="*{book.getManhaxuatban()}"></td>
-                                        <td th:text="*{book.getNamxuatban()}"></td> -->
+                                        <td th:text="*{book.getTentheloai()}"></td>
                                         <td th:text="*{book.getSoluong()}"></td>
                                         <td class="text-center">
                                             <a th:href="'/edit-book/' + ${book.getMasach()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>

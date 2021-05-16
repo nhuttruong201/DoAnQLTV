@@ -19,6 +19,17 @@ public class NhanVienEntity {
     private String machucvu;
 
 
+    public String getTenChucVu(){
+        if(this.getMachucvu().equals("cvql")){
+            return "Quản lý";
+        }else if(this.getMachucvu().equals("cvtt")){
+            return "Thủ thư";
+        }else{
+            return "Chưa xác định";
+        }
+    }
+    
+
     @Override
     public String toString() {
         return "{" +

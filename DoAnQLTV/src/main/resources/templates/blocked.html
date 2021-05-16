@@ -1,49 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}"></title>
     <link rel="icon" href="/images/logo.png" sizes="30x30">
+    <title>Tài khoản bị giới hạn</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/animation.css">
 </head>
-
-<style>
-    body {
-        background-color: #eee;
-    }
-</style>
 
 <body>
     <div class="container between">
-        <div th:replace="${source} :: ${fragment}"></div>
+        <div class="row pt-4">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 text-center">
+                <h1 class="text-danger"><i class="fas fa-exclamation-triangle"></i></h1>
+                <h6 class="text-danger">Tài khoản của bạn không được cấp quyền để truy cập trang này!</h6>
+                <a href="/trang-chu"><i class="fas fa-hand-point-right"></i> Quay lại </a>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
     </div>
-    <script>
-        $(Document).ready(function() {
-            // khởi động
-            if ($(window).width() < 576) {
-                $("#box-intro").hide();
-            } else {
-                $("#box-intro").show();
-            }
-            // thay đổi
-            $(window).resize(function() {
-                if ($(window).width() < 576) {
-                    $("#box-intro").hide();
-                } else {
-                    $("#box-intro").show();
-                }
-            });
-        });
-    </script>
+
 </body>
 
 </html>

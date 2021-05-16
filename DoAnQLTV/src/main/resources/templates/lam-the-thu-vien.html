@@ -34,21 +34,32 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit " class="btn btn-success">
+                <button type="submit" class="btn btn-success">
                     <i class="fas fa-hand-point-right"></i> Tạo thẻ thư viện
                 </button>
-                <a href="/quan-ly-the-thu-vien/tat-ca-the " type="button " class="btn btn-danger"><i
-                        class="fas fa-times"></i> Hủy</a>
+                <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn
+                    btn-danger"><i class="fas fa-times"></i> Hủy</a>
             </div>
         </div>
     </form>
 </div>
 
-<!-- Thêm thành công -->
-<div th:fragment="lam-the-thanh-cong ">
+<!--todo: Thêm thành công -->
+<div th:fragment="lam-the-thanh-cong">
     <div class="alert alert-success alert-dismissible fade show my-4">
-        <button type="button " class="close" data-dismiss="alert ">&times;</button>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Tạo thẻ thành công!</strong>
     </div>
-    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien "></div>
+    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien"></div>
+</div>
+
+<!--todo: sdt đã được sử dụng -->
+<div th:fragment="sdt-da-su-dung">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Số điện thoại đã được sử dụng!</strong>
+        <hr>
+        <span>Vui lòng nhập số điện thoại khác!</span>
+    </div>
+    <div th:replace="lam-the-thu-vien :: lam-the-thu-vien"></div>
 </div>

@@ -1,0 +1,69 @@
+<!-- todo: fragment chính -->
+<div class="container my-4" th:fragment="them-nhan-vien">
+    <strong style="color: #28a745;"><i class="fas fa-user-tie"></i> Thêm nhân viên</strong>
+    <hr>
+    <form th:action="@{/them-nhan-vien}" th:object="${staff}" method="post" class="was-validated">
+        <div class="row jumbotron py-4">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Họ tên:</label>
+                    <input type="text" class="form-control" placeholder="nhập họ tên" th:field="*{hoten}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="">Năm sinh:</label>
+                    <input type="number" class="form-control" placeholder="nhập năm sinh" required th:field="*{namsinh}" />
+                </div>
+                <div class="form-group">
+                    <label for="">Giới tính:</label>
+                    <select class="custom-select" th:field="*{gioitinh}">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="">Số điện thoại:</label>
+                    <input type="tel" class="form-control" placeholder="nhập số điện thoại" required th:field="*{sodienthoai}">
+                </div>
+                <div class="form-group">
+                    <label for="">Địa chỉ:</label>
+                    <input type="text" class="form-control" placeholder="nhập quận/huyện" required th:field="*{diachi}">
+                </div>
+                <div class="form-group">
+                    <label for="">Chức vụ:</label>
+                    <select class="custom-select" th:field="*{machucvu}">
+                        <option th:each="cv : ${listCV}" th:value="${cv.getMachucvu()}" th:text="${cv.getTenchucvu()}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Thêm nhân viên</button>
+                <a href="/quan-ly-nhan-vien/tat-ca-nhan-vien" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--todo: Thêm thành công -->
+<div th:fragment="them-nhan-vien-thanh-cong">
+    <div class="alert alert-success alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Thêm nhân viên thành công!</strong> Xem thông tin nhân viên vừa thêm ở mục quản lý nhân viên.
+    </div>
+    <div th:replace="them-nhan-vien :: them-nhan-vien"></div>
+</div>
+<!-- todo: sdt đã được sử dụng -->
+<div th:fragment="sdt-da-su-dung">
+    <div class="alert alert-danger alert-dismissible fade show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Số điện thoại đã được sử dụng!</strong>
+        <hr>
+        <span>Vui lòng nhập số điện thoại khác!</span>
+    </div>
+    <div th:replace="them-nhan-vien :: them-nhan-vien"></div>
+</div>

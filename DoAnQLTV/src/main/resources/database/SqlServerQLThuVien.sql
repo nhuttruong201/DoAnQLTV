@@ -42,7 +42,7 @@ create table taikhoan
 
 create table theloai
 (
-	matheloai nvarchar(1000) primary key,
+	matheloai nvarchar(20) primary key,
 	tentheloai nvarchar(1000) not null
 )
 
@@ -60,7 +60,7 @@ create table sach
 	tacgia nvarchar(1000) not null,
 	namxuatban int not null,
 	manhaxuatban nvarchar(20) not null,
-	matheloai nvarchar(1000) not null,
+	matheloai nvarchar(20) not null,
 	soluong int not null,
 	foreign key (matheloai) references theloai (matheloai),
 	foreign key (manhaxuatban) references nhaxuatban (manhaxuatban)
@@ -130,25 +130,27 @@ insert into theloai values ('ttt', N'Truyện, tiểu thuyết');
 insert into theloai values ('tltltg', N'Tâm lý');
 insert into theloai values ('tn', N'Thiếu nhi');
 -- insert sách
-insert into sach values (N'Đắc Nhân Tâm', N'Dale Carnegie', 1936, 'tre', 'tltltg', 100);
-insert into sach values (N'Tuổi trẻ đáng giá bao nhiêu', N'Roise Nguyễn', 1936, 'tre', 'vhnt', 100);
-insert into sach values (N'Cho tôi xin 1 vé đi tuổi thơ', N'Nguyễn Nhật Ánh', 1936, 'tre', 'vhnt', 100);
+insert into sach values (N'Đắc Nhân Tâm', N'Dale Carnegie', 2000, 'tre', 'tltltg', 100);
+insert into sach values (N'Tuổi trẻ đáng giá bao nhiêu', N'Roise Nguyễn', 2000, 'tre', 'vhnt', 100);
+insert into sach values (N'Cho tôi xin 1 vé đi tuổi thơ', N'Nguyễn Nhật Ánh', 2000, 'tre', 'vhnt', 100);
 -- insert chức vụ
 insert into chucvu values ('cvql', N'Quản lý');
-insert into chucvu values ('cvnl', N'Nhập liệu');
 insert into chucvu values ('cvtt', N'Thủ thư');
 -- insert nhân viên
 insert into nhanvien values ( N'Võ Nhựt Trường', 2000, N'Nam', '0356616590', N'Thủ Đức', 'cvql');
-insert into nhanvien values ( N'Đỗ Quang Trung', 2000, N'Nam', '1111111111', N'Thủ Đức', 'cvnl');
-insert into nhanvien values ( N'Nguyễn Hoàng Vinh', 2000, N'Nam', '2222222222', N'Thủ Đức', 'cvtt');
+insert into nhanvien values ( N'Đỗ Quang Trung', 2000, N'Nam', '1111111111', N'Thủ Đức', 'cvql');
+insert into nhanvien values ( N'Nguyễn Hoàng Vinh', 2000, N'Nam', '2222222222', N'Thủ Đức', 'cvql');
 insert into nhanvien values ( N'Lương Hoàng Long', 2000, N'Nam', '2222222222', N'Thủ Đức', 'cvtt');
 -- insert quyền hạn
-insert into quyenhan values (0, 'staff');
-insert into quyenhan values (1, 'admin');
+insert into quyenhan values (0, 'Staff');
+insert into quyenhan values (1, 'Admin');
 -- insert tài khoản
 insert into taikhoan values ('admin', 'admin', 'nhuttruongvo201@gmail.com', 1, 1);
-insert into taikhoan values ('hoangvinh', 'admin', 'null', 2, 0);
-insert into taikhoan values ('quangtrung', 'admin', 'null', 3, 0);
+insert into taikhoan values ('nhuttruong', 'admin', 'null', 1, 1);
+insert into taikhoan values ('quangtrung', 'admin', 'null', 2, 1);
+insert into taikhoan values ('hoangvinh', 'admin', 'null', 3, 1);
+insert into taikhoan values ('staff', 'admin', 'null', 4, 0);
+
 -- insert trạng thái thẻ
 insert into trangthaithe values ('open', N'Mở');
 insert into trangthaithe values ('lock', N'Bị khóa');

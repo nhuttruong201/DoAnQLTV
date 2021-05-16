@@ -1,0 +1,97 @@
+<!--todo: fragment chính -->
+<div class="container my-4" th:fragment="quan-ly-tai-khoan">
+    <div class="row">
+        <div class="col-sm-12">
+            <strong style="color: #28a745;"><i class="fas fa-user"></i> Quản lý tài khoản</strong>
+            <div class="float-right">
+                <a href="/them-tai-khoan" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Thêm mới
+                </a>
+            </div>
+            <br>
+            <hr>
+            <!-- <form action="/tim-nhan-vien" method="post">
+                <div class="row">
+                    <div class="col-sm-4 mt-1">
+                        <select name="masach" class="custom-select">
+                            <option value="">Mã nhân viên</option>
+                            <option th:each="book : ${listBook}" th:value="${book.getMasach()}" th:text="${book.getMasach()}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tensach" id="" placeholder="tên sách">
+                    </div>
+                    <div class="col-sm-4 mt-1">
+                        <input class="form-control" type="text" name="tacgia" id="" placeholder="tên tác giả">
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary btn-block text-center">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form> -->
+            <div class="row jumbotron p-1">
+                <div class="col-sm-12 mt-2">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-group">
+                                <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-primary" id="btnShowBookAvai">Tất cả tài khoản</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div th:replace="${source} :: ${type}">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $("#btnQuanLyTaiKhoan").addClass("active");
+            });
+        </script>
+    </div>
+</div>
+
+<!--todo: Tất cả tài khoản -->
+<div class="col-sm-12" th:fragment="tat-ca-tai-khoan">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Tên tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Nhân viên</th>
+                <th>Email</th>
+                <th>Quyền hạn</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ac : ${listAccount}">
+                <td th:text="*{ac.getId()}"></td>
+                <td th:text="*{ac.getTentaikhoan()}"></td>
+                <td th:text="*{ac.getMatkhau()}"></td>
+                <td th:text="*{ac.getHoten()}"></td>
+                <td th:text="*{ac.getEmail()}"></td>
+                <td th:text="*{ac.getTenquyenhan()}"></td>
+                <td class="text-center">
+                    <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            // $("#btnShowBookAvai").addClass("active");
+        });
+    </script>
+</div>
