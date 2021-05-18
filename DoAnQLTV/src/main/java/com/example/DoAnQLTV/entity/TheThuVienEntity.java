@@ -22,9 +22,9 @@ public class TheThuVienEntity {
    
     public String getTenTrangThai(){
         if(this.matrangthai.equals("lock")){
-            return "Bị khóa";
+            return "OFF";
         }else{
-            return "Hoạt động";
+            return "ON";
         }
     }
 

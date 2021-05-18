@@ -76,6 +76,7 @@ public class QuanLyTheController {
                 listCardBorrows.add(temp);
             }
         } else if(type.equals("the-het-han")){
+            //todo: Thẻ hết hạn
             LocalDate today = LocalDate.now();
             List<TheThuVienEntity> listAllCard = theThuVienRepo.findAll();
             for(var i : listAllCard){
