@@ -1,3 +1,4 @@
+<!-- todo: fragment chính -->
 <div class="container my-4" th:fragment="kiem-tra-the">
     <div class="fadeInDown">
         <strong style="color: #28a745;"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</strong>
@@ -12,10 +13,11 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <select name="mathe" class="custom-select">
+                    <input type="number" name="mathe" class="form-control" placeholder="nhập mã thẻ" />
+                    <!-- <select name="mathe" class="custom-select">
                         <option value="">chọn mã thẻ thư viện</option>
                         <option th:each="id : ${listIdCardBorrow}" th:value="${id}" th:text="${id}"></option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="col-sm-6">
@@ -41,7 +43,7 @@
     </script>
 </div>
 
-<!-- Trả sách -->
+<!--todo: Xử lý trả sách -->
 <div class="container my-4" th:fragment="tra-sach">
     <strong style="color: #28a745;"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</strong>
     <hr>
@@ -85,7 +87,6 @@
                             <th>ID Sách</th>
                             <th>Tên sách</th>
                             <th>SL</th>
-                            <!-- <th class="text-center">Thao tác</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -94,9 +95,6 @@
                             <td th:text="*{book.getMasach()}"></td>
                             <td th:text="*{book.getTensach()}"></td>
                             <td th:text="*{book.getSoluong()}"></td>
-                            <!-- <td class="text-center">
-                                <button type="button" th:onclick="|MoveBook(*{book.getMaphieumuon()})|" th:class="'btn btn-outline-primary btn-sm btnMoveId_' + *{book.getMaphieumuon()}"><i class="fas fa-arrow-alt-circle-right"></i></button>
-                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -125,34 +123,13 @@
     </script>
 </div>
 
-<!-- không được để trống -->
-<div th:fragment="khong-co-du-lieu">
+<!--todo: check fail -->
+<div th:fragment="check-fail">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Không có dữ liệu!</strong>
+        <strong><i class="fas fa-exclamation-triangle"></i> <span th:text="${titleAlert}"></span></strong>
         <hr>
-        <span>
-            <i class="fas fa-exclamation-triangle"></i> 
-            <span> Chọn mã thẻ hoặc nhập số điện thoại để check!</span>
-        </span>
-    </div>
-    <div th:replace="tra-sach :: kiem-tra-the"></div>
-</div>
-
-
-<!-- Không tồn tại thẻ -->
-<div th:fragment="the-khong-ton-tai">
-    <div class="alert alert-danger alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Thẻ không tồn tại!</strong>
-        <hr>
-        <span>
-            <i class="fas fa-exclamation-triangle"></i> 
-            <span th:text="${alert}"></span>
-        </span>
-        <hr>
-        <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
-
+        <span th:text="${alert}"></span>
     </div>
     <div th:replace="tra-sach :: kiem-tra-the"></div>
 </div>

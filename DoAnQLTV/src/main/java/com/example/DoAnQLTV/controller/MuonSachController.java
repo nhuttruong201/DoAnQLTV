@@ -60,10 +60,10 @@ public class MuonSachController {
     }
 
     @PostMapping("/muon-sach")
-    public String MuonSach(Model model,
-        @RequestParam(name = "mathe", defaultValue = "0") String mathe,
-        @RequestParam(name = "sdt", defaultValue = "0") String sdt,
-        HttpSession session){
+    public String MuonSach(HttpSession session, Model model,
+        @RequestParam(name = "mathe", defaultValue = "") String mathe,
+        @RequestParam(name = "sdt", defaultValue = "") String sdt
+        ){
         //todo: check login - note: truyền HttpSession session
         if(!SessionService.CheckLogin(session)){
             return "redirect:/login";
@@ -72,107 +72,54 @@ public class MuonSachController {
         String tentaikhoan = SessionService.getSession(session);
         model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
         model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
-
         model.addAttribute("source", "muon-sach");
         model.addAttribute("title", "Yâu cầu mượn sách");
-        List<TheThuVienEntity> listCard = theThuVienRepo.findAll();
+ 
         List<SachEntity> listBook = sachRepo.findAll();
-        model.addAttribute("listCard", listCard);
+        //todo: phục vụ check mã sách mượn
         model.addAttribute("listBook", listBook);
     
-        // Check Card
-        TheThuVienEntity cardCheck;
-        // cả thẻ và sdt rỗng
-        if(mathe.equals("0") && sdt.equals("0")){
-            model.addAttribute("fragment", "khong-co-du-lieu");
-            model.addAttribute("sdt", sdt);
-            return "index";
-        }  
-        // thẻ rỗng
-        if(mathe.equals("0")){
-            cardCheck = theThuVienRepo.findBySodienthoai(sdt);
-            if(cardCheck==null){
-                 // thẻ không tồn tại
-                model.addAttribute("fragment", "the-khong-ton-tai");
-                model.addAttribute("sdt", sdt);
-                return "index";
-            }
+        TheThuVienEntity cardCheck = new TheThuVienEntity();
+        //todo: cả mã thẻ và sdt rỗng
+        if(mathe.equals("") && sdt.equals("")){
+            return "redirect:/muon-sach";
         }else{
-            cardCheck = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
-            // check = mã thẻ chắc chắn tồn tại thẻ do tải dữ liệu db lên select input nên ko cần check thẻ null
+            if(mathe.equals("")){
+                cardCheck = theThuVienRepo.findBySodienthoai(sdt);
+                model.addAttribute("alert", "không tồn tại thẻ với số điện thoại: " + sdt);
+            }else{
+                cardCheck = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
+                model.addAttribute("alert", "không tồn tại thẻ với mã thẻ: " + mathe);
+            }
         }
-        // check thẻ bị khóa
+        //todo: check thẻ không tồn tại
+        if(cardCheck==null){
+            model.addAttribute("fragment", "the-khong-ton-tai");
+            return "index";
+        }
+
+        //todo: check thẻ bị khóa
         if(cardCheck.getMatrangthai().equals("lock")){
             model.addAttribute("fragment", "the-bi-khoa");
             // xuất thông tin thẻ hiện tại
-            TheThuVienEntity card = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
+            TheThuVienEntity card = theThuVienRepo.findByMathe(cardCheck.getMathe());
             model.addAttribute("mathe", card.getMathe());
             model.addAttribute("hoten", card.getHoten());
             model.addAttribute("gioitinh", card.getGioitinh());
             model.addAttribute("sdt", card.getSodienthoai());
             return "index";
-        }else{
-            // check mã thẻ rỗng
-            // nếu mã thẻ rỗng thì data submit sẽ là sdt
-            if(mathe.equals("0")){
-                // duyệt để tìm thẻ yêu cầu mượn sách
-                for(TheThuVienEntity i : listCard){
-                    if(i.getSodienthoai().equals(sdt)){
-                        //todo: check thẻ thành công
-                        model.addAttribute("mathe", i.getMathe());
-                        model.addAttribute("hoten", i.getHoten());
-                        model.addAttribute("sdt", i.getSodienthoai());
-                        model.addAttribute("fragment", "muon-sach");
-                         // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
-                        LocalDate toDay = LocalDate.now();
-                        
-                        model.addAttribute("toDay", toDay);
-                        return "index";
-                    }
-                }
-                // không tồn tại thẻ với sdt submit
-                model.addAttribute("fragment", "the-khong-ton-tai");
-                model.addAttribute("sdt", sdt);
-                return "index";
-            }else{
-                // mã thẻ không rỗng -> data submit = mã thẻ
-                List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(Integer.parseInt(mathe), 1);
-                // check thẻ hết lượt: tối đa 2 lượt mượn cùng lúc
-                if(listBill.size()<2){
-                    // còn lượt
-                    // duyệt để tìm thẻ yêu cầu mượn sách
-                    for(TheThuVienEntity i : listCard){
-                        if(i.getMathe() == Integer.parseInt(mathe)){
-                            //todo: check thẻ thành công
-                            model.addAttribute("mathe", i.getMathe());
-                            model.addAttribute("hoten", i.getHoten());
-                            model.addAttribute("sdt", i.getSodienthoai());
-                            model.addAttribute("fragment", "muon-sach");
-                            // phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
-                            LocalDate toDay = LocalDate.now();
-                            model.addAttribute("toDay", toDay);
-                            return "index";
-                        }
-                    }
-                }else{
-                    // quá số lần mượn
-                    model.addAttribute("fragment", "het-luot");
-                    TheThuVienEntity card = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
-                    model.addAttribute("mathe", mathe);
-                    model.addAttribute("hoten", card.getHoten());
-                    model.addAttribute("gioitinh", card.getGioitinh());
-                    model.addAttribute("sdt", card.getSodienthoai());
-    
-                    return "index";
-                }
-            }
-    
-            // thẻ không tồn tại
-            model.addAttribute("fragment", "the-khong-ton-tai");
-            model.addAttribute("sdt", sdt);
-            return "index";
         }
-
+        
+        //todo: Thẻ đủ điều kiện mượn sách
+        //todo: xuất thông tin thẻ để lập phiếu mượn
+        model.addAttribute("mathe", cardCheck.getMathe());
+        model.addAttribute("hoten", cardCheck.getHoten());
+        model.addAttribute("sdt", cardCheck.getSodienthoai());
+        model.addAttribute("fragment", "muon-sach");
+        //todo: phục vụ check ngày trả phải lớn hơn ngaỳ hiện tại
+        LocalDate toDay = LocalDate.now();
+        model.addAttribute("toDay", toDay);
+        return "index";
     }
     
     //todo: Lập phiếu mượn

@@ -14,12 +14,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <select name="mathe" class="custom-select">
-                        <option value="0">chọn mã thẻ thư viện</option>
-                        <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}">
-                        </option>
-                    </select>
-                    <!-- <input type="number" name="mathe" class="form-control" placeholder="nhập mã thẻ thư viện" /> -->
+                    <input type="number" name="mathe" class="form-control" placeholder="nhập mã thẻ" />
                 </div>
             </div>
             <div class="col-sm-6">
@@ -49,15 +44,16 @@
 <div th:fragment="the-khong-ton-tai">
     <div class="alert alert-danger alert-dismissible fade show my-4">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <i class="fas fa-exclamation-triangle"></i>
-        <strong>Thẻ không tồn tại!</strong>
-        <hr/>
-        <span th:text="'Không tồn tại thẻ với số điện thoại: ' + ${sdt}"></span>
+        <strong><i class="fas fa-exclamation-triangle"></i> Thẻ không tồn tại!</strong>
+        <hr>
+        <span th:text="${alert}"></span>
         <hr>
         <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
+
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
+
 <!--todo: Đã đạt số lần mượn tối đa -->
 <div th:fragment="het-luot">
     <div class="alert alert-danger alert-dismissible fade show my-4">
@@ -92,20 +88,8 @@
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
 </div>
-<!--todo: Không được để trống -->
-<div th:fragment="khong-co-du-lieu">
-    <div class="alert alert-danger alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Không có dữ liệu!</strong>
-        <hr />
-        <span>
-            <i class="fas fa-exclamation-triangle"></i>
-            <span> Chọn mã thẻ hoặc nhập số điện thoại để check!</span>
-        </span>
-    </div>
-    <div th:replace="muon-sach :: kiem-tra-the"></div>
-</div>
-<!--todo: Mượn sách -->
+
+<!--todo: Xử lý mượn sách -->
 <div class="container my-4" th:fragment="muon-sach">
     <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
     <hr />
