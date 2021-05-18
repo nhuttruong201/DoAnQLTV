@@ -30,6 +30,7 @@
     <div th:replace="fragment-login :: login"></div>
     <input type="hidden" th:value="${username}" id="username-fail">
     <input type="hidden" th:value="${password}" id="password-fail">
+    <input type="hidden" th:value="${alert}" id="alert">
     <script>
         $(Document).ready(function() {
             $("#box-intro").removeClass("fadeIn");
@@ -38,7 +39,7 @@
             $("#username").val($("#username-fail").val());
             $("#password").val($("#password-fail").val());
 
-            var alert = '<br><div class="text-center" id="alert-login"><div><span class="text-danger"><i class="fas fa-exclamation-triangle"></i> Tài khoản hoặc mật khẩu không chính xác!</span>'
+            var alert = '<br><div class="text-center" id="alert-login"><div><span class="text-danger"><i class="fas fa-exclamation-triangle"></i> ' + $("#alert").val() + '</span>'
             $("#frmLogin").append(alert);
             $("#username").focusin(function() {
                 $("#alert-login").remove();

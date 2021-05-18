@@ -1,10 +1,7 @@
 package com.example.DoAnQLTV.entity;
 
 import java.sql.Date;
-
 import javax.persistence.*;
-
-import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -27,7 +24,7 @@ public class TheThuVienEntity {
         if(this.matrangthai.equals("lock")){
             return "Bị khóa";
         }else{
-            return "Mở";
+            return "Hoạt động";
         }
     }
 

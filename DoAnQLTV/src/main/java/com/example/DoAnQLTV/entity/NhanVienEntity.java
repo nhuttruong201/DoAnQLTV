@@ -3,7 +3,6 @@ package com.example.DoAnQLTV.entity;
 
 import javax.persistence.*;
 
-import com.example.DoAnQLTV.repository.NhanVienRepo;
 
 @Entity
 @Table(name = "nhanvien")

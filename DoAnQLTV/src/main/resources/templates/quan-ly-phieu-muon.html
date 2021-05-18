@@ -13,19 +13,13 @@
             <form action="/tim-phieu-muon" method="post">
                 <div class="row">
                     <div class="col-sm-4 mt-1">
-                        <select name="maphieumuon" class="custom-select">
-                            <option value="">mã phiếu mượn</option>
-                            <option th:each="bill : ${listAllBill}" th:value="${bill.getMaphieumuon()}" th:text="${bill.getMaphieumuon()}"></option>
-                        </select>
+                        <input class="form-control" type="number" name="maphieumuon" placeholder="mã phiếu mượn">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <select name="mathe" id="" class="custom-select">
-                            <option value="">mã đọc giả</option>
-                            <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}"></option>
-                        </select>
+                        <input class="form-control" type="number" name="mathe" placeholder="mã đọc giả">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="date" name="ngaymuon" id="">
+                        <input class="form-control" type="date" name="ngaymuon">
                     </div>
                 </div>
                 <div class="row my-3">
@@ -79,6 +73,7 @@
     <script>
         $(document).ready(function() {
             $("#btnShowBillUnpaid").addClass("active");
+            $(".trangthai").addClass("text-danger font-weight-bold");
         });
     </script>
 </div>
@@ -92,8 +87,6 @@
         });
     </script>
 </div>
-
-
 <!-- todo: list bill -->
 <div th:fragment="list-bill">
     <table class="table table-bordered table-hover table-info">
@@ -101,6 +94,7 @@
             <tr>
                 <th>ID Bill</th>
                 <th>ID thẻ</th>
+                <th>ID nhân viên</th>
                 <th>Ngày mượn</th>
                 <th>Hạn trả</th>
                 <th>Ngày trả</th>
@@ -112,10 +106,11 @@
             <tr th:each="bill : ${listBill}">
                 <td th:text="*{bill.getMaphieumuon()}"></td>
                 <td th:text="*{bill.getMathe()}"></td>
+                <td th:text="*{bill.getManhanvien()}"></td>
                 <td th:text="*{bill.getNgaymuon()}"></td>
                 <td th:text="*{bill.getHantra()}" class="hantra"></td>
                 <td th:text="*{bill.getNgaytra()}"></td>
-                <td th:text="*{bill.getTenTrangThai()}"></td>
+                <td th:text="*{bill.getTenTrangThai()}" class="trangthai"></td>
                 <td class="text-center">
                     <form action="/tra-sach" method="post">
                         <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">

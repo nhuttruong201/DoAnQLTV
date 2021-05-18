@@ -36,6 +36,7 @@ create table taikhoan
 	email varchar(1000) not null,
 	manhanvien int not null,
 	maquyenhan int not null,
+	status varchar(100) not null,
 	foreign key (manhanvien) references nhanvien (manhanvien),
 	foreign key (maquyenhan) references quyenhan (maquyenhan)
 )
@@ -145,11 +146,13 @@ insert into nhanvien values ( N'Lương Hoàng Long', 2000, N'Nam', '2222222222'
 insert into quyenhan values (0, 'Staff');
 insert into quyenhan values (1, 'Admin');
 -- insert tài khoản
-insert into taikhoan values ('admin', 'admin', 'nhuttruongvo201@gmail.com', 1, 1);
-insert into taikhoan values ('nhuttruong', 'admin', 'null', 1, 1);
-insert into taikhoan values ('quangtrung', 'admin', 'null', 2, 1);
-insert into taikhoan values ('hoangvinh', 'admin', 'null', 3, 1);
-insert into taikhoan values ('staff', 'admin', 'null', 4, 0);
+-- tentaikhoan, matkhau, email, manhanvien, maquyenhan, status
+insert into taikhoan values ('admin', 'admin', 'nhuttruongvo201@gmail.com', 1, 1, 'ON');
+insert into taikhoan values ('nhuttruong', 'admin', 'null', 1, 1, 'ON');
+insert into taikhoan values ('quangtrung', 'admin', 'null', 2, 1, 'ON');
+insert into taikhoan values ('hoangvinh', 'admin', 'null', 3, 1, 'ON');
+insert into taikhoan values ('staff01', 'admin', 'null', 4, 0, 'ON');
+insert into taikhoan values ('staff02', 'admin', 'null', 4, 0, 'OFF');
 
 -- insert trạng thái thẻ
 insert into trangthaithe values ('open', N'Mở');

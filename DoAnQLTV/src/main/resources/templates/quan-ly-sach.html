@@ -13,16 +13,13 @@
             <form action="/tim-sach" method="post">
                 <div class="row">
                     <div class="col-sm-4 mt-1">
-                        <select name="masach" class="custom-select">
-                            <option value="">Mã sách</option>
-                            <option th:each="book : ${listBook}" th:value="${book.getMasach()}" th:text="${book.getMasach()}"></option>
-                        </select>
+                        <input class="form-control" type="number" name="masach" placeholder="mã sách">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="tensach" id="" placeholder="tên sách">
+                        <input class="form-control" type="text" name="tensach" placeholder="tên sách">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="tacgia" id="" placeholder="tên tác giả">
+                        <input class="form-control" type="text" name="tacgia" placeholder="tên tác giả">
                     </div>
                 </div>
                 <div class="row my-3">

@@ -11,7 +11,8 @@ public interface TheThuVienRepo extends JpaRepository<TheThuVienEntity, Long> {
     
     List<TheThuVienEntity> findByMatrangthai(String matrangthai);
     TheThuVienEntity findByMathe(int id);
-    List<TheThuVienEntity> findByHotenLikeAndSodienthoaiLikeAllIgnoreCase(String hoten, String sdt);
+    List<TheThuVienEntity> findByHotenLikeAndSodienthoaiLike(String hoten, String sdt);
+    List<TheThuVienEntity> findByHotenLikeAndSodienthoaiLikeAndMathe(String hoten, String sdt, int mathe);
     TheThuVienEntity findBySodienthoai(String sdt); 
     List<TheThuVienEntity> findByHotenLike(String hoten);
     

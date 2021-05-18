@@ -13,15 +13,12 @@ import com.example.DoAnQLTV.entity.SachEntity;
 import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.repository.ChiTietPhieuMuonRepo;
-import com.example.DoAnQLTV.repository.NhaXuatBanRepo;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.PhieuMuonRepo;
 import com.example.DoAnQLTV.repository.QuyenHanRepo;
 import com.example.DoAnQLTV.repository.SachRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
-import com.example.DoAnQLTV.repository.TheLoaiRepo;
 import com.example.DoAnQLTV.repository.TheThuVienRepo;
-import com.example.DoAnQLTV.repository.TrangThaiTheRepo;
 import com.example.DoAnQLTV.service.SessionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,9 +175,9 @@ public class MuonSachController {
 
     }
     
-    // Lập phiếu mượn
+    //todo: Lập phiếu mượn
     @PostMapping("/lap-phieu-muon")
-    public String LapPhieuMuon(Model model, 
+    public String LapPhieuMuon(HttpSession session, Model model, 
         @RequestParam(name = "mathe") int mathe,
         @RequestParam(name = "hantra") Date hantra,
         @RequestParam(name = "numBookType") int numBookType,
@@ -193,8 +190,7 @@ public class MuonSachController {
         @RequestParam(name = "numBook[1]") String numBook_2,
         @RequestParam(name = "numBook[2]") String numBook_3,
         @RequestParam(name = "numBook[3]") String numBook_4,
-        @RequestParam(name = "numBook[4]") String numBook_5,
-        HttpSession session){
+        @RequestParam(name = "numBook[4]") String numBook_5){
         //todo: check login - note: truyền HttpSession session
         if(!SessionService.CheckLogin(session)){
             return "redirect:/login";
@@ -204,40 +200,44 @@ public class MuonSachController {
         model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
         model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
        
-        LocalDate localDate = LocalDate.now();
-        Date ngaymuon = Date.valueOf(localDate);
-
+        //todo: lấy ngày hiện tại để lập phiếu mượn
+        LocalDate toDay = LocalDate.now();
+        //todo: convert to Date để lưu vào csdl
+        Date ngaymuon = Date.valueOf(toDay);
+        //todo: lấy mã nhân viên để lập phiếu mượn
         TaiKhoanEntity acTemp = taiKhoanRepo.findByTentaikhoan(SessionService.getSession(session));
-
+        int manhanvien = acTemp.getManhanvien();
+        //todo: Lập phiếu mượn
         PhieuMuonEntity temp = new PhieuMuonEntity();
         temp.setMathe(mathe);
-        temp.setManhanvien(acTemp.getManhanvien());
+        temp.setManhanvien(manhanvien);
         temp.setNgaymuon(ngaymuon);
         temp.setHantra(hantra);
         temp.setTrangthai(1);
         phieuMuonRepo.save(temp);
 
-        // save ctpm
+        //todo: xử lý dữ liệu phiếu mượn vừa lập
         String[] arrBookId = {bookId_1, bookId_2, bookId_3, bookId_4, bookId_5};
         String[] arrNumBook = {numBook_1, numBook_2, numBook_3, numBook_4, numBook_5};
 
         List<PhieuMuonEntity> listBill = phieuMuonRepo.findAll();
-        
-        // Đảo ngược list để lấy mã vừa tạo
+        //todo: Đảo ngược list bill để lấy id bill vừa tạo
         Collections.reverse(listBill);
         int maphieumuon = listBill.get(0).getMaphieumuon();
         System.out.println("Mã phiếu mượn vừa tạo: " + maphieumuon);
+        //todo: duyệt theo số lượng loại sách
         for(int i=0; i<numBookType; i++){
             ChiTietPhieuMuonEntity ctpmTemp = new ChiTietPhieuMuonEntity();
             ctpmTemp.setMaphieumuon(maphieumuon);
             ctpmTemp.setMasach(Integer.parseInt(arrBookId[i]));
             ctpmTemp.setSoluong(Integer.parseInt(arrNumBook[i]));
             chiTietPhieuMuonRepo.save(ctpmTemp);
+            //todo: cập nhật lại số lượng sách trong kho
             SachEntity bookTemp = sachRepo.findByMasach(Integer.parseInt(arrBookId[i]));
             bookTemp.setSoluong(bookTemp.getSoluong()-Integer.parseInt(arrNumBook[i]));
             sachRepo.save(bookTemp);
         }
-        
+        //todo Lập phiếu mượn thành công
         model.addAttribute("source", "success");
         model.addAttribute("fragment", "success");
         model.addAttribute("alert", "Lập phiếu mượn thành công!");

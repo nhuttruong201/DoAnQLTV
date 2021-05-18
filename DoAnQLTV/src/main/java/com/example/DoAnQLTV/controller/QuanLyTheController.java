@@ -1,5 +1,6 @@
 package com.example.DoAnQLTV.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.example.DoAnQLTV.entity.PhieuMuonEntity;
-import com.example.DoAnQLTV.entity.TaiKhoanEntity;
 import com.example.DoAnQLTV.entity.TheThuVienEntity;
 import com.example.DoAnQLTV.entity.TrangThaiTheEntity;
 import com.example.DoAnQLTV.repository.NhanVienRepo;
@@ -74,6 +74,15 @@ public class QuanLyTheController {
                 temp.setNgaymuon(i.getNgaymuon());
                 temp.setHantra(i.getHantra());
                 listCardBorrows.add(temp);
+            }
+        } else if(type.equals("the-het-han")){
+            LocalDate today = LocalDate.now();
+            List<TheThuVienEntity> listAllCard = theThuVienRepo.findAll();
+            for(var i : listAllCard){
+                String hansudung = i.getHansudung().toString();
+                if(LocalDate.parse(hansudung).compareTo(today)<0){
+                    listCard.add(i);
+                }
             }
         }
         Collections.reverse(listCard);
@@ -228,24 +237,10 @@ public class QuanLyTheController {
         if (mathe.equals("") && hoten.equals("") && sdt.equals("")) {
             listCard = theThuVienRepo.findAll();
         }else{
-            if (mathe.equals("")) {
-                if (!hoten.equals("") && sdt.equals("")) {
-                    listCard = theThuVienRepo.findByHotenLike("%" + hoten + "%");
-                } else if (hoten.equals("") && !sdt.equals("")) {
-                    TheThuVienEntity card = theThuVienRepo.findBySodienthoai(sdt);
-                    if (card != null) {
-                        listCard.add(card);
-                    }
-                } else {
-                    listCard = theThuVienRepo.findByHotenLikeAndSodienthoaiLikeAllIgnoreCase("%" + hoten + "%", "%" + sdt + "%");
-                }
-            } else {
-                hoten = "";
-                sdt = "";
-                TheThuVienEntity card = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
-                if (card != null) {
-                    listCard.add(card);
-                }
+            if(mathe.equals("")) {
+                listCard = theThuVienRepo.findByHotenLikeAndSodienthoaiLike("%"+hoten+"%", "%"+sdt+"%");
+            }else{
+                listCard = theThuVienRepo.findByHotenLikeAndSodienthoaiLikeAndMathe("%"+hoten+"%", "%"+sdt+"%", Integer.parseInt(mathe));
             }
         }
         Collections.reverse(listCard);

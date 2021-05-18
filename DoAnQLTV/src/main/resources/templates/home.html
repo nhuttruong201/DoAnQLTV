@@ -91,8 +91,9 @@
                 <table class="table table-bordered table-hover table-info">
                     <thead class="bg-light">
                         <tr>
-                            <th>ID Bill</th>
+                            <th>ID bill</th>
                             <th>ID thẻ</th>
+                            <th>ID nhân viên</th>
                             <th>Ngày mượn</th>
                             <th>Hạn trả</th>
                             <th>Ngày trả</th>
@@ -104,6 +105,7 @@
                         <tr th:each="bill : ${listBillUnpaid}">
                             <td th:text="*{bill.getMaphieumuon()}"></td>
                             <td th:text="*{bill.getMathe()}"></td>
+                            <td th:text="*{bill.getManhanvien()}"></td>
                             <td th:text="*{bill.getNgaymuon()}"></td>
                             <td th:text="*{bill.getHantra()}" class="hantra"></td>
                             <td th:text="*{bill.getNgaytra()}"></td>
@@ -126,7 +128,7 @@
                 <table class="table table-bordered table-hover table-info">
                     <thead class="bg-light">
                         <tr>
-                            <th>ID Bill</th>
+                            <th>ID bill</th>
                             <th>ID sách</th>
                             <th>Tên sách</th>
                             <th>Số lượng</th>

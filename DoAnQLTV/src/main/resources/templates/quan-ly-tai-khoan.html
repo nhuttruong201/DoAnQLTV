@@ -10,37 +10,35 @@
             </div>
             <br>
             <hr>
-            <!-- <form action="/tim-nhan-vien" method="post">
+            <form action="/tim-tai-khoan" method="post">
                 <div class="row">
                     <div class="col-sm-4 mt-1">
-                        <select name="masach" class="custom-select">
-                            <option value="">Mã nhân viên</option>
-                            <option th:each="book : ${listBook}" th:value="${book.getMasach()}" th:text="${book.getMasach()}"></option>
-                        </select>
+                        <input class="form-control" type="text" name="tentaikhoan" th:value="${tentaikhoan}" placeholder="tên tài khoản">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="tensach" id="" placeholder="tên sách">
+                        <input class="form-control" type="text" name="email" th:value="${email}" placeholder="email">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="tacgia" id="" placeholder="tên tác giả">
+                        <input class="form-control" type="number" name="manhanvien" th:value="${manhanvien}" placeholder="mã nhân viên">
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary btn-block text-center">
-                            <i class="fas fa-search"></i> Tìm
-                        </button>
+                        <button class="btn btn-primary btn-block text-center" type="submit">
+                        <i class="fas fa-search"></i> Tìm
+                    </button>
                     </div>
                     <div class="col-sm-3"></div>
                 </div>
-            </form> -->
+            </form>
             <div class="row jumbotron p-1">
                 <div class="col-sm-12 mt-2">
                     <div class="row">
                         <div class="col-sm-12 text-center">
                             <div class="btn-group">
-                                <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-primary" id="btnShowBookAvai">Tất cả tài khoản</a>
+                                <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-primary" id="btnAllAccount">Tất cả tài khoản</a>
+                                <a href="/quan-ly-tai-khoan/tai-khoan-bi-khoa" type="button" class="btn btn-primary" id="btnAccountLock">Tài khoản bị khóa</a>
                             </div>
                         </div>
                     </div>
@@ -61,17 +59,19 @@
     </div>
 </div>
 
-<!--todo: Tất cả tài khoản -->
-<div class="col-sm-12" th:fragment="tat-ca-tai-khoan">
+
+<!--todo: Tài khoản bị khóa -->
+<div class="col-sm-12" th:fragment="tai-khoan-bi-khoa">
     <table class="table table-bordered table-hover table-info">
         <thead class="bg-light">
             <tr>
                 <th>ID</th>
                 <th>Tên tài khoản</th>
                 <th>Mật khẩu</th>
-                <th>Nhân viên</th>
                 <th>Email</th>
+                <th>ID nhân viên</th>
                 <th>Quyền hạn</th>
+                <th>Status</th>
                 <th class="text-center">Thao tác</th>
             </tr>
         </thead>
@@ -80,9 +80,10 @@
                 <td th:text="*{ac.getId()}"></td>
                 <td th:text="*{ac.getTentaikhoan()}"></td>
                 <td th:text="*{ac.getMatkhau()}"></td>
-                <td th:text="*{ac.getHoten()}"></td>
                 <td th:text="*{ac.getEmail()}"></td>
-                <td th:text="*{ac.getTenquyenhan()}"></td>
+                <td th:text="*{ac.getManhanvien()}"></td>
+                <td th:text="*{ac.getTenQuyenHan()}"></td>
+                <td th:text="*{ac.getStatus()}" class="status"></td>
                 <td class="text-center">
                     <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
                 </td>
@@ -91,7 +92,45 @@
     </table>
     <script>
         $(document).ready(function() {
-            // $("#btnShowBookAvai").addClass("active");
+            $("#btnAccountLock").addClass("active");
+            $(".status").addClass("text-danger font-weight-bold");
+        });
+    </script>
+</div>
+
+<!--todo: Tất cả tài khoản -->
+<div class="col-sm-12" th:fragment="tat-ca-tai-khoan">
+    <table class="table table-bordered table-hover table-info">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Tên tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Email</th>
+                <th>ID nhân viên</th>
+                <th>Quyền hạn</th>
+                <th>Status</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ac : ${listAccount}">
+                <td th:text="*{ac.getId()}"></td>
+                <td th:text="*{ac.getTentaikhoan()}"></td>
+                <td th:text="*{ac.getMatkhau()}"></td>
+                <td th:text="*{ac.getEmail()}"></td>
+                <td th:text="*{ac.getManhanvien()}"></td>
+                <td th:text="*{ac.getTenQuyenHan()}"></td>
+                <td th:text="*{ac.getStatus()}"></td>
+                <td class="text-center">
+                    <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $("#btnAllAccount").addClass("active");
         });
     </script>
 </div>

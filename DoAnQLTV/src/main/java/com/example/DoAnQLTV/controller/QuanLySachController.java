@@ -258,25 +258,10 @@ public class QuanLySachController {
         if (masach.equals("") && tensach.equals("") && tacgia.equals("")) {
             listBook = sachRepo.findAll();
         }else{
-            //todo: mã sách rỗng -> tìm theo tên sách và tác giả
-            if (masach.equals("")) {
-                if (!tensach.equals("") && tacgia.equals("")) {
-                    listBook = sachRepo.findByTensachLike("%" + tensach + "%");
-                } else if (tensach.equals("") && !tacgia.equals("")) {
-                    listBook = sachRepo.findByTacgiaLike("%" + tacgia + "%");
-                }else {
-                    // cả 2 tồn tại
-                    listBook = sachRepo.findByTensachLikeAndTacgiaLikeAllIgnoreCase("%" + tensach + "%", "%" + tacgia + "%");
-                }
-            } else {
-                //todo: mã sách tồn tại
-                // làm rỗng tên sách và tác giả vì ưu tiên mã sách
-                tensach = "";
-                tacgia = "";
-                SachEntity book = sachRepo.findByMasach(Integer.parseInt(masach));
-                if (book != null) {
-                    listBook.add(book);
-                }
+            if(masach.equals("")){
+                listBook = sachRepo.findByTensachLikeAndTacgiaLike("%"+tensach+"%", "%"+tacgia+"%");
+            }else{
+                listBook = sachRepo.findByMasachAndTensachLikeAndTacgiaLike(Integer.parseInt(masach), "%"+tensach+"%", "%"+tacgia+"%");
             }
         }
         //todo: xử lý dữ liệu tìm được

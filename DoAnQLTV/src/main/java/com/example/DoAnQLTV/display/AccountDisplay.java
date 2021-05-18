@@ -1,7 +1,5 @@
 package com.example.DoAnQLTV.display;
 
-import com.example.DoAnQLTV.entity.NhanVienEntity;
-import com.example.DoAnQLTV.repository.NhanVienRepo;
 
 import org.springframework.stereotype.Service;
 

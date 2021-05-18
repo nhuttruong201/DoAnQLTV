@@ -13,8 +13,6 @@ import com.example.DoAnQLTV.repository.NhanVienRepo;
 import com.example.DoAnQLTV.repository.QuyenHanRepo;
 import com.example.DoAnQLTV.repository.TaiKhoanRepo;
 import com.example.DoAnQLTV.service.SessionService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -191,6 +190,48 @@ public class QuanLyNhanVienController {
         model.addAttribute("alert", "Cập nhật thông tin nhân viên thành công!");
         model.addAttribute("linkBack", "/quan-ly-nhan-vien/tat-ca-nhan-vien");
        
+        return "index";
+    }
+
+    //todo: Tìm nhân viên
+    @PostMapping("/tim-nhan-vien")
+    public String TimNhanVien(HttpSession session, Model model,
+        @RequestParam(name = "manhanvien", defaultValue = "") String manhanvien,
+        @RequestParam(name = "hoten", defaultValue = "") String hoten,
+        @RequestParam(name = "sodienthoai", defaultValue = "") String sodienthoai){
+        // todo: check login - note: truyền HttpSession session
+        if (!SessionService.CheckLogin(session)) {
+            return "redirect:/login";
+        }
+        //todo: check admin
+        if(!SessionService.CheckAdmin(session, taiKhoanRepo)){
+            return "blocked";
+        }
+        // todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
+        model.addAttribute("title", "Tìm nhân viên");
+        model.addAttribute("source", "tim-nhan-vien");
+        model.addAttribute("fragment", "tim-nhan-vien");
+
+        List<NhanVienEntity> listNhanVien = new ArrayList<NhanVienEntity>();
+        if(manhanvien.equals("") && hoten.equals("") && sodienthoai.equals("")){
+            listNhanVien = nhanVienRepo.findAll();
+        }else{
+            if(manhanvien.equals("")){
+                listNhanVien = nhanVienRepo.findByHotenLikeAndSodienthoaiLike("%"+hoten+"%", "%"+sodienthoai+"%");
+            }else{
+                listNhanVien = nhanVienRepo.findByHotenLikeAndSodienthoaiLikeAndManhanvien("%"+hoten+"%", "%"+sodienthoai+"%", Integer.parseInt(manhanvien));
+            }
+        }
+
+        model.addAttribute("listNhanVien", listNhanVien);
+        model.addAttribute("size", listNhanVien.size());
+        model.addAttribute("manhanvien", manhanvien);
+        model.addAttribute("hoten", hoten);
+        model.addAttribute("sodienthoai", sodienthoai);
+
         return "index";
     }
 }

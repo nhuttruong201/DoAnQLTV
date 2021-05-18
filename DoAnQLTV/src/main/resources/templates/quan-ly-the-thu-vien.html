@@ -1,3 +1,4 @@
+<!-- todo: fragment chính -->
 <div class="container my-4" th:fragment="quan-ly-the-thu-vien">
     <div class="row">
         <div class="col-sm-12">
@@ -11,19 +12,14 @@
             <form action="/tim-the-thu-vien" method="post">
                 <div class="row">
                     <div class="col-sm-4 mt-1">
-                        <select name="mathe" class="custom-select">
-                            <option value="">Mã thẻ</option>
-                            <option th:each="card : ${listCard}" th:value="${card.getMathe()}" th:text="${card.getMathe()}"></option>
-                        </select>
-
+                        <input class="form-control" type="number" name="mathe" placeholder="mã thẻ">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="hoten" id="" placeholder="tên đọc giả">
+                        <input class="form-control" type="text" name="hoten" placeholder="tên đọc giả">
                     </div>
                     <div class="col-sm-4 mt-1">
-                        <input class="form-control" type="text" name="sdt" id="" placeholder="số điện thoại">
+                        <input class="form-control" type="text" name="sdt" placeholder="số điện thoại">
                     </div>
-
                 </div>
                 <div class="row my-3">
                     <div class="col-sm-3"></div>
@@ -42,6 +38,7 @@
                             <div class="btn-group">
                                 <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn btn-primary" id="btnShowAllCard">Tất cả thẻ</a>
                                 <a href="/quan-ly-the-thu-vien/the-bi-khoa" type="button" class="btn btn-primary" id="btnShowCardLock">Thẻ bị khóa</a>
+                                <a href="/quan-ly-the-thu-vien/the-het-han" type="button" class="btn btn-primary" id="btnShowCardExpired">Thẻ hết hạn</a>
                                 <a href="/quan-ly-the-thu-vien/the-dang-muon" type="button" class="btn btn-primary" id="btnShowCardBorrow">Thẻ đang mượn</a>
                             </div>
                         </div>
@@ -79,6 +76,17 @@
     <script>
         $(document).ready(function() {
             $("#btnShowCardLock").addClass("active");
+            $(".trangthai").addClass("text-danger font-weight-bold");
+        });
+    </script>
+</div>
+<!--todo: Thẻ hết hạn -->
+<div class="col-sm-12" th:fragment="the-het-han">
+    <div th:replace="quan-ly-the-thu-vien :: list-card"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowCardExpired").addClass("active");
+            $(".hansudung").addClass("text-danger font-weight-bold");
         });
     </script>
 </div>
@@ -134,8 +142,8 @@
                 <td th:text="*{card.getGioitinh()}"></td>
                 <td th:text="*{card.getSodienthoai()}"></td>
                 <td th:text="*{card.getDiachi()}"></td>
-                <td th:text="*{card.getHansudung()}"></td>
-                <td th:text="*{card.getTenTrangThai()}"></td>
+                <td th:text="*{card.getHansudung()}" class="hansudung"></td>
+                <td th:text="*{card.getTenTrangThai()}" class="trangthai"></td>
                 <th class="text-center">
                     <a th:href="'/edit-card/' + ${card.getMathe()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
                 </th>

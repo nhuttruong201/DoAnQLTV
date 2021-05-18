@@ -11,7 +11,7 @@ public interface SachRepo extends JpaRepository<SachEntity, Long> {
     List<SachEntity> findByTensachLike(String name);
     SachEntity findByMasach(int id);
     void deleteByMasach(int id);
-    List<SachEntity> findByMasachAndTensachLikeAndTacgiaLikeAllIgnoreCase(int masach, String tensach, String tacgia);
-    List<SachEntity> findByTensachLikeAndTacgiaLikeAllIgnoreCase(String tensach, String tacgia);
+    List<SachEntity> findByMasachAndTensachLikeAndTacgiaLike(int masach, String tensach, String tacgia);
+    List<SachEntity> findByTensachLikeAndTacgiaLike(String tensach, String tacgia);
     List<SachEntity> findByTacgiaLike(String tacgia);
 }

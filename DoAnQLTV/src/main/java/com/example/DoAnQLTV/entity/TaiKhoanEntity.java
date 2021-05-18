@@ -16,6 +16,7 @@ public class TaiKhoanEntity {
     private int manhanvien;
     private String email;
     private int maquyenhan;
+    private String status;
 
 
     public String getHoTen(NhanVienRepo nhanVienRepo){
@@ -25,13 +26,15 @@ public class TaiKhoanEntity {
 
     public String getTenQuyenHan(){
         if(this.maquyenhan==0){
-            return "Nhân viên";
+            return "Staff";
         }else if(this.maquyenhan==1){
             return "Admin";
         }else{
-            return "Chưa xác định";
+            return "Undefined";
         }
     }
+
+ 
 
     @Override
     public String toString() {
@@ -42,7 +45,16 @@ public class TaiKhoanEntity {
             ", manhanvien='" + getManhanvien() + "'" +
             ", email='" + getEmail() + "'" +
             ", maquyenhan='" + getMaquyenhan() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getMaquyenhan() {

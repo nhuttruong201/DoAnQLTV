@@ -33,12 +33,19 @@
                         <option value="1">Admin</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="">Status:</label>
+                    <select class="custom-select" th:field="*{status}">
+                        <option value="ON">ON</option>
+                        <option value="OFF">OFF</option>
+                    </select>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Cập nhật tài khoản</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-hand-point-right"></i> Cập nhật</button>
                 <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
             </div>
         </div>

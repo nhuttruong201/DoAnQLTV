@@ -17,6 +17,6 @@ public interface PhieuMuonRepo extends JpaRepository<PhieuMuonEntity, Integer> {
     List<PhieuMuonEntity> findByMatheAndNgaymuon(int mathe, Date ngaymuon);
     List<PhieuMuonEntity> findByNgaymuon(Date ngaymuon);
     
-    
+    List<PhieuMuonEntity> findByMaphieumuonAndMatheAndNgaymuon(int maphieumuon, int mathe, Date ngaymuon);
     
 }

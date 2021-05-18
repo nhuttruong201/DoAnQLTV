@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class QuanLyTaiKhoanController {
@@ -29,6 +30,7 @@ public class QuanLyTaiKhoanController {
     @Autowired private TaiKhoanRepo taiKhoanRepo;
     @Autowired private NhanVienRepo nhanVienRepo;
 
+    //todo: thống kê
     @GetMapping("/quan-ly-tai-khoan/{type}")
     public String QuanLyTaiKhoan(HttpSession session, Model model, @PathVariable(name = "type") String type){
         // todo: check login - note: truyền HttpSession session
@@ -51,22 +53,11 @@ public class QuanLyTaiKhoanController {
         List<TaiKhoanEntity> listAccount = new ArrayList<TaiKhoanEntity>();
         if(type.equals("tat-ca-tai-khoan")){
             listAccount = taiKhoanRepo.findAll();
+        }else if(type.equals("tai-khoan-bi-khoa")){
+            listAccount = taiKhoanRepo.findByStatus("OFF");
         }
-
-        List<AccountDisplay> listAccountDisplay = new ArrayList<AccountDisplay>();
-        for(var i : listAccount){
-            AccountDisplay temp = new AccountDisplay();
-            temp.setId(i.getId());
-            temp.setTentaikhoan(i.getTentaikhoan());
-            temp.setMatkhau(i.getMatkhau());
-            temp.setHoten(i.getHoTen(nhanVienRepo));
-            temp.setEmail(i.getEmail());
-            temp.setTenquyenhan(i.getTenQuyenHan());
-            listAccountDisplay.add(temp);
-        }
-
-        Collections.reverse(listAccountDisplay);
-        model.addAttribute("listAccount", listAccountDisplay);
+        Collections.reverse(listAccount);
+        model.addAttribute("listAccount", listAccount);
         
         return "index";
     }
@@ -96,6 +87,7 @@ public class QuanLyTaiKhoanController {
         return "index";
     }
 
+    // todo: Thêm tài khoản
     @PostMapping("/them-tai-khoan")
     public String ThemTaiKhoan(HttpSession session, Model model, @ModelAttribute TaiKhoanEntity newAc){
         // todo: check login - note: truyền HttpSession session
@@ -129,6 +121,8 @@ public class QuanLyTaiKhoanController {
                 return "index";
             }
         }
+        // todo: lưu tài khoản vào csdl
+        newAc.setStatus("ON");
         taiKhoanRepo.save(newAc);
         model.addAttribute("fragment", "them-tai-khoan-thanh-cong");
         model.addAttribute("account", new TaiKhoanEntity());
@@ -209,4 +203,56 @@ public class QuanLyTaiKhoanController {
         return "index";
     }
 
+    //todo: Tìm tài khoản
+    @PostMapping("/tim-tai-khoan")
+    public String TimTaiKhoan(HttpSession session, Model model,
+        @RequestParam(name = "tentaikhoan", defaultValue = "") String username,
+        @RequestParam(name = "email", defaultValue = "") String email,
+        @RequestParam(name = "manhanvien", defaultValue = "") String manhanvien){
+        // todo: check login - note: truyền HttpSession session
+        if (!SessionService.CheckLogin(session)) {
+            return "redirect:/login";
+        }
+        // todo: check admin
+        if(!SessionService.CheckAdmin(session, taiKhoanRepo)){
+            return "blocked";
+        }
+        // todo: get tài khoản đang đăng nhập
+        String tentaikhoan = SessionService.getSession(session);
+        model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
+        model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));                                                            
+        model.addAttribute("title", "Tìm tài khoản");
+        model.addAttribute("source", "tim-tai-khoan");
+        model.addAttribute("fragment", "tim-tai-khoan");
+        List<TaiKhoanEntity> listAccount = new ArrayList<TaiKhoanEntity>();
+        if(username.equals("") && email.equals("") && manhanvien.equals("")){
+            listAccount = taiKhoanRepo.findAll();
+        }else{
+            if(manhanvien.equals("")){
+                listAccount = taiKhoanRepo.findByTentaikhoanLikeAndEmailLike("%"+username+"%", "%"+email+"%");
+            }else{
+                listAccount = taiKhoanRepo.findByTentaikhoanLikeAndEmailLikeAndManhanvien("%"+username+"%", "%"+email+"%", Integer.parseInt(manhanvien));
+            }
+        }
+        
+        List<AccountDisplay> listAccountDisplay = new ArrayList<AccountDisplay>();
+        for(var i : listAccount){
+            AccountDisplay temp = new AccountDisplay();
+            temp.setId(i.getId());
+            temp.setTentaikhoan(i.getTentaikhoan());
+            temp.setMatkhau(i.getMatkhau());
+            temp.setHoten(i.getHoTen(nhanVienRepo));
+            temp.setEmail(i.getEmail());
+            temp.setTenquyenhan(i.getTenQuyenHan());
+            listAccountDisplay.add(temp);
+        }
+        Collections.reverse(listAccountDisplay);
+        model.addAttribute("listAccount", listAccountDisplay);
+        model.addAttribute("size", listAccountDisplay.size());
+        model.addAttribute("tentaikhoan", username);
+        model.addAttribute("email", email);
+        model.addAttribute("manhanvien", manhanvien);
+
+        return "index";
+    }
 }
