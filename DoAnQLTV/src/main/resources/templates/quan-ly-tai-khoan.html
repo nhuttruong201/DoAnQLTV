@@ -62,36 +62,10 @@
 
 <!--todo: Tài khoản bị khóa -->
 <div class="col-sm-12" th:fragment="tai-khoan-bi-khoa">
-    <table class="table table-bordered table-hover table-info">
-        <thead class="bg-light">
-            <tr>
-                <th>ID</th>
-                <th>Tên tài khoản</th>
-                <th>Mật khẩu</th>
-                <th>Email</th>
-                <th>ID nhân viên</th>
-                <th>Quyền hạn</th>
-                <th>Status</th>
-                <th class="text-center">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="ac : ${listAccount}">
-                <td th:text="*{ac.getId()}"></td>
-                <td th:text="*{ac.getTentaikhoan()}"></td>
-                <td th:text="*{ac.getMatkhau()}"></td>
-                <td th:text="*{ac.getEmail()}"></td>
-                <td th:text="*{ac.getManhanvien()}"></td>
-                <td th:text="*{ac.getTenQuyenHan()}"></td>
-                <td th:text="*{ac.getStatus()}" class="status"></td>
-                <td class="text-center">
-                    <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div th:replace="quan-ly-tai-khoan :: list-account"></div>
     <script>
         $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
             $("#btnAccountLock").addClass("active");
             $(".status").addClass("text-danger font-weight-bold");
         });
@@ -100,6 +74,17 @@
 
 <!--todo: Tất cả tài khoản -->
 <div class="col-sm-12" th:fragment="tat-ca-tai-khoan">
+    <div th:replace="quan-ly-tai-khoan :: list-account"></div>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("#btnAllAccount").addClass("active");
+        });
+    </script>
+</div>
+
+
+<div th:fragment="list-account">
     <table class="table table-bordered table-hover table-info">
         <thead class="bg-light">
             <tr>
@@ -123,14 +108,9 @@
                 <td th:text="*{ac.getTenQuyenHan()}"></td>
                 <td th:text="*{ac.getStatus()}"></td>
                 <td class="text-center">
-                    <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                    <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Chỉnh sửa"><i class="fas fa-pencil-alt"></i></a>
                 </td>
             </tr>
         </tbody>
     </table>
-    <script>
-        $(document).ready(function() {
-            $("#btnAllAccount").addClass("active");
-        });
-    </script>
 </div>

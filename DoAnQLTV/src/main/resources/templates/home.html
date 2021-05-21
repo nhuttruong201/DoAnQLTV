@@ -113,12 +113,17 @@
                             <td class="text-center">
                                 <form action="/tra-sach" method="post">
                                     <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">
-                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></button>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Thanh toán"><i class="fas fa-cart-arrow-down"></i></button>
                                 </form>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <script>
+                    $(document).ready(function() {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+                </script>
             </div>
         </div>
         <div class="col-sm-12">

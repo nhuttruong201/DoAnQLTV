@@ -1,6 +1,6 @@
 <!-- todo: Kiểm tra thẻ -->
 <div class="container my-4" th:fragment="kiem-tra-the">
-    <div class="fadeInDown">
+    <div class="fadeInDown" id="titleManager">
         <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
     </div>
 
@@ -14,18 +14,18 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <input type="number" name="mathe" class="form-control" placeholder="nhập mã thẻ" />
+                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" placeholder="nhập mã thẻ" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Số điện thoại</label>
-                    <input type="text" name="sdt" class="form-control" placeholder="nhập số điện thoại" />
+                    <input type="text" name="sdt" th:value="${sdt}" class="form-control" placeholder="nhập số điện thoại" />
                 </div>
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-                <button type="submit" class="btn btn-info btn-block">
+                <button type="submit" class="btn btn-primary btn-block">
                     <i class="fas fa-check-circle"></i> Check
                 </button>
             </div>
@@ -40,55 +40,6 @@
     </script>
 </div>
 
-<!--todo: Thẻ không tồn tại -->
-<div th:fragment="the-khong-ton-tai">
-    <div class="alert alert-danger alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong><i class="fas fa-exclamation-triangle"></i> Thẻ không tồn tại!</strong>
-        <hr>
-        <span th:text="${alert}"></span>
-        <hr>
-        <a th:href="'/lam-the-thu-vien/' + ${sdt}"><i class="fas fa-hand-point-right"></i> Tạo thẻ ngay</a>
-
-    </div>
-    <div th:replace="muon-sach :: kiem-tra-the"></div>
-</div>
-
-<!--todo: Đã đạt số lần mượn tối đa -->
-<div th:fragment="het-luot">
-    <div class="alert alert-danger alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <i class="fas fa-exclamation-triangle"></i>
-        <strong>Số lần mượn sách đã đạt tối đa 2 lần!</strong>
-        <hr />
-        <span>Một thẻ thư viện chỉ được mượn sách tối đa 2 lần cùng lúc!</span>
-        <hr />
-        <strong>Thông tin thẻ: </strong>
-        <span th:text="'Mã thẻ: ' + ${mathe}"></span>
-        <span th:text="' - Họ tên: ' + ${hoten}"></span>
-        <span th:text="' - Giới tính: '+${gioitinh}"></span>
-        <span th:text="' - Sdt: '+${sdt}"></span>
-
-    </div>
-    <div th:replace="muon-sach :: kiem-tra-the"></div>
-</div>
-<!--todo: Thẻ bị khóa -->
-<div th:fragment="the-bi-khoa">
-    <div class="alert alert-danger alert-dismissible fade show my-4">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <i class="fas fa-exclamation-triangle"></i>
-        <strong>Thẻ đã bị vô hiệu hóa!</strong>
-        <hr />
-        <strong>Thông tin thẻ: </strong>
-        <span th:text="'Mã thẻ: ' + ${mathe}"></span>
-        <span th:text="' - Họ tên: ' + ${hoten}"></span>
-        <span th:text="' - Giới tính: '+${gioitinh}"></span>
-        <span th:text="' - Sdt: '+${sdt}"></span>
-
-    </div>
-    <div th:replace="muon-sach :: kiem-tra-the"></div>
-</div>
-
 <!--todo: Xử lý mượn sách -->
 <div class="container my-4" th:fragment="muon-sach">
     <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
@@ -97,22 +48,22 @@
         <div class="row jumbotron p-1 py-3">
             <div class="col-sm-12">
                 <strong><i class="fas fa-address-card"></i> Thông tin đọc giả</strong>
-                <hr />
+                <br><br>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" readonly placeholder="" />
+                    <input type="number" name="mathe" th:value="${mathe}" class="form-control bg-light border-info" readonly placeholder="" />
                 </div>
                 <div class="form-group">
                     <label for="">Họ tên đọc giả</label>
-                    <input type="text" name="mathe" th:value="${hoten}" class="form-control" readonly placeholder="" />
+                    <input type="text" name="mathe" th:value="${hoten}" class="form-control bg-light border-info" readonly placeholder="" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Số điện thoại</label>
-                    <input type="text" name="sdt" th:value="${sdt}" class="form-control" readonly placeholder="" />
+                    <input type="text" name="sdt" th:value="${sdt}" class="form-control bg-light border-info" readonly placeholder="" />
                 </div>
                 <div class="form-group">
                     <label for="">Hạn trả</label>
@@ -121,8 +72,9 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <strong><i class="fas fa-book"></i> Thông tin sách mượn</strong>
                 <hr />
+                <strong><i class="fas fa-book"></i> Thông tin sách mượn</strong>
+                <br><br>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
@@ -132,7 +84,6 @@
                         <option th:each="book : ${listBook}" th:value="${book.getMasach()}"
                             th:text="${book.getMasach()}"></option>
                     </select>
-                    <!-- <input type="text" class="form-control" placeholder="nhập mã sách" required/> -->
                 </div>
                 <div class="form-group">
                     <label for="">Tên sách</label>
@@ -191,4 +142,21 @@
     </form>
 
     <script src="handle.js"></script>
+</div>
+
+
+<!--todo: check fail -->
+<div th:fragment="check-fail">
+    <div class="alert alert-danger alert-dismissible fadeInDown show my-4">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong><i class="fas fa-exclamation-triangle"></i> <span th:text="${titleAlert}"></span></strong>
+        <hr>
+        <span th:text="${alert}"></span>
+    </div>
+    <div th:replace="muon-sach :: kiem-tra-the"></div>
+    <script>
+        $(document).ready(function() {
+            $("#titleManager").removeClass("fadeInDown");
+        });
+    </script>
 </div>

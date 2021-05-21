@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-sm-12 text-center">
                             <div class="btn-group">
-                                <a href="/quan-ly-nhan-vien/tat-ca-nhan-vien" type="button" class="btn btn-primary" id="btnShowBookAvai">Tất cả nhân viên</a>
+                                <a href="/quan-ly-nhan-vien/tat-ca-nhan-vien" type="button" class="btn btn-primary" id="btnShowAllStaff">Tất cả nhân viên</a>
                             </div>
                         </div>
                     </div>
@@ -83,14 +83,15 @@
                 <td th:text="*{nv.getDiachi()}"></td>
                 <td th:text="*{nv.getTenChucVu()}"></td>
                 <td class="text-center">
-                    <a th:href="'/edit-staff/' + ${nv.getManhanvien()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                    <a th:href="'/edit-staff/' + ${nv.getManhanvien()}" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Chỉnh sửa"><i class="fas fa-pencil-alt"></i></a>
                 </td>
             </tr>
         </tbody>
     </table>
-    <!-- <script>
+    <script>
         $(document).ready(function() {
-            // $("#btnShowBookAvai").addClass("active");
+            $("#btnShowAllStaff").addClass("active");
+            $('[data-toggle="tooltip"]').tooltip();
         });
-    </script> -->
+    </script>
 </div>

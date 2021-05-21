@@ -80,14 +80,15 @@
                 <td th:text="*{book.getTentheloai()}"></td>
                 <td th:text="*{book.getSoluong()}"></td>
                 <td class="text-center">
-                    <a th:href="'/edit-book/' + ${book.getMasach()}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                    <a th:href="'/delete-book/' + ${book.getMasach()}" onclick="return confirm('\n\n\nSau khi xóa, thông tin sách vẫn còn nhưng số lượng trở về 0.\nBạn có chắc xóa?\n');" type="button" class="btn btn-outline-primary btn-sm"><i class="far fa-trash-alt"></i></a>
+                    <a th:href="'/edit-book/' + ${book.getMasach()}" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Chỉnh sửa"><i class="fas fa-pencil-alt"></i></a>
+                    <a th:href="'/delete-book/' + ${book.getMasach()}" onclick="return confirm('\n\n\nSau khi xóa, thông tin sách vẫn còn nhưng số lượng trở về 0.\nBạn có chắc xóa?\n');" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Xóa"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
         </tbody>
     </table>
     <script>
         $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
             $("#btnShowBookAvai").addClass("active");
         });
     </script>

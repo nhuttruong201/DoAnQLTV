@@ -15,5 +15,6 @@ public interface TheThuVienRepo extends JpaRepository<TheThuVienEntity, Long> {
     List<TheThuVienEntity> findByHotenLikeAndSodienthoaiLikeAndMathe(String hoten, String sdt, int mathe);
     TheThuVienEntity findBySodienthoai(String sdt); 
     List<TheThuVienEntity> findByHotenLike(String hoten);
+    TheThuVienEntity findByMatheAndSodienthoai(int mathe, String sdt);
     
 }

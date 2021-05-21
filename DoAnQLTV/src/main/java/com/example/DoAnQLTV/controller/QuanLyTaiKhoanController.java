@@ -69,7 +69,7 @@ public class QuanLyTaiKhoanController {
         if (!SessionService.CheckLogin(session)) {
             return "redirect:/login";
         }
-        //todo: check admin
+        // todo: check admin
         if(!SessionService.CheckAdmin(session, taiKhoanRepo)){
             return "blocked";
         }
@@ -87,7 +87,7 @@ public class QuanLyTaiKhoanController {
         return "index";
     }
 
-    // todo: Thêm tài khoản
+    // todo: Xử lý thêm tài khoản
     @PostMapping("/them-tai-khoan")
     public String ThemTaiKhoan(HttpSession session, Model model, @ModelAttribute TaiKhoanEntity newAc){
         // todo: check login - note: truyền HttpSession session
@@ -121,6 +121,7 @@ public class QuanLyTaiKhoanController {
                 return "index";
             }
         }
+        // todo: đủ điều kiện lập tài khoản mới
         // todo: lưu tài khoản vào csdl
         newAc.setStatus("ON");
         taiKhoanRepo.save(newAc);

@@ -64,6 +64,7 @@
     <script>
         $(document).ready(function() {
             $("#btnShowAllBill").addClass("active");
+            $(".thaotac").remove();
         });
     </script>
 </div>
@@ -72,8 +73,8 @@
     <div th:replace="quan-ly-phieu-muon :: list-bill"></div>
     <script>
         $(document).ready(function() {
-            $("#btnShowBillUnpaid").addClass("active");
             $(".trangthai").addClass("text-danger font-weight-bold");
+            $("#btnShowBillUnpaid").addClass("active");
         });
     </script>
 </div>
@@ -83,6 +84,7 @@
     <script>
         $(document).ready(function() {
             $(".hantra").addClass("text-danger font-weight-bold");
+            $(".thaotac").remove();
             $("#btnShowBillExpired").addClass("active");
         });
     </script>
@@ -99,7 +101,7 @@
                 <th>Hạn trả</th>
                 <th>Ngày trả</th>
                 <th>Trạng thái</th>
-                <th class="text-center">Thao tác</th>
+                <th class="text-center thaotac">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -111,13 +113,18 @@
                 <td th:text="*{bill.getHantra()}" class="hantra"></td>
                 <td th:text="*{bill.getNgaytra()}"></td>
                 <td th:text="*{bill.getTenTrangThai()}" class="trangthai"></td>
-                <td class="text-center">
+                <td class="text-center thaotac">
                     <form action="/tra-sach" method="post">
                         <input type="hidden" name="mathe" th:value="*{bill.getMathe()}">
-                        <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-cart-arrow-down"></i></button>
+                        <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Thanh toán"><i class="fas fa-cart-arrow-down"></i></button>
                     </form>
                 </td>
             </tr>
         </tbody>
     </table>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </div>

@@ -53,6 +53,7 @@ public class TraSachController {
         model.addAttribute("source", "tra-sach");
         model.addAttribute("fragment", "kiem-tra-the");
         model.addAttribute("title", "Yêu cầu trả sách");
+        
 
         List<PhieuMuonEntity> listBill = phieuMuonRepo.findByTrangthai(1);
         List<Integer> arrIdCardOnly = new ArrayList<Integer>();
@@ -80,33 +81,37 @@ public class TraSachController {
         model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
         model.addAttribute("source", "tra-sach");
         model.addAttribute("title", "Yâu cầu trả sách");
+        model.addAttribute("mathe", mathe);
+        model.addAttribute("sdt", sdt);
 
         TheThuVienEntity cardCheck = new TheThuVienEntity();
         // todo: check rỗng submit
         if (mathe.equals("") && sdt.equals("")) {
             return "redirect:/tra-sach";
-        }else{
+        } 
+        else if(!mathe.equals("") && !sdt.equals("")){
+            cardCheck = theThuVienRepo.findByMatheAndSodienthoai(Integer.parseInt(mathe), sdt);
+        }
+        else{
             if(mathe.equals("")){
                 cardCheck = theThuVienRepo.findBySodienthoai(sdt);
-                model.addAttribute("alert", "không tồn tại thẻ với số điện thoại: " + sdt);
             }else{
                 cardCheck = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
-                model.addAttribute("alert", "không tồn tại thẻ với mã thẻ: " + mathe);
             }
         }
         // todo: check thẻ không tồn tại
         if(cardCheck == null){
             model.addAttribute("fragment", "check-fail");
             model.addAttribute("titleAlert", "Thẻ không tồn tại!");
+            model.addAttribute("alert", "Vui lòng nhập mã thẻ hoặc số điện thoại khác để check!");
             return "index";
         }
         // todo: check thẻ có mượn không
         List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(cardCheck.getMathe(), 1);
         if(listBill.size()==0){
-            System.out.println("không có mượn");
             model.addAttribute("fragment", "check-fail");
             model.addAttribute("titleAlert", "Thẻ hiện không mượn sách!");
-            model.addAttribute("alert", "Vui lập nhập mã thẻ khác để check!");
+            model.addAttribute("alert", "Vui lập nhập mã thẻ hoặc số điện thoại khác để check!");
             return "index";
         }
         //todo: Check thẻ thành công

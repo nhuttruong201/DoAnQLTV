@@ -74,6 +74,8 @@ public class MuonSachController {
         model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
         model.addAttribute("source", "muon-sach");
         model.addAttribute("title", "Yâu cầu mượn sách");
+        model.addAttribute("mathe", mathe);
+        model.addAttribute("sdt", sdt);
  
         List<SachEntity> listBook = sachRepo.findAll();
         //todo: phục vụ check mã sách mượn
@@ -83,30 +85,30 @@ public class MuonSachController {
         //todo: cả mã thẻ và sdt rỗng
         if(mathe.equals("") && sdt.equals("")){
             return "redirect:/muon-sach";
-        }else{
+        }
+        else if(!mathe.equals("") && !sdt.equals("")){
+            cardCheck = theThuVienRepo.findByMatheAndSodienthoai(Integer.parseInt(mathe), sdt);
+        }
+        else{
             if(mathe.equals("")){
                 cardCheck = theThuVienRepo.findBySodienthoai(sdt);
-                model.addAttribute("alert", "không tồn tại thẻ với số điện thoại: " + sdt);
             }else{
                 cardCheck = theThuVienRepo.findByMathe(Integer.parseInt(mathe));
-                model.addAttribute("alert", "không tồn tại thẻ với mã thẻ: " + mathe);
             }
         }
         //todo: check thẻ không tồn tại
         if(cardCheck==null){
-            model.addAttribute("fragment", "the-khong-ton-tai");
+            model.addAttribute("fragment", "check-fail");
+            model.addAttribute("titleAlert", "Thẻ không tồn tại!");
+            model.addAttribute("alert", "Vui lòng nhập mã thẻ hoặc số điện thoại khác để check!");
             return "index";
         }
 
         //todo: check thẻ bị khóa
         if(cardCheck.getMatrangthai().equals("lock")){
-            model.addAttribute("fragment", "the-bi-khoa");
-            // xuất thông tin thẻ hiện tại
-            TheThuVienEntity card = theThuVienRepo.findByMathe(cardCheck.getMathe());
-            model.addAttribute("mathe", card.getMathe());
-            model.addAttribute("hoten", card.getHoten());
-            model.addAttribute("gioitinh", card.getGioitinh());
-            model.addAttribute("sdt", card.getSodienthoai());
+            model.addAttribute("fragment", "check-fail");
+            model.addAttribute("titleAlert", "Thẻ đã bị vô hiệu hóa!");
+            model.addAttribute("alert", "Thẻ đã vi phạm điều lệ mượn sách nên bị khóa!");
             return "index";
         }
         
