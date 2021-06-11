@@ -37,6 +37,7 @@
                         <div class="col-sm-12 text-center">
                             <div class="btn-group">
                                 <a href="/quan-ly-the-thu-vien/tat-ca-the" type="button" class="btn btn-primary" id="btnShowAllCard">Tất cả thẻ</a>
+                                <a href="/quan-ly-the-thu-vien/the-hoat-dong" type="button" class="btn btn-primary" id="btnShowCardOpen">Thẻ hoạt động</a>
                                 <a href="/quan-ly-the-thu-vien/the-bi-khoa" type="button" class="btn btn-primary" id="btnShowCardLock">Thẻ bị khóa</a>
                                 <a href="/quan-ly-the-thu-vien/the-het-han" type="button" class="btn btn-primary" id="btnShowCardExpired">Thẻ hết hạn</a>
                                 <a href="/quan-ly-the-thu-vien/the-dang-muon" type="button" class="btn btn-primary" id="btnShowCardBorrow">Thẻ đang mượn</a>
@@ -50,7 +51,7 @@
                                 <div class="modal-content">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h5 class="modal-title font-italic" id="readerName">Lịch sử mượn sách</h5>
+                                        <h5 class="modal-title" id="readerName">Lịch sử mượn sách</h5>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <!-- Modal body -->
@@ -123,6 +124,18 @@
     <script>
         $(document).ready(function() {
             $("#btnShowAllCard").addClass("active");
+        });
+    </script>
+</div>
+
+
+<!--todo: Thẻ hoạt động -->
+<div class="col-sm-12" th:fragment="the-hoat-dong">
+    <div th:replace="quan-ly-the-thu-vien :: list-card"></div>
+    <script>
+        $(document).ready(function() {
+            $("#btnShowCardOpen").addClass("active");
+            $(".trangthai").addClass("text-success font-weight-bold");
         });
     </script>
 </div>

@@ -38,6 +38,7 @@
                         <div class="col-sm-12 text-center">
                             <div class="btn-group">
                                 <a href="/quan-ly-tai-khoan/tat-ca-tai-khoan" type="button" class="btn btn-primary" id="btnAllAccount">Tất cả tài khoản</a>
+                                <a href="/quan-ly-tai-khoan/tai-khoan-hoat-dong" type="button" class="btn btn-primary" id="btnAccountOpen">Tài khoản hoạt động</a>
                                 <a href="/quan-ly-tai-khoan/tai-khoan-bi-khoa" type="button" class="btn btn-primary" id="btnAccountLock">Tài khoản bị khóa</a>
                             </div>
                         </div>
@@ -68,6 +69,18 @@
             $('[data-toggle="tooltip"]').tooltip();
             $("#btnAccountLock").addClass("active");
             $(".status").addClass("text-danger font-weight-bold");
+        });
+    </script>
+</div>
+
+<!--todo: Tài khoản hoạt động -->
+<div class="col-sm-12" th:fragment="tai-khoan-hoat-dong">
+    <div th:replace="quan-ly-tai-khoan :: list-account"></div>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("#btnAccountOpen").addClass("active");
+            $(".status").addClass("text-success font-weight-bold");
         });
     </script>
 </div>
@@ -106,7 +119,7 @@
                 <td th:text="*{ac.getEmail()}"></td>
                 <td th:text="*{ac.getManhanvien()}"></td>
                 <td th:text="*{ac.getTenQuyenHan()}"></td>
-                <td th:text="*{ac.getStatus()}"></td>
+                <td th:text="*{ac.getStatus()}" class="status"></td>
                 <td class="text-center">
                     <a th:href="'/edit-account/' + ${ac.getId()}" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title="Chỉnh sửa"><i class="fas fa-pencil-alt"></i></a>
                 </td>

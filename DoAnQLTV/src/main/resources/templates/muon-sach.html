@@ -1,6 +1,6 @@
 <!-- todo: Kiểm tra thẻ -->
 <div class="container my-4" th:fragment="kiem-tra-the">
-    <div class="fadeInDown" id="titleManager">
+    <div id="titleManager">
         <strong style="color: #28a745"><i class="fas fa-shopping-cart"></i> Yêu cầu mượn sách</strong>
     </div>
 
@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" placeholder="nhập mã thẻ" />
+                    <input type="number" name="mathe" th:value="${mathe}" class="form-control" min="1" placeholder="nhập mã thẻ" />
                 </div>
             </div>
             <div class="col-sm-6">
@@ -154,9 +154,4 @@
         <span th:text="${alert}"></span>
     </div>
     <div th:replace="muon-sach :: kiem-tra-the"></div>
-    <script>
-        $(document).ready(function() {
-            $("#titleManager").removeClass("fadeInDown");
-        });
-    </script>
 </div>

@@ -49,10 +49,7 @@ public class QuanLyPhieuMuonController {
         model.addAttribute("fragment", "quan-ly-phieu-muon");
         model.addAttribute("type", type);
 
-        List<PhieuMuonEntity> listAllBill = phieuMuonRepo.findAll();
-        model.addAttribute("listAllBill", listAllBill);
         List<PhieuMuonEntity> listBill = new ArrayList<PhieuMuonEntity>();
-
         if (type.equals("tat-ca-phieu")) {
             // todo: tất cả bill
             listBill = phieuMuonRepo.findAll();

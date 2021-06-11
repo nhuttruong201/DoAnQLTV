@@ -155,7 +155,7 @@ insert into taikhoan values ('staff01', 'admin', 'null', 4, 0, 'ON');
 insert into taikhoan values ('staff02', 'admin', 'null', 4, 0, 'OFF');
 
 -- insert trạng thái thẻ
-insert into trangthaithe values ('open', N'Mở');
+insert into trangthaithe values ('open', N'Hoạt động');
 insert into trangthaithe values ('lock', N'Bị khóa');
 -- insert thẻ thư viện
 -- set dateformat trước khi insert mới

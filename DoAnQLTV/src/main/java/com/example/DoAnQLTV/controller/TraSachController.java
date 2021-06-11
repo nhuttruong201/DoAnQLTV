@@ -148,7 +148,16 @@ public class TraSachController {
     @PostMapping("/thanh-toan-sach-tra")
     public String ThanhToanSachTra(HttpSession session, Model model, 
         @RequestParam(name = "idBill") String idBill,
-        @RequestParam(name = "mathe") int mathe, @RequestParam(name = "ngaytra") Date ngaytra) {
+        @RequestParam(name = "mathe") int mathe, 
+        @RequestParam(name = "ngaytra") Date ngaytra
+        // ,
+        // @RequestParam(name = "idBookDebit_1", defaultValue = "0") String idBookDebit_1,
+        // @RequestParam(name = "idBookDebit_2", defaultValue = "0") String idBookDebit_2,
+        // @RequestParam(name = "idBookDebit_3", defaultValue = "0") String idBookDebit_3,
+        // @RequestParam(name = "numBookDebit_1", defaultValue = "0") String numBookDebit_1,
+        // @RequestParam(name = "numBookDebit_2", defaultValue = "0") String numBookDebit_2,
+        // @RequestParam(name = "numBookDebit_3", defaultValue = "0") String numBookDebit_3
+        ) {
         // todo: check login - note: truyền HttpSession session
         if (!SessionService.CheckLogin(session)) {
             return "redirect:/login";
@@ -157,12 +166,14 @@ public class TraSachController {
         String tentaikhoan = SessionService.getSession(session);
         model.addAttribute("currentAccount", SessionService.getQuyenHan(quyenHanRepo, taiKhoanRepo, tentaikhoan));
         model.addAttribute("fullname", SessionService.getFullName(taiKhoanRepo, tentaikhoan, nhanVienRepo));
-
+        // todo: get nhân viên thanh toán
+        TaiKhoanEntity acTemp = taiKhoanRepo.findByTentaikhoan(SessionService.getSession(session));
         if (idBill.equals("allBill")) {
             List<PhieuMuonEntity> listBill = phieuMuonRepo.findByMatheAndTrangthai(mathe, 1);
             for (PhieuMuonEntity i : listBill) {
                 PhieuMuonEntity billTemp = phieuMuonRepo.findByMaphieumuon(i.getMaphieumuon());
                 billTemp.setTrangthai(0);
+                billTemp.setManhanvien(acTemp.getManhanvien());
                 billTemp.setNgaytra(ngaytra);
                 phieuMuonRepo.save(billTemp);
 
@@ -174,7 +185,7 @@ public class TraSachController {
                 }
             }
         } else {
-            TaiKhoanEntity acTemp = taiKhoanRepo.findByTentaikhoan(SessionService.getSession(session));
+            
             PhieuMuonEntity billTemp = phieuMuonRepo.findByMaphieumuon(Integer.parseInt(idBill));
             billTemp.setTrangthai(0);
             billTemp.setNgaytra(ngaytra);
@@ -189,6 +200,18 @@ public class TraSachController {
                 sachRepo.save(bookUndo);
             }
         }
+
+
+        // // todo: cập nhật lại số lượng sách thông qua sách nợ
+        // String[] arrIdBookDebit = {idBookDebit_1, idBookDebit_2, idBookDebit_3};
+        // String[] arrNumBookDebit = {numBookDebit_1, numBookDebit_2, numBookDebit_3}; 
+        // for(int i=0; i<3; i++){
+        //     SachEntity bookTemp = sachRepo.findByMasach(Integer.parseInt(arrIdBookDebit[i]));
+        //     if(bookTemp != null){
+        //         bookTemp.setSoluong(bookTemp.getSoluong() - Integer.parseInt(arrNumBookDebit[i]));
+        //         sachRepo.save(bookTemp);
+        //     }
+        // }
 
         model.addAttribute("source", "success");
         model.addAttribute("fragment", "success");

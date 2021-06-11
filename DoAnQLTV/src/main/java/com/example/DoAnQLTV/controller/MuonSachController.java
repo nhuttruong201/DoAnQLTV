@@ -103,7 +103,16 @@ public class MuonSachController {
             model.addAttribute("alert", "Vui lòng nhập mã thẻ hoặc số điện thoại khác để check!");
             return "index";
         }
-
+        // todo: Load thẻ hết hạn
+        LocalDate today = LocalDate.now();
+        List<TheThuVienEntity> listAllCard = theThuVienRepo.findAll();
+        for(var i : listAllCard){
+            String hansudung = i.getHansudung().toString();
+            if(LocalDate.parse(hansudung).compareTo(today)<0){
+               i.setMatrangthai("lock");
+               theThuVienRepo.save(i);
+            }
+        }
         //todo: check thẻ bị khóa
         if(cardCheck.getMatrangthai().equals("lock")){
             model.addAttribute("fragment", "check-fail");

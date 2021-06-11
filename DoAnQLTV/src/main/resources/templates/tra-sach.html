@@ -1,6 +1,6 @@
 <!-- todo: fragment chính -->
 <div class="container my-4" th:fragment="kiem-tra-the">
-    <div class="fadeInDown" id="titleManager">
+    <div id="titleManager">
         <strong style="color: #28a745;"><i class="fas fa-shopping-cart"></i> Yêu cầu trả sách</strong>
     </div>
     <hr>
@@ -13,7 +13,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Mã thẻ thư viện</label>
-                    <input type="number" name="mathe" class="form-control" th:value="${mathe}" placeholder="nhập mã thẻ" />
+                    <input type="number" name="mathe" class="form-control" th:value="${mathe}" min="1" placeholder="nhập mã thẻ" />
                 </div>
             </div>
             <div class="col-sm-6">
@@ -82,10 +82,11 @@
                 <table class="table table-bordered table-hover table-info mt-2">
                     <thead class="bg-light">
                         <tr>
-                            <th>ID Bill</th>
-                            <th>ID Sách</th>
+                            <th>ID bill</th>
+                            <th>ID sách</th>
                             <th>Tên sách</th>
                             <th>SL</th>
+                            <!-- <th class="text-center">Thao tác</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -94,6 +95,9 @@
                             <td th:text="*{book.getMasach()}"></td>
                             <td th:text="*{book.getTensach()}"></td>
                             <td th:text="*{book.getSoluong()}"></td>
+                            <!-- <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-info-circle"></i></button>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -104,6 +108,36 @@
                     <option value="allBill">Tất cả phiếu</option>
                     <option th:each="bill : ${listBill}" th:value="${bill.getMaphieumuon()}" th:text="${bill.getMaphieumuon()}"></option>
                 </select>
+                <hr>
+                <!-- <span>Danh sách nợ (nếu có)</span> -
+                <button type="button" class="btn btn-primary btn-sm" id="btnAddBookDebit"><i class="fas fa-plus-circle"></i></button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnDelBookDebit"><i class="fas fa-minus-circle"></i></button>
+                <table class="table table-bordered table-hover table-sm table-info mt-2">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>ID bill</th>
+                            <th>ID sách</th>
+                            <th>SL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyBookDebit">
+                        <tr id="numTr_1">
+                            <td><input type="number" name="IdBillDebit_1" id="IdBillDebit_1" style="width: 100%;"></td>
+                            <td><input type="number" name="idBookDebit_1" id="idBookDebit_1" style="width: 100%;"></td>
+                            <td><input type="number" name="numBookDebit_1" id="numBookDebit_1" style="width: 100%;"></td>
+                        </tr>
+                        <tr id="numTr_2">
+                            <td><input type="number" name="IdBillDebit_2" id="IdBillDebit_2" style="width: 100%;"></td>
+                            <td><input type="number" name="idBookDebit_2" id="idBookDebit_2" style="width: 100%;"></td>
+                            <td><input type="number" name="numBookDebit_2" id="numBookDebit_2" style="width: 100%;"></td>
+                        </tr>
+                        <tr id="numTr_3">
+                            <td><input type="number" name="IdBillDebit_3" id="IdBillDebit_3" style="width: 100%;"></td>
+                            <td><input type="number" name="idBookDebit_3" id="idBookDebit_3" style="width: 100%;"></td>
+                            <td><input type="number" name="numBookDebit_3" id="numBookDebit_3" style="width: 100%;"></td>
+                        </tr>
+                    </tbody>
+                </table> -->
             </div>
 
         </div>
@@ -115,11 +149,31 @@
             </div>
         </div>
     </form>
-    <script>
+    <!-- <script>
+        var sttBookDebit = 0;
         $(document).ready(function() {
             $("#btnYeuCauTraSach").addClass("active");
+            $("#numTr_1").hide();
+            $("#numTr_2").hide();
+            $("#numTr_3").hide();
+            $("#btnAddBookDebit").click(function() {
+                if (sttBookDebit < 3) {
+                    sttBookDebit++;
+                    $("#numTr_" + sttBookDebit).show();
+                }
+            });
+
+            $("#btnDelBookDebit").click(function() {
+                if (sttBookDebit > 0) {
+                    $("#numTr_" + sttBookDebit).hide();
+                    $("#IdBillDebit_" + sttBookDebit).val("");
+                    $("#idBookDebit_" + sttBookDebit).val("");
+                    $("#numBookDebit_" + sttBookDebit).val("");
+                    sttBookDebit--;
+                }
+            });
         });
-    </script>
+    </script> -->
 </div>
 
 <!--todo: check fail -->
@@ -131,9 +185,4 @@
         <span th:text="${alert}"></span>
     </div>
     <div th:replace="tra-sach :: kiem-tra-the"></div>
-    <script>
-        $(document).ready(function() {
-            $("#titleManager").removeClass("fadeInDown");
-        });
-    </script>
 </div>

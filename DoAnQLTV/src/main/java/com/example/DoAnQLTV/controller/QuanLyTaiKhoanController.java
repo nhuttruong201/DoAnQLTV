@@ -53,6 +53,8 @@ public class QuanLyTaiKhoanController {
         List<TaiKhoanEntity> listAccount = new ArrayList<TaiKhoanEntity>();
         if(type.equals("tat-ca-tai-khoan")){
             listAccount = taiKhoanRepo.findAll();
+        }else if(type.equals("tai-khoan-hoat-dong")){
+            listAccount = taiKhoanRepo.findByStatus("ON");
         }else if(type.equals("tai-khoan-bi-khoa")){
             listAccount = taiKhoanRepo.findByStatus("OFF");
         }

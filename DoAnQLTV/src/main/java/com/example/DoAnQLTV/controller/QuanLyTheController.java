@@ -57,9 +57,25 @@ public class QuanLyTheController {
 
         List<TheThuVienEntity> listCard = new ArrayList<TheThuVienEntity>();
         List<CardBorrow> listCardBorrows = new ArrayList<CardBorrow>();
+        
+        // todo: Load thẻ hết hạn
+        LocalDate todayCheck = LocalDate.now();
+        List<TheThuVienEntity> listAllCardCheck = theThuVienRepo.findAll();
+        for(var i : listAllCardCheck){
+            String hansudung = i.getHansudung().toString();
+            if(LocalDate.parse(hansudung).compareTo(todayCheck)<0){
+               i.setMatrangthai("lock");
+               theThuVienRepo.save(i);
+            }
+        }
+
+
         if (type.equals("tat-ca-the")) {
             // todo: tât cả thẻ
             listCard = theThuVienRepo.findAll();
+        } else if (type.equals("the-hoat-dong")) {
+            // todo: thẻ hoạt động
+            listCard = theThuVienRepo.findByMatrangthai("open");
         } else if (type.equals("the-bi-khoa")) {
             // todo: thẻ bị khóa
             listCard = theThuVienRepo.findByMatrangthai("lock");
@@ -83,6 +99,8 @@ public class QuanLyTheController {
                 String hansudung = i.getHansudung().toString();
                 if(LocalDate.parse(hansudung).compareTo(today)<0){
                     listCard.add(i);
+                    i.setMatrangthai("lock");
+                    theThuVienRepo.save(i);
                 }
             }
         }
