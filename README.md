@@ -1,9 +1,4 @@
-#Võ Nhựt Trường - Đồ án Java
-#Đề tài: Website quản lý thư viện
-#Công nghệ: SpringBoot (Java)
-
-
-# DoAnQLTV
+# Võ Nhựt Trường
 Đồ án Java - Quản lý thư viện với Spring boot framework
 
 
