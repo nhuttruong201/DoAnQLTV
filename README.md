@@ -2,7 +2,7 @@
 Đồ án Java - Quản lý thư viện với Spring boot framework
 
 
-# lưu ý một số lệnh:
+# Lưu ý một số lệnh:
 # Lệnh thymeleaf:
 * Chi tiết xem: https://loda.me/spring-boot-9-giai-thich-cach-thymeleaf-van-hanh-expression-demo-full-loda1558267496214/
 
